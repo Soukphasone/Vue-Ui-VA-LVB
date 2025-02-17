@@ -7,7 +7,7 @@ import { encryptData } from '@/stores/EncryptDecrypt'
 import { useAccountStore } from '@/stores/accountNumber'
 import { showAlert } from '@/stores/alert'
 import { useI18n } from 'vue-i18n'
-
+import {fallbackCopyText} from '@/stores/copyText'
 // Customer information
 const userData = JSON.parse(localStorage.getItem('userData'))
 const target = ref(null)
@@ -59,14 +59,18 @@ onMounted(() => {
   fetchData()
 })
 const copyText = async () => {
-  if (!navigator.clipboard) {
-    console.error('Clipboard API not supported in this browser.')
-    return
+  if (!selectedAccount.value || !selectedAccount.value.ACCOUNT) {
+    console.error("No account selected to copy");
+    return;
   }
-
   try {
-    await navigator.clipboard.writeText(selectedAccount.value.ACCOUNT)
-    copied.value = true
+    if (navigator.clipboard) {
+      console.log("HI");
+      await navigator.clipboard.writeText(selectedAccount.value.ACCOUNT);
+    } else {
+      fallbackCopyText(selectedAccount.value.ACCOUNT);
+    }
+    copied.value = true;
     showAlert(
       t('copy'),
       t('success'),
@@ -74,28 +78,18 @@ const copyText = async () => {
       'Yes',
       'Cancel',
       '#86e54c',
-      '#28a745',
+      '#28a745', // Confirm button color (green)
       '#dc3545',
       false,
       false,
       2000
-    )
-    setTimeout(() => (copied.value = false), 2000)
+    );
+    setTimeout(() => (copied.value = false), 2000);
   } catch (err) {
-    console.error('Failed to copy:', err)
-    const textArea = document.createElement('textarea')
-    textArea.value = selectedAccount.value.ACCOUNT
-    document.body.appendChild(textArea)
-    textArea.select()
-    try {
-      document.execCommand('copy')
-      copied.value = true
-    } catch (err) {
-      console.error('Fallback copy failed:', err)
-    }
-    document.body.removeChild(textArea)
+    console.error("Failed to copy:", err);
   }
-}
+};
+
 </script>
 <template>
   <div class="px-4">
