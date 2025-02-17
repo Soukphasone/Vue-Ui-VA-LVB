@@ -76,7 +76,7 @@ onClickOutside(target, () => {
       <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <!-- Sidebar Menu -->
         <nav class="mt-5 py-2 px-2.5">
-          <div class="h-[calc(90vh)]">
+          <div class="h-[calc(85vh)]">
             <div class="flex flex-col justify-between h-full">
               <template v-for="menuGroup in menuGroups" :key="menuGroup.name">
                 <div>
