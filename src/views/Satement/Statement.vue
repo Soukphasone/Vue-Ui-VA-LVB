@@ -1,8 +1,9 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import TableReport from '@/components/Tables/TableReport.vue';
 </script>
 <template>
   <DefaultLayout>
-    <div>Statent Page</div>
+    <TableReport />
   </DefaultLayout>
 </template>

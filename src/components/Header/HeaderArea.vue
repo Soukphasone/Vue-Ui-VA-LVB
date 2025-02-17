@@ -6,10 +6,12 @@ import Navbar from '@/components/Nav/Navbar.vue'
 import PreviewPage from '@/components/Previews/PreviewPage.vue'
 import { exportToPDF } from '@/stores/exportPDF'
 import eventBus from '@/eventBus'
+import { useRoute } from 'vue-router'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
 const checkExport = ref(null)
 const contentToExport = ref(null)
+const currentPage = useRoute().name
 
 const refresh = async () => {
   await new Promise((resolve) => setTimeout(resolve, 100))
@@ -99,7 +101,7 @@ const sidebarStore = useSidebarStore()
         </div>
       </div>
     </header>
-    <Navbar style="margin-top: -5px" />
+    <Navbar v-if="currentPage === 'Statement'" style="margin-top: -5px" />
   </div>
   <div v-if="userData && checkExport" ref="contentToExport" class="hidden-preview">
     <PreviewPage />

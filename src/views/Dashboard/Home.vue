@@ -1,9 +1,8 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import TableReport from '@/components/Tables/TableReport.vue';
 </script>
 <template>
   <DefaultLayout>
-      <TableReport />
+    <div class="flex items-center justify-center h-screen text-2xl">Home</div>
   </DefaultLayout>
 </template>

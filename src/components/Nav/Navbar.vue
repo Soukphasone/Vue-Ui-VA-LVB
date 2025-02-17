@@ -60,12 +60,10 @@ onMounted(() => {
 })
 const copyText = async () => {
   if (!selectedAccount.value || !selectedAccount.value.ACCOUNT) {
-    console.error("No account selected to copy");
     return;
   }
   try {
     if (navigator.clipboard) {
-      console.log("HI");
       await navigator.clipboard.writeText(selectedAccount.value.ACCOUNT);
     } else {
       fallbackCopyText(selectedAccount.value.ACCOUNT);
@@ -86,7 +84,7 @@ const copyText = async () => {
     );
     setTimeout(() => (copied.value = false), 2000);
   } catch (err) {
-    console.error("Failed to copy:", err);
+    console.error(err);
   }
 };
 

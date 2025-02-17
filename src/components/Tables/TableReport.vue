@@ -3,7 +3,7 @@ import { onMounted, ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import flatPicker from 'flatpickr'
-import { reportFinance, balanceAccount } from '@/service/GetPostAPI'
+import { reportFinance} from '@/service/GetPostAPI'
 import { encryptData } from '@/stores/EncryptDecrypt'
 import { formatNumber, formatDate, formatDateShort, formatDateTime } from '@/service/Format.ts'
 import Loading from '@/components/Loading/Loading.vue'
@@ -195,13 +195,6 @@ onMounted(async () => {
         )}`
         dateFrom.value = formatDate(selectedDates[0])
         dateTo.value = formatDate(selectedDates[1])
-        // let data_En = {
-        //   branch_id: userDataLogin?.BRANCH_ID,
-        //   account_no: accountNumber,
-        //   from_date: formatDate(selectedDates[0]),
-        //   to_date: formatDate(selectedDates[1])
-        // }
-        // dataEncrypt.value = data_En
         datePicker.value.value = formattedRange
         hideNameDay.value = true
       }
