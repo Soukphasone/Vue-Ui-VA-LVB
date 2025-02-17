@@ -30,7 +30,7 @@ onClickOutside(target, () => {
       <!-- SIDEBAR HEADER -->
       <div class="flex items-center justify-between gap-2 px-4 py-3">
         <button
-          class="z-99999 block rounded-max border border-gray-50 hover:border-stroke hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none"
+          class="z-99999 block rounded-max hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none" 
           @click="sidebarStore.isSidebarOpen = false"
         >
           <span class="relative block h-5.5 w-5.5 cursor-pointer">
@@ -76,7 +76,7 @@ onClickOutside(target, () => {
       <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
         <!-- Sidebar Menu -->
         <nav class="mt-5 py-2 px-2.5">
-          <div class="h-[calc(84vh)]">
+          <div class="h-[calc(90vh)]">
             <div class="flex flex-col justify-between h-full">
               <template v-for="menuGroup in menuGroups" :key="menuGroup.name">
                 <div>

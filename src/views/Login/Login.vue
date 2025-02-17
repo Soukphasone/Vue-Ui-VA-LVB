@@ -8,9 +8,9 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
 
 <template>
   <DefaultLayout>
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-">
       <div
-        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+        class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
       >
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <div class="flex justify-center">
@@ -20,7 +20,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
             <div>
               <label
                 for="Username"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="block mb-2 text-sm text-gray-900"
                 >{{ $t('user_name') }}</label
               >
               <input
@@ -34,7 +34,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
               />
             </div>
             <div>
-              <label for="password" class="block mb-2 text-gray-900 dark:text-white">{{
+              <label for="password" class="block mb-2 text-gray-900">{{
                 $t('password')
               }}</label>
               <div class="relative">
@@ -74,7 +74,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
                   </span>
                   <span v-else>
                     <svg
-                      viewBox="'0 0 24 24'"
+                      viewBox="0 0 24 24"
                       fill="currentColor"
                       xmlns="http://www.w3.org/2000/svg"
                       class="w-6 h-6 text-gray-700"

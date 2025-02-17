@@ -40,7 +40,7 @@ const sidebarStore = useSidebarStore()
         <div class="flex items-center gap-2 sm:gap-4">
           <!-- Hamburger Toggle BTN -->
           <button
-          class="z-99999 block rounded-max border border-gray-50 hover:border-stroke hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none"
+            class="z-99999 block rounded-max hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none"
             @click="
               () => {
                 toggleSidebar()
@@ -75,10 +75,8 @@ const sidebarStore = useSidebarStore()
               </span>
             </span>
           </button>
-       
         </div>
         <div></div>
-        
 
         <div class="flex items-center gap-4 2xsm:gap-10">
           <ul class="flex items-center gap-2 2xsm:gap-4">
@@ -101,7 +99,7 @@ const sidebarStore = useSidebarStore()
         </div>
       </div>
     </header>
-    <Navbar />
+    <Navbar style="margin-top: -5px" />
   </div>
   <div v-if="userData && checkExport" ref="contentToExport" class="hidden-preview">
     <PreviewPage />

@@ -18,7 +18,7 @@ const exportPDF = () => {
 <template>
   <div :class="check === 'vn' ? '' : 'font-lao'">
     <div v-if="data">
-    <div class="px-6 text-right">
+    <div class="px-6 py-1 text-right">
       <button class="bg-primary text-whiter py-1 px-3 rounded-3" @click="exportPDF">
         Export to PDF
       </button>

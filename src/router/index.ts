@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Dashboard/Home.vue'
+import Statement from '@/views/Satement/Statement.vue'
 import Login from '@/views/Login/Login.vue'
 import ChangePasswordView from '@/views/ChangePassword/ChangePassword.vue'
 import PreviewViewView from '@/views/Previews/PreviewView.vue'
@@ -7,10 +8,19 @@ import { PATH } from './pathName'
 const routes = [
   {
     path: PATH.HOME,
-    name: 'home',
+    name: 'Home',
     component: Home,
     meta: {
       title: 'Home',
+      requiresAuth: true
+    }
+  },
+  {
+    path: PATH.STATEMENT,
+    name: 'Statement',
+    component: Statement,
+    meta: {
+      title: 'Statement',
       requiresAuth: true
     }
   },

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref, computed, watch } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import flatPicker from 'flatpickr'
@@ -18,7 +18,6 @@ const { t } = useI18n()
 const check = ref(currentLanguage.value)
 const router = useRouter()
 const userDataLogin = JSON.parse(localStorage.getItem('userData'))
-const accountNo = ref('')
 const accountStore = useAccountStore()
 const accountNumber = computed(() => accountStore.value)
 const target = ref(null)
@@ -26,6 +25,7 @@ const flatPickerInstance = ref(null)
 const datePicker = ref(null)
 const selectedValueDate = ref('')
 const selectedNameDay = ref(null)
+const hideNameDay = ref(false)
 const isDropdownOpen = ref(false)
 const dataReport = ref([])
 const isLoading = ref(false)
@@ -36,27 +36,27 @@ const dateTo = ref(formatDate(today))
 const searchQuery = ref('')
 const dayList = ref([
   { id: 1, name: 'To day', value: 'today', color: 'white', country: 'en' },
-  { id: 2, name: 'Yesterday', value: 'yesterday', color: 'white' },
-  { id: 3, name: 'Last 3 Days', value: 'last3days', color: 'white' },
-  { id: 4, name: 'Last 7 Days', value: 'last7days', color: 'white' },
-  { id: 5, name: 'Last 30 Days', value: 'last30days', color: 'white' },
-  { id: 6, name: 'Last 60 Days', value: 'last60days', color: 'white' }
+  { id: 2, name: 'Last 7 Days', value: 'last7days', color: 'white' },
+  { id: 3, name: 'Last 15 Days', value: 'last15days', color: 'white' },
+  { id: 4, name: 'Last 30 Days', value: 'last30days', color: 'white' },
+  { id: 5, name: 'Last 60 Days', value: 'last60days', color: 'white' },
+  { id: 6, name: 'Last 90 Days', value: 'last90days', color: 'white' }
 ])
 const dayListLao = ref([
   { id: 1, name: 'ມື້ນີ້', value: 'today', color: 'white', country: 'la' },
-  { id: 2, name: 'ມື້ວານ', value: 'yesterday', color: 'white' },
-  { id: 3, name: '3 ມື້ກ່ອນ', value: 'last3days', color: 'white' },
-  { id: 4, name: '7 ມື້ກ່ອນ', value: 'last7days', color: 'white' },
-  { id: 5, name: '30 ມື້ກ່ອນ', value: 'last30days', color: 'white' },
-  { id: 6, name: '60 ມື້ກ່ອນ', value: 'last60days', color: 'white' }
+  { id: 2, name: '7 ມື້ກ່ອນ', value: 'last3days', color: 'white' },
+  { id: 3, name: '15 ມື້ກ່ອນ', value: 'last7days', color: 'white' },
+  { id: 4, name: '30 ມື້ກ່ອນ', value: 'last15days', color: 'white' },
+  { id: 5, name: '60 ມື້ກ່ອນ', value: 'last60days', color: 'white' },
+  { id: 6, name: '90 ມື້ກ່ອນ', value: 'last90days', color: 'white' }
 ])
 const dayListViet = ref([
   { id: 1, name: 'Hôm nay', value: 'today', color: 'white', country: 'vn' },
-  { id: 2, name: 'Hôm qua', value: 'yesterday', color: 'white' },
-  { id: 3, name: '3 ngày trước', value: 'last3days', color: 'white' },
-  { id: 4, name: '7 ngày trước', value: 'last7days', color: 'white' },
-  { id: 5, name: '30 ngày trước', value: 'last30days', color: 'white' },
-  { id: 6, name: '60 ngày trước', value: 'last60days', color: 'white' }
+  { id: 2, name: '7 ngày trước', value: 'last7days', color: 'white' },
+  { id: 3, name: '15 ngày trước', value: 'last15days', color: 'white' },
+  { id: 4, name: '30 ngày trước', value: 'last30days', color: 'white' },
+  { id: 5, name: '60 ngày trước', value: 'last60days', color: 'white' },
+  { id: 6, name: '90 ngày trước', value: 'last90days', color: 'white' }
 ])
 const checkToken = () => {
   const token = localStorage.getItem('authToken')
@@ -121,20 +121,20 @@ const selectAccount = async (account) => {
     case 'today':
       range = { startDate: today, endDate: today }
       break
-    case 'yesterday':
-      range = calculateDateRange(1)
-      break
-    case 'last3days':
-      range = calculateDateRange(3)
-      break
     case 'last7days':
       range = calculateDateRange(7)
+      break
+    case 'last15days':
+      range = calculateDateRange(15)
       break
     case 'last30days':
       range = calculateDateRange(30)
       break
     case 'last60days':
       range = calculateDateRange(60)
+      break
+    case 'last90days':
+      range = calculateDateRange(90)
       break
     default:
       range = { startDate: null, endDate: null }
@@ -153,21 +153,15 @@ const selectAccount = async (account) => {
       to_date: formatDate(range.endDate)
     }
     dataEncrypt.value = data_En
+    hideNameDay.value = false
+
   }
 }
 onMounted(async () => {
   checkToken()
-  const body = {
-    data: encryptData(userDataLogin?.CIF)
-  }
-  const _account = await balanceAccount(body)
-  if (_account.data.length > 0) {
-    accountNo.value = _account.data[0]?.ACCOUNT
-  }
   dataEncrypt.value = {
     branch_id: userDataLogin?.BRANCH_ID,
     account_no: accountNumber,
-    // account_no: accountNo.value,
     from_date: formatDate(today),
     to_date: formatDate(today)
   }
@@ -209,6 +203,7 @@ onMounted(async () => {
         // }
         // dataEncrypt.value = data_En
         datePicker.value.value = formattedRange
+        hideNameDay.value = true
       }
     },
     onReady: () => {
@@ -270,7 +265,8 @@ watch(dataReport, (newData) => {
                 ref="target"
               >
                 <div class="dropdown-selected-date">
-                  {{ selectedNameDay ? selectedNameDay.name : '' }}
+                  <p v-if="!hideNameDay">{{ selectedNameDay ? selectedNameDay.name : '' }}</p>
+                  <p v-else>- - - - - - - - - - -</p>
                   <div class="ml-25 px-2">
                     <svg
                       class="absolute top-1/2 -translate-y-1/2 fill-current"
@@ -421,7 +417,6 @@ watch(dataReport, (newData) => {
                       />
                     </svg>
                   </div>
-
                   <input
                     type="text"
                     v-model="searchQuery"

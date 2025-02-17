@@ -13,7 +13,6 @@ const userData = JSON.parse(localStorage.getItem('userData'))
 const target = ref(null)
 const copied = ref(false)
 const { t } = useI18n()
-
 // Reactive state
 const isVisible = ref(false)
 const accountList = ref([])
@@ -39,7 +38,6 @@ const selectAccount = (account) => {
   selectedAccount.value = account
   !isDropdownOpen.value
   refreshAccount()
-
 }
 // ---->
 onClickOutside(target, () => {
@@ -119,7 +117,7 @@ const copyText = async () => {
                 <span v-else>
                   <!-- Eye Open Icon -->
                   <svg
-                    viewBox="'0 0 24 24'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
                     class="w-6 h-6 hover:text-gray-300"
@@ -150,12 +148,43 @@ const copyText = async () => {
                 <div class="flex gap-2">
                   <p>{{ selectedAccount.ACCOUNT }}</p>
                   <button @click="copyText" class="copy-button focus:outline-none">
-                    <img
+                    <svg
                       v-if="!copied"
-                      src="@/assets/images/icon/icon-copy.png"
-                      alt=""
-                      class="w-5"
-                    />
+                      fill="none"
+                      height="17px"
+                      width="17px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      viewBox="0 0 203.996 203.996"
+                      stroke="#ffffff"
+                      class="fill-white hover:fill-gray-300"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <g id="SVGRepo_iconCarrier">
+                        <path
+                          d="M182.39,5v169.151c0,2.762-2.238,5-5,5h-9.61V19.609c0-2.762-2.238-5-5-5H50.105V5c0-2.762,2.238-5,5-5H177.39 C180.152,0,182.39,2.238,182.39,5z M154.196,33.783v165.213c0,2.762-2.238,5-5,5H26.606c-2.762,0-5-2.238-5-5V33.783 c0-2.762,2.238-5,5-5h122.59C151.958,28.783,154.196,31.021,154.196,33.783z M40.248,94.254c0,2.762,2.238,5,5,5h71 c2.762,0,5-2.238,5-5s-2.238-5-5-5h-71C42.486,89.254,40.248,91.492,40.248,94.254z M45.248,79.664H89.01c2.762,0,5-2.238,5-5 s-2.238-5-5-5H45.248c-2.762,0-5,2.238-5,5S42.486,79.664,45.248,79.664z M135.554,164.395c0-2.762-2.238-5-5-5H45.248 c-2.762,0-5,2.238-5,5s2.238,5,5,5h85.307C133.316,169.395,135.554,167.156,135.554,164.395z M135.554,144.806c0-2.762-2.238-5-5-5 H45.248c-2.762,0-5,2.238-5,5s2.238,5,5,5h85.307C133.316,149.806,135.554,147.567,135.554,144.806z M135.554,55.075 c0-2.762-2.238-5-5-5H45.248c-2.762,0-5,2.238-5,5s2.238,5,5,5h85.307C133.316,60.075,135.554,57.837,135.554,55.075z"
+                        />
+                      </g>
+                    </svg>
+                    <!-- <svg
+                      v-if="!copied"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="w-5 h-5 cursor-pointer hover:text-gray-400 transition"
+                    >
+                      <path
+                        d="M8 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2v2h2a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4h-8a4 4 0 0 0-4 4v2z"
+                      />
+                      <path
+                        d="M2 9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9zm10 0H4v10h8V9z"
+                      />
+                    </svg> -->
                     <svg
                       v-else
                       xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +258,6 @@ const copyText = async () => {
             </div>
           </div>
         </div>
-
         <!-- <div v-else><DropdownUser /></div> -->
       </div>
     </div>
