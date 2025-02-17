@@ -28,7 +28,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
                 type="text"
                 name="userName"
                 id="userName"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 placeholder="Enter User Name"
                 required
               />
@@ -45,13 +45,13 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
                   id="password"
                   placeholder="••••••••"
                   required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 />
                 <button
                   v-if="passWord.length >= 1"
                   type="button"
                   @click="handleShowEye"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
                 >
                   <span v-if="isShowEye">
                     <svg
@@ -89,7 +89,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
             </div>
             <div v-if="errorMessage" class="text-center text-red-600">{{ errorMessage }}</div>
             <button
-              class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               <span v-if="isLoading" class="flex flex-col justify-center items-center">
                 <Loading size="20px" />

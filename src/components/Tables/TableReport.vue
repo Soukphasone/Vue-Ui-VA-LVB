@@ -384,7 +384,7 @@ watch(dataReport, (newData) => {
       <div class="flex items-center">
         <ul class="flex items-center gap-2">
           <li>
-            <div class="border border-stroke rounded-2 py-1 px-4">
+            <div class="hidden sm:block border border-stroke rounded-2 py-1 px-4">
               <form>
                 <div class="relative">
                   <div class="absolute top-1/2 left-0 -translate-y-1/2">
