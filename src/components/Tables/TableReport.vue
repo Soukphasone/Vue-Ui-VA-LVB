@@ -44,9 +44,9 @@ const dayList = ref([
 ])
 const dayListLao = ref([
   { id: 1, name: 'ມື້ນີ້', value: 'today', color: 'white', country: 'la' },
-  { id: 2, name: '7 ມື້ກ່ອນ', value: 'last3days', color: 'white' },
-  { id: 3, name: '15 ມື້ກ່ອນ', value: 'last7days', color: 'white' },
-  { id: 4, name: '30 ມື້ກ່ອນ', value: 'last15days', color: 'white' },
+  { id: 2, name: '7 ມື້ກ່ອນ', value: 'last7days', color: 'white' },
+  { id: 3, name: '15 ມື້ກ່ອນ', value: 'last15days', color: 'white' },
+  { id: 4, name: '30 ມື້ກ່ອນ', value: 'last30days', color: 'white' },
   { id: 5, name: '60 ມື້ກ່ອນ', value: 'last60days', color: 'white' },
   { id: 6, name: '90 ມື້ກ່ອນ', value: 'last90days', color: 'white' }
 ])
