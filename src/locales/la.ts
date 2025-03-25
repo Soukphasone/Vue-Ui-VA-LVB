@@ -33,7 +33,7 @@ export const la = {
   email: 'ອີເມວ',
   tel: 'ເບີໂທ',
   login_information: 'ຂໍ້ມູນເຂົ້າລະບົບ',
-  user_name: 'ຊື່ຜູ້ໃໍຊ້',
+  user_name: 'ຊື່ຜູ້ໃຊ້',
   password: 'ລະຫັດ',
   old_password: 'ລະຫັດເກົ່າ',
   new_password: 'ລະຫັດໃໝ່',
@@ -97,16 +97,12 @@ export const la = {
   no_data: 'ບໍ່ມີຂໍ້ມູນ',
   do_you_want_to_log_out:'ທ່ານຕ້ອງການອອກຈາກບົບບໍ?',
   Yes: 'ແມ່ນ',
-  no:'ບໍ່'
-
-
-
-
-
-
-
-  
-
+  no:'ບໍ່',
+  dd_mm_yy:'ວວ/ດດ/ປປ - ວວ/ດດ/ປປ',
+  apply:'ຄົ້ນຫາ',
+  view:'ເບິ່ງ',
+  individual:'ບຸກຄົນ(I)',
+  welcome_:'ຍິນດີຕ້ອນຮັບ'
 
 
 }

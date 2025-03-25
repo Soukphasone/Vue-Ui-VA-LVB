@@ -7,8 +7,10 @@ import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
-  const userName = ref('010277499')
+  const userName = ref('')
+  // const userName = ref('010277499')
   const passWord = ref('')
+  const checkError = ref(false)
   const errorMessage = ref('')
   const isLoading = ref(false)
   const isShowEye = ref(false)
@@ -17,6 +19,17 @@ export default function useLoginPage() {
     isShowEye.value = !isShowEye.value
   }
   const handleLogin = async () => {
+    if (!userName.value) {
+      checkError.value = true
+      errorMessage.value = 'Check User Name'
+      return
+    } else if (!passWord.value) {
+      if (!userName.value) {
+        checkError.value = true
+        return
+      }
+      return
+    }
     isLoading.value = true
     try {
       const userLogin = {

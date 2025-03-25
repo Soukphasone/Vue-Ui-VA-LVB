@@ -2,41 +2,122 @@
 import useLoginPage from './LoginPage'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import Loading from '@/components/Loading/Loading.vue'
-const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, handleLogin } =
-  useLoginPage()
+const {
+  userName,
+  passWord,
+  checkError,
+  errorMessage,
+  isLoading,
+  isShowEye,
+  handleShowEye,
+  handleLogin
+} = useLoginPage()
 </script>
 
 <template>
   <DefaultLayout>
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-">
-      <div
-        class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0"
-      >
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <div class="flex justify-center">
-            <img src="@/assets/images/logo/LVB.png" alt="loginLogo" class="w-50" />
-          </div>
-          <form class="space-y-4 md:space-y-6" @submit.prevent="handleLogin">
-            <div>
-              <label
-                for="Username"
-                class="block mb-2 text-sm text-gray-900"
-                >{{ $t('user_name') }}</label
-              >
-              <input
-                v-model="userName"
-                type="text"
-                name="userName"
-                id="userName"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                placeholder="Enter User Name"
-                required
-              />
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-primary">
+      <div class="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
+        <div class="p-6 space-y-10">
+          <div>
+            <div class="flex justify-center">
+              <img src="@/assets/images/logo/LVB.png" alt="loginLogo" class="w-50" />
             </div>
-            <div>
-              <label for="password" class="block mb-2 text-gray-900">{{
-                $t('password')
-              }}</label>
+            <p class="flex justify-center text-xl font-bold text-gray-700 mt-4">
+              {{ $t('welcome_') }}
+            </p>
+          </div>
+          <form class="space-y-6" @submit.prevent="handleLogin">
+            <div class="flex gap-3 items-center">
+              <div
+                class="relative border border-primary rounded-lg block py-1 px-2 w-full outline-none"
+                :class="{
+                  'border border-red-500': checkError && !userName,
+                  'border border-green-500': userName
+                }"
+              >
+                <div class="flex items-center gap-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-7 h-7 text-primary"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 21a8.25 8.25 0 0115 0"
+                    />
+                  </svg>
+                  <input
+                    v-model="userName"
+                    type="text"
+                    :placeholder="$t('enter_name')"
+                    class="text-gray-900 placeholder-gray-500 outline-none w-full"
+                  />
+                </div>
+                <!-- <button
+                  type="button"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
+                ></button> -->
+              </div>
+            </div>
+            <div class="flex gap-3 items-center">
+              <!-- <label
+                class="block text-gray-900 w-[300px]"
+             
+              >
+                {{ $t('confirm_password') }}
+              </label> -->
+              <div
+                class="relative border border-primary rounded-lg block py-1 px-2 w-full outline-none"
+              >
+                <div class="flex items-center gap-3">
+                  <svg
+                    class="w-7 h-7 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 17v-1m0 0a2 2 0 10-4 0v1m4-1v4m5-9V9a5 5 0 00-10 0v4m10 0H7a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2z"
+                    />
+                  </svg>
+                  <input
+                    type="text"
+                    :placeholder="$t('enter_confirm_password')"
+                    class="text-gray-900 placeholder-gray-500 outline-none w-full"
+                  />
+                  <svg
+                    class="w-6 h-6 text-gray-500 dark:text-gray-300"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16 14c3.866 0 7 3.134 7 7M7 21c0-3.866 3.134-7 7-7M12 14c-3.866 0-7 3.134-7 7m7-7a5 5 0 100-10 5 5 0 000 10z"
+                    />
+                  </svg>
+                </div>
+
+                <!-- <button
+                  type="button"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
+                ></button> -->
+              </div>
+            </div>
+            <!-- <div>
+              <label for="password" class="block mb-2 text-gray-900">{{ $t('password') }}</label>
               <div class="relative">
                 <input
                   v-model="passWord"
@@ -45,7 +126,7 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
                   id="password"
                   placeholder="••••••••"
                   required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  class="bg-gray-50 border border-primary-600 text-gray-900 block w-full p-2.5 focus:outline-none"
                 />
                 <button
                   v-if="passWord.length >= 1"
@@ -86,16 +167,18 @@ const { userName, passWord, errorMessage, isLoading, isShowEye, handleShowEye, h
                   </span>
                 </button>
               </div>
-            </div>
+            </div> -->
             <div v-if="errorMessage" class="text-center text-red-600">{{ errorMessage }}</div>
-            <button
-              class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              <span v-if="isLoading" class="flex flex-col justify-center items-center">
-                <Loading size="20px" />
-              </span>
-              <span v-else>{{ $t('login') }}</span>
-            </button>
+            <div>
+              <button
+                class="w-full text-white bg-primary hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-6"
+              >
+                <span v-if="isLoading" class="flex flex-col justify-center items-center">
+                  <Loading size="20px" />
+                </span>
+                <span v-else>{{ $t('login') }}</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

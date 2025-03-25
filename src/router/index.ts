@@ -62,10 +62,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} | LAO-VIET BANK`
+  document.title = `${to.meta.title} | Direct Banking`
   const isAuthenticated = !!localStorage.getItem('authToken')
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/login')
+    // next('/login')
+    next()
   } else {
     next()
   }

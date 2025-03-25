@@ -10,7 +10,8 @@ const currentPage = useRoute().name
 sidebarStore.page = currentPage
 </script>
 <template>
-  <li v-if="userData">
+  <!-- <li v-if="userData"> -->
+  <li>
     <router-link
       :to="item.route"
       class="group relative flex items-center gap-2.5 py-2 px-2.5 font-medium text-bodydark3 duration-300 ease-in-out hover:bg-primary hover:text-white rounded-2"
@@ -54,7 +55,7 @@ sidebarStore.page = currentPage
       <!-- Dropdown Menu End -->
     </div>
   </li>
-  <li v-else>
+  <!-- <li v-else>
     <router-link
       to=""
       class="group relative flex items-center gap-2.5 py-2 px-2.5 font-medium text-bodydark3 duration-300 ease-in-out hover:bg-primary hover:text-white rounded-2"
@@ -87,7 +88,6 @@ sidebarStore.page = currentPage
         />
       </svg>
     </router-link>
-    <!-- Dropdown Menu Start -->
     <div class="translate transform overflow-hidden" v-show="sidebarStore.page === item.label">
       <SidebarDropdown
         v-if="item.children"
@@ -95,7 +95,6 @@ sidebarStore.page = currentPage
         :currentPage="currentPage"
         :page="item.label"
       />
-      <!-- Dropdown Menu End -->
     </div>
-  </li>
+  </li> -->
 </template>

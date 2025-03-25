@@ -44,7 +44,11 @@ const logOut = () => {
         <p>{{ $t('hello') }}</p>
         <p>Customer</p>
       </div>
-      <button v-if="userData" class="hidden sm:block absolute right-0 h-9 w-9 mb-2 focus:outline-none"  @click="logOut">
+      <button
+        v-if="userData"
+        class="hidden sm:block absolute right-0 h-9 w-9 mb-2 focus:outline-none"
+        @click="logOut"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -55,6 +59,7 @@ const logOut = () => {
             d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10V19H5V5H10V3ZM21 12L16 7V10H9V14H16V17L21 12Z"
           />
         </svg>
+        <p class="text-user text-red-500">Exit</p>
       </button>
     </div>
   </div>

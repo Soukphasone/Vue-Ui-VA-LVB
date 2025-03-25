@@ -97,14 +97,11 @@ export const vn = {
   no_data: 'Không có dữ liệu',
   do_you_want_to_log_out:'Bạn có muốn đăng xuất không?',
   Yes: 'Vâng',
-  no: 'Không'
-
-
-
-  
-
-
-
-
+  no: 'Không',
+  dd_mm_yy:'NN/TT/NN - NN/TT/NN',
+  apply:'Tìm kiểm',
+  view:'Xem',
+  individual:'Cá nhân(I)',
+  welcome_:'Kính chào quy khách'
 
 }

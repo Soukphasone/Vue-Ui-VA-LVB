@@ -3,7 +3,7 @@ import { onMounted, ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import flatPicker from 'flatpickr'
-import { reportFinance} from '@/service/GetPostAPI'
+import { reportFinance } from '@/service/GetPostAPI'
 import { encryptData } from '@/stores/EncryptDecrypt'
 import { formatNumber, formatDate, formatDateShort, formatDateTime } from '@/service/Format.ts'
 import Loading from '@/components/Loading/Loading.vue'
@@ -61,7 +61,7 @@ const dayListViet = ref([
 const checkToken = () => {
   const token = localStorage.getItem('authToken')
   if (isTokenExpired(token)) {
-    logout()
+    // logout()
   }
 }
 const queryDate = () => {
@@ -88,7 +88,7 @@ const fetchData = async () => {
   } finally {
     setTimeout(() => {
       isLoading.value = false
-    }, 1000)
+    }, 500)
   }
 }
 watch(dataEncrypt, async () => {
@@ -154,7 +154,6 @@ const selectAccount = async (account) => {
     }
     dataEncrypt.value = data_En
     hideNameDay.value = false
-
   }
 }
 onMounted(async () => {
@@ -259,7 +258,7 @@ watch(dataReport, (newData) => {
               >
                 <div class="dropdown-selected-date">
                   <p v-if="!hideNameDay">{{ selectedNameDay ? selectedNameDay.name : '' }}</p>
-                  <p v-else>- - - - - - - - - - -</p>
+                  <p v-else class="text-center mr-5">xxx-xxx-xxx</p>
                   <div class="ml-25 px-2">
                     <svg
                       class="absolute top-1/2 -translate-y-1/2 fill-current"
@@ -358,7 +357,7 @@ watch(dataReport, (newData) => {
             </span>
             <!-- Date picker -->
             <input
-              placeholder="DD/MM/YY - DD/MM/YY"
+              :placeholder="t('dd_mm_yy')"
               ref="datePicker"
               type="text"
               class="w-full bg-transparent pl-[40px] text-dark-2 outline-none transition"
@@ -366,10 +365,24 @@ watch(dataReport, (newData) => {
           </div>
         </div>
         <button
-          class="border border-stroke rounded-lg bg-primary hover:bg-blue-800 px-4 py-1 ml-2 text-whiter text-sm"
+          class="flex gap-1 items-center border border-stroke rounded-lg bg-primary hover:bg-blue-800 px-2 py-1 ml-2 text-whiter text-sm"
           @click="queryDate"
         >
-          Apply
+          <svg
+            class="w-5 h-5 text-gray-100 transition duration-200"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 10 17.5a7.5 7.5 0 0 0 6.65-3.85z"
+            />
+          </svg>
+          {{ t('apply') }}
         </button>
         <button
           v-if="dataReport.length > 0"
@@ -377,7 +390,7 @@ watch(dataReport, (newData) => {
           class="flex items-center gap-1.5 max-w-sm mx-auto rounded-lg bg-primary hover:bg-blue-800 px-3 py-1 ml-2 text-whiter text-sm"
         >
           <img src="@/assets/images/icon/eye-view.png" alt="view" class="w-5" />
-          <p>View</p>
+          <p>{{ t('view') }}</p>
         </button>
         <div v-else></div>
       </div>

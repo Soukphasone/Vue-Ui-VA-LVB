@@ -61,7 +61,7 @@ export const en = {
   deposit: 'Deposit',
   total_withdraw: 'Total withdraw',
   total_deposit: 'total deposit',
-  total:'Total',
+  total: 'Total',
   date: 'Date',
   next: 'Next',
   previous: 'Previous',
@@ -83,8 +83,8 @@ export const en = {
   account_statement: 'account statement',
   opening_balance: 'opening balance',
   ending_balance: 'ending balance',
-  total_opening_balance : 'Previous balance',
-  total_ending_balance : 'Ending balance',
+  total_opening_balance: 'Previous balance',
+  total_ending_balance: 'Ending balance',
   time_print: 'Time pint',
   date_print: 'Date print',
   create_by: 'Create by',
@@ -99,5 +99,10 @@ export const en = {
   no_data: 'No items found',
   do_you_want_to_log_out: 'Do you want to log out?',
   Yes: 'Yes',
-  no:'NO'
+  no: 'NO',
+  dd_mm_yy: 'DD/MM/YY - DD/MM/YY',
+  apply: 'Apply',
+  view: 'View',
+  individual:'Individua(I)',
+  welcome_:'Welcome'
 }

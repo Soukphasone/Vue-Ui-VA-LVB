@@ -2,7 +2,7 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import { onClickOutside } from '@vueuse/core'
 import { useDarkModeStore } from '@/stores/darkMode'
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import SidebarItem from './SidebarItem.vue'
 import logoWhite from '@/assets/images/logo/champa-full-red-1.png'
 import logo from '@/assets/images/logo/LVB-Logo.png'
@@ -15,9 +15,22 @@ const darkModeStore = useDarkModeStore()
 onClickOutside(target, () => {
   sidebarStore.isSidebarOpen = false
 })
+const closeOnEscape = (event) => {
+  if (event.key === 'Escape') {
+    sidebarStore.isSidebarOpen = false
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', closeOnEscape)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', closeOnEscape)
+})
 </script>
 <template>
-  <button @keydown.esc="sidebarStore.isSidebarOpen = false">
+  <div @click.prevent="closeOnEscape">
     <aside
       class="absolute left-0 top-0 z-9999 flex h-screen w-65 flex-col overflow-y-hidden bg-white border border-gray-200 duration-300 ease-linear"
       :class="{
@@ -25,12 +38,11 @@ onClickOutside(target, () => {
         '-translate-x-full': !sidebarStore.isSidebarOpen
       }"
       ref="target"
-      @keydown.esc="sidebarStore.isSidebarOpen = false"
     >
       <!-- SIDEBAR HEADER -->
       <div class="flex items-center justify-between gap-2 px-4 py-3">
         <button
-          class="z-99999 block rounded-max hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none" 
+          class="z-99999 block rounded-max hover:bg-gray-200 p-1.5 hover:shadow-sm focus:outline-none"
           @click="sidebarStore.isSidebarOpen = false"
         >
           <span class="relative block h-5.5 w-5.5 cursor-pointer">
@@ -110,5 +122,5 @@ onClickOutside(target, () => {
         <!-- Sidebar Menu -->
       </div>
     </aside>
-  </button>
+  </div>
 </template>
