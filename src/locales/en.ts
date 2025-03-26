@@ -46,6 +46,7 @@ export const en = {
   enter_tel: 'Enter number phone',
   enter_password: 'Enter password',
   enter_old_password: 'Enter old password',
+  enter_new_password: 'Enter new password',
   enter_confirm_password: 'Enter confirm password ',
   cancel: 'Cancel',
   edit: 'Edit',
@@ -104,5 +105,6 @@ export const en = {
   apply: 'Apply',
   view: 'View',
   individual:'Individua(I)',
-  welcome_:'Welcome'
+  welcome_:'Welcome',
+  please_check_again: 'Please check again',
 }

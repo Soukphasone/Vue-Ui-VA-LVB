@@ -44,6 +44,7 @@ export const vn = {
   enter_tel: 'Nhập số điện thoại',
   enter_password: 'Nhập mật khẩu',
   enter_old_password: 'Nhập mật khẩu cũ',
+  enter_new_password: 'Nhập mật khẩu mới',
   enter_confirm_password: 'Nhập mật khẩu xác nhận ',
   cancel: 'Hủy',
   edit: 'Sửa',
@@ -102,6 +103,8 @@ export const vn = {
   apply:'Tìm kiểm',
   view:'Xem',
   individual:'Cá nhân(I)',
-  welcome_:'Kính chào quy khách'
+  welcome_:'Kính chào quy khách',
+  please_check_again: 'Hãy kiểm tra lại',
+
 
 }

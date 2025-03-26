@@ -44,6 +44,7 @@ export const la = {
   enter_tel: 'ປ້ອນເບີໂທ',
   enter_password: 'ປ້ອນລະຫັດ',
   enter_old_password: 'ປ້ອນລະຫັດເກົ່າ',
+  enter_new_password: 'ປ້ອນລະຫັດໃໝ່',
   enter_confirm_password: 'ປ້ອນລະຫັດຢືນຢັນ',
   cancel: 'ຍົກເລີກ',
   edit: 'ແກ້ໄຂ',

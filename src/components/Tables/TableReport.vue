@@ -18,6 +18,7 @@ const { t } = useI18n()
 const check = ref(currentLanguage.value)
 const router = useRouter()
 const userDataLogin = JSON.parse(localStorage.getItem('userData'))
+console.log('UserLogin', userDataLogin)
 const accountStore = useAccountStore()
 const accountNumber = computed(() => accountStore.value)
 const target = ref(null)
@@ -79,16 +80,18 @@ const fetchData = async () => {
     const body = {
       data: encryptData(JSON.stringify(dataEncrypt.value))
     }
+    console.log('Body_R', body.data)
     const _report = await reportFinance(body)
-    if (_report.data === null) {
-      dataReport.value = ''
-    } else if (_report.data.length > 0) {
+    console.log('Report', _report)
+    if (_report.data) {
+      console.log('Y')
       dataReport.value = _report.data
+    } if (_report.data === null) {
+      dataReport.value = []
+      console.log('NO')
     }
   } finally {
-    setTimeout(() => {
-      isLoading.value = false
-    }, 500)
+    isLoading.value = false
   }
 }
 watch(dataEncrypt, async () => {
@@ -445,7 +448,7 @@ watch(dataReport, (newData) => {
       </div>
     </div>
     <div
-      v-else-if="!isLoading && dataReport.length <= 0"
+      v-else-if="!isLoading && !dataReport.length"
       class="flex flex-col justify-center items-center bg-gray-100 min-h-screen border-t"
     >
       <div class="flex flex-col items-center justify-center mb-60">
@@ -485,7 +488,7 @@ watch(dataReport, (newData) => {
       <tbody>
         <tr v-for="(item, index) in filteredItems" :key="index">
           <td class="px-1 min-w-45 border-b">
-            <p class="text-black text-center">{{ formatDateTime(item.TRN_DATE) }}</p>
+            <p class="text-black text-center">{{ formatDateTime(item.TRN_DT) }}</p>
           </td>
           <td class="py-3 px-4 border-b text-center">
             <p class="text-black">{{ item.TRN_REF_NO }}</p>

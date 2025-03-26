@@ -7,8 +7,8 @@ import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
-  const userName = ref('')
-  // const userName = ref('010277499')
+  // const userName = ref('')
+  const userName = ref('010277499')
   const passWord = ref('')
   const checkError = ref(false)
   const errorMessage = ref('')
@@ -18,13 +18,13 @@ export default function useLoginPage() {
   const handleShowEye = () => {
     isShowEye.value = !isShowEye.value
   }
+  const validateNumber = (event: any) => {
+    userName.value = event.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+  };
   const handleLogin = async () => {
-    if (!userName.value) {
+    if (!userName.value || !passWord.value ) {
       checkError.value = true
-      errorMessage.value = 'Check User Name'
-      return
-    } else if (!passWord.value) {
-      checkError.value = true
+      errorMessage.value = t('please_check_again')
       return
     }
     isLoading.value = true
@@ -36,6 +36,7 @@ export default function useLoginPage() {
       const body = {
         data: encryptData(JSON.stringify(userLogin))
       }
+      console.log("body", body.data);
 
       const _dataLogin = await Login(body)
       if (_dataLogin?.data?.TOKEN) {
@@ -70,6 +71,7 @@ export default function useLoginPage() {
     errorMessage,
     isLoading,
     isShowEye,
+    validateNumber,
     handleShowEye,
     handleLogin
   }

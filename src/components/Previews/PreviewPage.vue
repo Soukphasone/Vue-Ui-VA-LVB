@@ -178,7 +178,7 @@ const totals = computed(() => {
           <tbody>
             <tr v-for="(item, index) in reportData" :key="index" class="text-center">
               <td class="px-1 border border-black">
-                <p class="text-black">{{ formatDateTime(item.TRN_DATE) }}</p>
+                <p class="text-black">{{ item.TRN_DATE }}</p>
               </td>
               <td class="py-4 px-4 border border-black">
                 <p class="text-black">{{ item.TRN_REF_NO }}</p>

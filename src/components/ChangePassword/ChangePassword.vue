@@ -11,6 +11,7 @@ const {
   newPassword,
   oldPassword,
   confirmPassword,
+  checkError,
   errorMessage,
   isShowEyeOldPass,
   isShowEyeNewPass,
@@ -28,26 +29,47 @@ const {
       class="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 z-50 bg-change-pass"
     >
       <div
-        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+        class="w-full bg-white rounded-xl shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
       >
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <div class="flex justify-center">
+        <div class="p-6">
+          <div class="flex justify-center mb-10">
             <p class="text-xl text-black">{{ $t('change_password') }}</p>
           </div>
-          <form class="space-y-4 md:space-y-6" @submit.prevent="handleChangePass">
-            <div>
-              <label for="oldPassword" class="block mb-2 text-gray-900 dark:text-white">{{
-                $t('old_password')
-              }}</label>
-              <div class="relative">
+          <form class="space-y-4" @submit.prevent="handleChangePass">
+            <div
+              class="relative rounded-lg block py-2 px-2 w-full outline-none"
+              :class="{
+                'border border-primary': !oldPassword,
+                'border border-red-500': checkError && !oldPassword,
+                'border border-green-500': oldPassword || !checkError
+              }"
+            >
+              <div class="flex items-center gap-3">
+                <svg
+                  class="w-7 h-7"
+                  :class="{
+                    'text-primary': !oldPassword,
+                    'text-red-500': checkError && !oldPassword,
+                    'text-black': oldPassword || !checkError
+                  }"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 11V8a4 4 0 10-8 0v3M7 11h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z"
+                  />
+                  <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+                </svg>
                 <input
                   v-model="oldPassword"
                   :type="isShowEyeOldPass ? 'text' : 'password'"
-                  name="oldPassword"
-                  id="oldPassword"
-                  placeholder="••••••••"
-                  required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  :placeholder="$t('enter_old_password')"
+                  class="text-gray-900 placeholder-gray-500 outline-none w-full"
                 />
                 <button
                   v-if="oldPassword.length > 0"
@@ -88,20 +110,46 @@ const {
                   </span>
                 </button>
               </div>
+
+              <!-- <button
+                  type="button"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
+                ></button> -->
             </div>
-            <div>
-              <label for="newPassword" class="block mb-2 text-gray-900 dark:text-white">
-                {{ $t('new_password') }}
-              </label>
-              <div class="relative">
+            <div
+              class="relative rounded-lg block py-2 px-2 w-full outline-none"
+              :class="{
+                'border border-primary': !newPassword,
+                'border border-red-500': checkError && !newPassword,
+                'border border-green-500': newPassword || !checkError
+              }"
+            >
+              <div class="flex items-center gap-3">
+                <svg
+                  class="w-7 h-7"
+                  :class="{
+                    'text-primary': !newPassword,
+                    'text-red-500': checkError && !newPassword,
+                    'text-black': newPassword || !checkError
+                  }"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 11V8a4 4 0 10-8 0v3M7 11h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z"
+                  />
+                  <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+                </svg>
                 <input
                   v-model="newPassword"
                   :type="isShowEyeNewPass ? 'text' : 'password'"
-                  name="newPassword"
-                  id="newPassword"
-                  placeholder="••••••••"
-                  required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  :placeholder="$t('enter_new_password')"
+                  class="text-gray-900 placeholder-gray-500 outline-none w-full"
                 />
                 <button
                   v-if="newPassword.length > 0"
@@ -130,7 +178,7 @@ const {
                   </span>
                   <span v-else>
                     <svg
-                      viewBox="0 0 24 24"
+                      viewBox="'0 0 24 24'"
                       fill="currentColor"
                       xmlns="http://www.w3.org/2000/svg"
                       class="w-6 h-6 text-gray-700"
@@ -143,20 +191,40 @@ const {
                 </button>
               </div>
             </div>
-
-            <div>
-              <label for="confirmPassword" class="block mb-2 text-gray-900 dark:text-white">{{
-                $t('confirm_password')
-              }}</label>
-              <div class="relative">
+            <div
+              class="relative rounded-lg block py-2 px-2 w-full outline-none"
+              :class="{
+                'border border-primary': !confirmPassword,
+                'border border-red-500': checkError && !confirmPassword,
+                'border border-green-500': confirmPassword || !checkError
+              }"
+            >
+              <div class="flex items-center gap-3">
+                <svg
+                  class="w-7 h-7"
+                  :class="{
+                    'text-primary': !confirmPassword,
+                    'text-red-500': checkError && !confirmPassword,
+                    'text-black': confirmPassword || !checkError
+                  }"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 11V8a4 4 0 10-8 0v3M7 11h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z"
+                  />
+                  <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+                </svg>
                 <input
                   v-model="confirmPassword"
                   :type="isShowEyeConPass ? 'text' : 'password'"
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  placeholder="••••••••"
-                  required
-                  class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  :placeholder="$t('enter_confirm_password')"
+                  class="text-gray-900 placeholder-gray-500 outline-none w-full"
                 />
                 <button
                   v-if="confirmPassword.length > 0"
@@ -164,7 +232,7 @@ const {
                   @click="handleShowEye('confirm-password')"
                   class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 focus:outline-none"
                 >
-                <span v-if="isShowEyeConPass">
+                  <span v-if="isShowEyeConPass">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -185,7 +253,7 @@ const {
                   </span>
                   <span v-else>
                     <svg
-                      viewBox="0 0 24 24"
+                      viewBox="'0 0 24 24'"
                       fill="currentColor"
                       xmlns="http://www.w3.org/2000/svg"
                       class="w-6 h-6 text-gray-700"
@@ -197,18 +265,25 @@ const {
                   </span>
                 </button>
               </div>
+
+              <!-- <button
+                  type="button"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
+                ></button> -->
             </div>
             <div v-if="errorMessage" class="text-center text-red-600">
               {{ errorMessage }}
             </div>
-            <button
-              class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >
-              <span v-if="isLoading" class="flex flex-col justify-center items-center">
-                <Loading size="20px" />
-              </span>
-              <span v-else>{{ $t('confirm') }}</span>
-            </button>
+            <div>
+              <button
+                class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2"
+              >
+                <span v-if="isLoading" class="flex flex-col justify-center items-center">
+                  <Loading size="20px" />
+                </span>
+                <span v-else>{{ $t('confirm') }}</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

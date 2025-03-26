@@ -11,13 +11,14 @@ export default function useChangePassword() {
   const oldPassword = ref('')
   const newPassword = ref('')
   const confirmPassword = ref('')
+  const checkError = ref(false)
   const errorMessage = ref('')
   const isShowEyeOldPass = ref(false)
   const isShowEyeNewPass = ref(false)
   const isShowEyeConPass = ref(false)
   const isLoading = ref(false)
 
-  const handleShowEye = (value) => {
+  const handleShowEye = (value: any) => {
     if (value === 'old-password') {
       isShowEyeOldPass.value = !isShowEyeOldPass.value
     } else if (value === 'new-password') {
@@ -27,6 +28,11 @@ export default function useChangePassword() {
     }
   }
   const handleChangePass = async () => {
+    if (!oldPassword.value || !newPassword.value || !confirmPassword.value) {
+      checkError.value = true
+      errorMessage.value = t('please_check_again')
+      return
+    }
     if (newPassword.value === oldPassword.value) {
       errorMessage.value = t('new_password_same_as_old')
       return
@@ -41,13 +47,13 @@ export default function useChangePassword() {
       const userLogin = {
         cif: userDataLogin?.CIF,
         old_pass: oldPassword.value,
-        new_pass: newPassword.value,
+        new_pass: newPassword.value
       }
       const body = {
-        data: encryptData(JSON.stringify(userLogin)),
+        data: encryptData(JSON.stringify(userLogin))
       }
       const response = await changePassword(body)
-      console.log("REP", response)
+      console.log('REP', response)
       if (response.message === 'Update Success') {
         logout()
       } else {
@@ -66,11 +72,12 @@ export default function useChangePassword() {
     oldPassword,
     newPassword,
     confirmPassword,
+    checkError,
     errorMessage,
     handleChangePass,
     isShowEyeOldPass,
     isShowEyeNewPass,
     isShowEyeConPass,
-    handleShowEye,
+    handleShowEye
   }
 }

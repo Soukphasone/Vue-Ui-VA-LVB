@@ -1,5 +1,7 @@
+import { cloneFnJSON } from '@vueuse/core'
 import { JSEncrypt } from 'jsencrypt'
 export function encryptData(data: string) {
+  console.log("Data_Before_En", data);
   if (data) {
     const pub_key = import.meta.env.VITE_ENC_KEY
     const encrypt = new JSEncrypt()
