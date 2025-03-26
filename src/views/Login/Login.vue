@@ -16,7 +16,9 @@ const {
 
 <template>
   <DefaultLayout>
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-primary">
+    <div
+      class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-change-pass"
+    >
       <div class="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
         <div class="p-6 space-y-10">
           <div>
@@ -30,10 +32,11 @@ const {
           <form class="space-y-6" @submit.prevent="handleLogin">
             <div class="flex gap-3 items-center">
               <div
-                class="relative border border-primary rounded-lg block py-1 px-2 w-full outline-none"
+                class="relative rounded-lg block py-2 px-2 w-full outline-none"
                 :class="{
+                  'border border-primary': !userName,
                   'border border-red-500': checkError && !userName,
-                  'border border-green-500': userName
+                  'border border-green-500': userName || !checkError
                 }"
               >
                 <div class="flex items-center gap-3">
@@ -43,12 +46,18 @@ const {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-7 h-7 text-primary"
+                    class="w-7 h-7"
+                    :class="{
+                      'text-primary': !userName,
+                      'text-red-500': checkError && !userName,
+                      'text-black': userName || !checkError
+                    }"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 21a8.25 8.25 0 0115 0"
+                      d="M15.75 7.5a3.75 3.75 0 11-7.5 0
+                       3.75 3.75 0 017.5 0zM4.5 21a8.25 8.25 0 0115 0"
                     />
                   </svg>
                   <input
@@ -58,25 +67,25 @@ const {
                     class="text-gray-900 placeholder-gray-500 outline-none w-full"
                   />
                 </div>
-                <!-- <button
-                  type="button"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
-                ></button> -->
               </div>
             </div>
             <div class="flex gap-3 items-center">
-              <!-- <label
-                class="block text-gray-900 w-[300px]"
-             
-              >
-                {{ $t('confirm_password') }}
-              </label> -->
               <div
-                class="relative border border-primary rounded-lg block py-1 px-2 w-full outline-none"
+                class="relative rounded-lg block py-2 px-2 w-full outline-none"
+                :class="{
+                  'border border-primary': !passWord,
+                  'border border-red-500': checkError && !passWord,
+                  'border border-green-500': passWord || !checkError
+                }"
               >
                 <div class="flex items-center gap-3">
                   <svg
-                    class="w-7 h-7 text-primary"
+                    class="w-7 h-7"
+                    :class="{
+                      'text-primary': !passWord,
+                      'text-red-500': checkError && !passWord,
+                      'text-black': passWord || !checkError
+                    }"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
@@ -90,11 +99,12 @@ const {
                     />
                   </svg>
                   <input
+                    v-model="passWord"
                     type="text"
-                    :placeholder="$t('enter_confirm_password')"
+                    :placeholder="$t('enter_password')"
                     class="text-gray-900 placeholder-gray-500 outline-none w-full"
                   />
-                  <svg
+                  <!-- <svg
                     class="w-6 h-6 text-gray-500 dark:text-gray-300"
                     fill="none"
                     stroke="currentColor"
@@ -107,7 +117,7 @@ const {
                       stroke-linejoin="round"
                       d="M16 14c3.866 0 7 3.134 7 7M7 21c0-3.866 3.134-7 7-7M12 14c-3.866 0-7 3.134-7 7m7-7a5 5 0 100-10 5 5 0 000 10z"
                     />
-                  </svg>
+                  </svg> -->
                 </div>
 
                 <!-- <button

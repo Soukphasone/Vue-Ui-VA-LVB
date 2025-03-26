@@ -36,7 +36,7 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-  <div class="sticky top-0 z-999 w-full bg-whiter">
+  <div class="sticky top-0 z-999 w-full bg-gray-100">
     <header class="">
       <div class="flex flex-grow items-center justify-between py-2 px-4">
         <div class="flex items-center gap-2 sm:gap-4">

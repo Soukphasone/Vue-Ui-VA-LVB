@@ -24,10 +24,7 @@ export default function useLoginPage() {
       errorMessage.value = 'Check User Name'
       return
     } else if (!passWord.value) {
-      if (!userName.value) {
-        checkError.value = true
-        return
-      }
+      checkError.value = true
       return
     }
     isLoading.value = true
@@ -69,6 +66,7 @@ export default function useLoginPage() {
   return {
     userName,
     passWord,
+    checkError,
     errorMessage,
     isLoading,
     isShowEye,
