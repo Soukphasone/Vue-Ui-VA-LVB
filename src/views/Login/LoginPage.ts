@@ -8,7 +8,7 @@ export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
   // const userName = ref('')
-  const userName = ref('010277499')
+  const userName = ref('')
   const passWord = ref('')
   const checkError = ref(false)
   const errorMessage = ref('')
