@@ -17,7 +17,7 @@ const { t } = useI18n()
 const isVisible = ref(false)
 const accountList = ref([])
 const accountListTest = ref([
-  { ACCOUNT: '01000210418076', BALANCE: '5547766', CURRENCY: 'LAK' },
+  { ACCOUNT: '01000210418076', BALANCE: '473399', CURRENCY: 'LAK' },
   { ACCOUNT: '01000210418088', BALANCE: '1000', CURRENCY: 'THB' },
   { ACCOUNT: '01000210418099', BALANCE: '50', CURRENCY: 'USD' }
 ])

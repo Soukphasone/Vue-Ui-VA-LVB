@@ -55,6 +55,7 @@ export const vn = {
   maker_id: 'Mã người tạo',
   created_at: 'Ngày tạo',
   authorize_status: 'Trang thái ủy quyển',
+  authorize_id: 'Người cho phép',
   description: 'Mô tả',
   date: 'Ngày',
   next: 'Tiếp theo',
@@ -105,6 +106,5 @@ export const vn = {
   individual:'Cá nhân(I)',
   welcome_:'Kính chào quy khách',
   please_check_again: 'Hãy kiểm tra lại',
-
-
+  please_select_account_authorize:'Hãy lựa chọn tài khoản trước'
 }

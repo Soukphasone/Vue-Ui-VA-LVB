@@ -18,7 +18,6 @@ const { t } = useI18n()
 const check = ref(currentLanguage.value)
 const router = useRouter()
 const userDataLogin = JSON.parse(localStorage.getItem('userData'))
-console.log('UserLogin', userDataLogin)
 const accountStore = useAccountStore()
 const accountNumber = computed(() => accountStore.value)
 const target = ref(null)
@@ -74,21 +73,20 @@ const queryDate = () => {
   }
   dataEncrypt.value = data_En
 }
+watch(accountNumber, async () => {
+  dataReport.value = []
+})
 const fetchData = async () => {
   isLoading.value = true
   try {
     const body = {
       data: encryptData(JSON.stringify(dataEncrypt.value))
     }
-    console.log('Body_R', body.data)
     const _report = await reportFinance(body)
-    console.log('Report', _report)
-    if (_report.data) {
-      console.log('Y')
+    if (_report.data[0].KEYCODE !== null) {
       dataReport.value = _report.data
-    } if (_report.data === null) {
+    } else {
       dataReport.value = []
-      console.log('NO')
     }
   } finally {
     isLoading.value = false
@@ -100,6 +98,7 @@ watch(dataEncrypt, async () => {
 watch(accountStore, async () => {
   await fetchData()
 })
+
 const filteredItems = computed(() =>
   dataReport.value.filter((item) =>
     item.DESCRIPTION.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -151,6 +150,7 @@ const selectAccount = async (account) => {
     dateTo.value = formatDate(range.endDate)
     let data_En = {
       branch_id: userDataLogin?.BRANCH_ID,
+      // account_no: '01000210418088',
       account_no: accountNumber,
       from_date: formatDate(range.startDate),
       to_date: formatDate(range.endDate)
@@ -447,28 +447,7 @@ watch(dataReport, (newData) => {
         <Loading />
       </div>
     </div>
-    <div
-      v-else-if="!isLoading && !dataReport.length"
-      class="flex flex-col justify-center items-center bg-gray-100 min-h-screen border-t"
-    >
-      <div class="flex flex-col items-center justify-center mb-60">
-        <svg
-          class="w-20 h-20 text-red-600 animate-pulse"
-          viewBox="0 0 100 100"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="50" cy="50" r="40" class="opacity-50" />
-          <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
-          <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-        </svg>
-        <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
-      </div>
-    </div>
-    <table v-else class="w-full table-auto h-70">
+    <table v-else-if="!isLoading && dataReport.length" class="w-full table-auto h-70">
       <thead>
         <tr class="bg-gray-100 border-t border-b text-center">
           <th class="p-2 px-4 font-medium text-black">{{ t('date') }}</th>
@@ -488,7 +467,7 @@ watch(dataReport, (newData) => {
       <tbody>
         <tr v-for="(item, index) in filteredItems" :key="index">
           <td class="px-1 min-w-45 border-b">
-            <p class="text-black text-center">{{ formatDateTime(item.TRN_DT) }}</p>
+            <p class="text-black text-center">{{ item.TRN_DATE }}</p>
           </td>
           <td class="py-3 px-4 border-b text-center">
             <p class="text-black">{{ item.TRN_REF_NO }}</p>
@@ -542,6 +521,27 @@ watch(dataReport, (newData) => {
         </tr>
       </tbody>
     </table>
+    <div
+      v-else
+      class="flex flex-col justify-center items-center bg-gray-100 min-h-screen border-t"
+    >
+      <div class="flex flex-col items-center justify-center mb-60">
+        <svg
+          class="w-20 h-20 text-red-600 animate-pulse"
+          viewBox="0 0 100 100"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="50" cy="50" r="40" class="opacity-50" />
+          <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
+          <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
+        </svg>
+        <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
+      </div>
+    </div>
   </div>
 </template>
 <style>

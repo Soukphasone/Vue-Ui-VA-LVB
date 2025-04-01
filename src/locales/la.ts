@@ -11,7 +11,8 @@ export const la = {
   register: 'ລົງທະບຽນ',
   customer_list: 'ລາຍຊື່ລູກຄ້າ',
   customer_type: 'ລູກຄ້າປະເພດ',
-  authorize_customer: 'ອະນຸຍາດສິດໃຫ້ລູກຄ້າ',
+  authorize_customer: 'ອະນຸຍາດສິດໃຫ້ລູກຄ້າ', 
+  authorize_id: 'ຜູ້ອະນຸມັດ',
   reset_pass_customer: 'Reset ລະຫັດລູກຄ້າ',
   report_customer_list: 'ລາຍງານລູກຄ້າ',
   enter_cif: 'ປ້ອນເລກ CIF',
@@ -103,7 +104,8 @@ export const la = {
   apply:'ຄົ້ນຫາ',
   view:'ເບິ່ງ',
   individual:'ບຸກຄົນ(I)',
-  welcome_:'ຍິນດີຕ້ອນຮັບ'
-
+  welcome_:'ຍິນດີຕ້ອນຮັບ',
+  please_select_account_authorize:'ກະລຸນາເລືອກບັນຊີ່ເພື່ອອະນຸມັດ',
+  please_check_again:'ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ',
 
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { PATH } from '@/router/pathName'
 import { showAlert } from '@/stores/alert'
+import { logout } from '@/stores/clearStorage'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -23,12 +24,7 @@ const logOut = () => {
     true
   ).then((result) => {
     if (result.isConfirmed) {
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('userData')
-      localStorage.removeItem('dataReport')
-      localStorage.removeItem('dateRange')
-      localStorage.removeItem('page')
-      router.push(PATH.LOGIN)
+      logout(router)
     }
   })
 }

@@ -3,6 +3,7 @@ import { encryptData } from '@/stores/EncryptDecrypt'
 import { changePassword } from '@/service/GetPostAPI'
 import { useI18n } from 'vue-i18n'
 import { logout } from '@/stores/clearStorage'
+import { useRouter } from 'vue-router'
 
 export default function useChangePassword() {
   const { t } = useI18n()
@@ -17,6 +18,7 @@ export default function useChangePassword() {
   const isShowEyeNewPass = ref(false)
   const isShowEyeConPass = ref(false)
   const isLoading = ref(false)
+  const router = useRouter()
 
   const handleShowEye = (value: any) => {
     if (value === 'old-password') {
@@ -53,9 +55,8 @@ export default function useChangePassword() {
         data: encryptData(JSON.stringify(userLogin))
       }
       const response = await changePassword(body)
-      console.log('REP', response)
       if (response.message === 'Update Success') {
-        logout()
+        logout(router)
       } else {
         errorMessage.value = t('error')
         setTimeout(() => {

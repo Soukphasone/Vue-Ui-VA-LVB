@@ -265,24 +265,34 @@ const {
                   </span>
                 </button>
               </div>
-
-              <!-- <button
-                  type="button"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 dark:text-gray-400 focus:outline-none"
-                ></button> -->
-            </div>
-            <div v-if="errorMessage" class="text-center text-red-600">
-              {{ errorMessage }}
             </div>
             <div>
               <button
-                class="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2"
+                class="w-full text-white bg-primary hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2"
               >
                 <span v-if="isLoading" class="flex flex-col justify-center items-center">
                   <Loading size="20px" />
                 </span>
                 <span v-else>{{ $t('confirm') }}</span>
               </button>
+            </div>
+            <div
+              v-if="errorMessage"
+              class="flex justify-center items-center gap-2 font-medium mt-4 text-red-500 animate-pulse"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-5 h-5 text-red-500"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2a1 1 0 0 1 .894.553l9 18A1 1 0 0 1 21 22H3a1 1 0 0 1-.894-1.447l9-18A1 1 0 0 1 12 2ZM11 8a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0V8Zm1 9a1.25 1.25 0 1 1 0 2.5A1.25 1.25 0 0 1 12 17Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              {{ errorMessage }}
             </div>
           </form>
         </div>

@@ -79,7 +79,7 @@ const totals = computed(() => {
 
 <template>
     <div class="grid grid-cols-3 gap-8">
-      <div class="py-8 px-8 text-gray-700 text-sm">
+      <div class="py-4 px-4 text-gray-700 text-sm">
         <div class="flex gap-2 items-center mb-3">
           <img src="@/assets/images/logo/LVB-Logo.png" alt="" class="w-20" />
           <span class="font-bold">LAO - VIET BANK</span>
@@ -113,7 +113,7 @@ const totals = computed(() => {
       </div>
     </div>
     <div class="flex flex-grow items-center justify-between mb-4 text-sm uppercase">
-      <div class="text-black px-8">
+      <div class="text-black px-4">
         <div class="flex gap-3">
           <p class="font-semibold">{{ t('account_number') }}:</p>
           <p>{{ accountNumber }}</p>
@@ -146,7 +146,7 @@ const totals = computed(() => {
         </div>
       </div>
     </div>
-    <div class="px-7 mb-6">
+    <div class="px-4 mb-6">
       <div class="max-w-full overflow-x-auto bg-gray-50">
         <table class="w-full table-auto text-sm">
           <thead>

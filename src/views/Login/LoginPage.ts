@@ -19,7 +19,7 @@ export default function useLoginPage() {
     isShowEye.value = !isShowEye.value
   }
   const validateNumber = (event: any) => {
-    userName.value = event.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    userName.value = event.target.value.replace(/\D/g, "");
   };
   const handleLogin = async () => {
     if (!userName.value || !passWord.value ) {
@@ -36,8 +36,6 @@ export default function useLoginPage() {
       const body = {
         data: encryptData(JSON.stringify(userLogin))
       }
-      console.log("body", body.data);
-
       const _dataLogin = await Login(body)
       if (_dataLogin?.data?.TOKEN) {
         localStorage.setItem('authToken', _dataLogin.data.TOKEN)

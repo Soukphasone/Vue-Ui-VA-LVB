@@ -40,7 +40,7 @@ export const en = {
   old_password: 'Old password',
   new_password: 'New password',
   confirm_password: 'Confirm Password',
-  enter_name: 'Enter name',
+  enter_name: 'Enter user name',
   enter_full_name: 'Enter full name',
   enter_email: 'Enter email',
   enter_tel: 'Enter number phone',
@@ -57,6 +57,7 @@ export const en = {
   maker_id: 'Maker ID',
   created_at: 'Created at',
   authorize_status: 'Authorize Status',
+  authorize_id: 'Authorize ID',
   description: 'Description',
   withdraw: 'Withdraw',
   deposit: 'Deposit',
@@ -104,7 +105,8 @@ export const en = {
   dd_mm_yy: 'DD/MM/YY - DD/MM/YY',
   apply: 'Apply',
   view: 'View',
-  individual:'Individua(I)',
-  welcome_:'Welcome',
+  individual: 'Individua(I)',
+  welcome_: 'Welcome',
   please_check_again: 'Please check again',
+  please_select_account_authorize: 'Please select account first'
 }

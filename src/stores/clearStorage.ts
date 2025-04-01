@@ -1,11 +1,9 @@
-import { useRouter } from 'vue-router'
 import { PATH } from '@/router/pathName'
-export function logout(){
-const router = useRouter()
-localStorage.removeItem('authToken')
-localStorage.removeItem('userData')
-localStorage.removeItem('dataReport')
-localStorage.removeItem('dateRange')
-router.push(PATH.LOGIN)
-  }
-  
+export const logout = async (router: any) => {
+  localStorage.removeItem('authToken')
+  localStorage.removeItem('userData')
+  localStorage.removeItem('dataReport')
+  localStorage.removeItem('dateRange')
+  localStorage.removeItem('page')
+  router.push(PATH.LOGIN)
+}
