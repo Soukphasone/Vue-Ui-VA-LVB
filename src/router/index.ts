@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Dashboard/Home.vue'
 import Statement from '@/views/Satement/Statement.vue'
 import Login from '@/views/Login/Login.vue'
+import ListCartVue from '@/components/Cart/ListCart.vue'
+import MenuDetailVue from '@/components/Menu/MenuDetail.vue'
 import ChangePasswordView from '@/views/ChangePassword/ChangePassword.vue'
 import PreviewViewView from '@/views/Previews/PreviewView.vue'
 import { PATH } from './pathName'
@@ -30,6 +32,22 @@ const routes = [
     component: Login,
     meta: {
       title: 'Login'
+    }
+  },
+  {
+    path: PATH.MENU_DETAIL,
+    name: 'Menu-detail',
+    component: MenuDetailVue,
+    meta: {
+      title: 'Menu-detail'
+    }
+  },
+  {
+    path: PATH.CART,
+    name: 'Cart',
+    component: ListCartVue,
+    meta: {
+      title: 'Cart'
     }
   },
   {

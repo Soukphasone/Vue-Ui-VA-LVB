@@ -1,36 +1,12 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref  } from 'vue'
 import { useSidebarStore } from '@/stores/sidebar'
 import ChangeLanguage from '../ChangeLanguage/ChangeLanguage.vue'
-import Navbar from '@/components/Nav/Navbar.vue'
-import PreviewPage from '@/components/Previews/PreviewPage.vue'
-import { exportToPDF } from '@/stores/exportPDF'
-import eventBus from '@/eventBus'
-import { useRoute } from 'vue-router'
-
+import { useRouter } from 'vue-router'
+import { PATH } from '@/router/pathName'
 const userData = JSON.parse(localStorage.getItem('userData'))
-const checkExport = ref(null)
-const contentToExport = ref(null)
-const currentPage = useRoute().name
-
-const refresh = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 100))
-  const data = JSON.parse(localStorage.getItem('dataReport'))
-  checkExport.value = data
-}
-onMounted(() => {
-  eventBus.on('refreshPreview', refresh)
-})
-
-onUnmounted(() => {
-  eventBus.off('refreshPreview', refresh)
-})
-const exportPDF = async () => {
-  if (contentToExport.value) {
-    await exportToPDF(contentToExport.value)
-  }
-}
-
+const cart = ref(JSON.parse(localStorage.getItem('cart')) || [])
+const router = useRouter()
 const { toggleSidebar } = useSidebarStore()
 const sidebarStore = useSidebarStore()
 </script>
@@ -82,34 +58,35 @@ const sidebarStore = useSidebarStore()
 
         <div class="flex items-center gap-4 2xsm:gap-10">
           <ul class="flex items-center gap-2 2xsm:gap-4">
-            <!-- <li>
-              <button
-                v-if="checkExport"
-                @click.prevent="exportPDF"
-                class="border border-gray-700 py-1 px-4 text-gray-900 rounded-2"
-              >
-                export to pdf
-              </button>
-              <button v-else class="border border-stroke py-1 px-4 text-gray-500 rounded-2">
-                export to pdf
-              </button>
-            </li> -->
-            <li class="px-4">
-              <ChangeLanguage />
+            <li class="py-2">
+              <div @click.prevent="router.push(PATH.CART)" class="relative inline-block">
+                <!-- Cart Icon -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-9 w-9"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  />
+                </svg>
+
+                <!-- Item Count Badge -->
+                <span
+                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                >
+                  {{ cart.length }}
+                </span>
+              </div>
             </li>
+            <!-- <li class="px-4">
+              <ChangeLanguage />
+            </li> -->
           </ul>
         </div>
       </div>
     </header>
-    <Navbar v-if="currentPage === 'Statement'" style="margin-top: -5px" />
-  </div>
-  <div v-if="userData && checkExport" ref="contentToExport" class="hidden-preview">
-    <PreviewPage />
   </div>
 </template>
-<style>
-.hidden-preview {
-  position: absolute;
-  left: -9999px;
-}
-</style>
+
