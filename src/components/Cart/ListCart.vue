@@ -19,7 +19,7 @@ const totalItems = computed(() => {
 
 // Shipping cost (could be dynamic based on logic)
 const shipping = computed(() => {
-  return subtotal.value > 100 ? 0 : 9.99
+  return subtotal.value > 100 ? 0 : 0
 })
 
 // Total cost
@@ -29,7 +29,17 @@ const total = computed(() => {
 
 // Methods
 const removeItem = (id) => {
-  cart.value = cart.value.filter((item) => item.code_id !== id)
+  // cart.value = cart.value.filter((item) => item.code_id !== id)
+   // Get current items from localStorage
+   const storedItems = localStorage.getItem('cart')
+  if (!storedItems) return
+  
+  // Parse and filter
+  const items = JSON.parse(storedItems)
+  const updatedItems = items.filter(item => item.code_id !== id)
+  cart.value = updatedItems
+  // Save back to localStorage
+  localStorage.setItem('cart', JSON.stringify(updatedItems))
 }
 
 const updateQuantity = (id, newQuantity) => {
@@ -122,7 +132,7 @@ const updateQuantity = (id, newQuantity) => {
               <!-- Total -->
               <div class="md:col-span-2 font-medium">
                 <span class="md:hidden font-medium mr-2">Total:</span>
-                ${{ (item.price * item.quantity)}}
+                {{ (item.price * item.quantity)}} KIP
               </div>
             </div>
           </div>

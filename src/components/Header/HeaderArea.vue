@@ -1,14 +1,33 @@
 <script setup>
-import { ref  } from 'vue'
+import { ref, onMounted, onUnmounted, onBeforeUnmount } from 'vue'
 import { useSidebarStore } from '@/stores/sidebar'
 import ChangeLanguage from '../ChangeLanguage/ChangeLanguage.vue'
 import { useRouter } from 'vue-router'
 import { PATH } from '@/router/pathName'
+import eventBus from '@/eventBus'
+
 const userData = JSON.parse(localStorage.getItem('userData'))
 const cart = ref(JSON.parse(localStorage.getItem('cart')) || [])
+const cartNumber = ref(cart.value.length || 0)
 const router = useRouter()
 const { toggleSidebar } = useSidebarStore()
 const sidebarStore = useSidebarStore()
+
+// Refresh
+const refreshCart = () => {
+  const cart = JSON.parse(localStorage.getItem('cart'))
+  if (cart) {
+    cartNumber.value = cart.length
+  }
+}
+onMounted(() => {
+  eventBus.on('refresh', refreshCart)
+})
+onBeforeUnmount(() => {
+  eventBus.off('refresh', refreshCart)
+})
+
+//
 </script>
 
 <template>
@@ -74,9 +93,10 @@ const sidebarStore = useSidebarStore()
 
                 <!-- Item Count Badge -->
                 <span
+                  v-if="cartNumber > 0"
                   class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
                 >
-                  {{ cart.length }}
+                  {{ cartNumber }}
                 </span>
               </div>
             </li>
@@ -89,4 +109,3 @@ const sidebarStore = useSidebarStore()
     </header>
   </div>
 </template>
-

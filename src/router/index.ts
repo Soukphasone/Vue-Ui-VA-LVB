@@ -5,7 +5,7 @@ import Login from '@/views/Login/Login.vue'
 import ListCartVue from '@/components/Cart/ListCart.vue'
 import MenuDetailVue from '@/components/Menu/MenuDetail.vue'
 import ChangePasswordView from '@/views/ChangePassword/ChangePassword.vue'
-import PreviewViewView from '@/views/Previews/PreviewView.vue'
+// import PreviewViewView from '@/views/Previews/PreviewView.vue'
 import { PATH } from './pathName'
 const routes = [
   {
@@ -59,15 +59,15 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/preview',
-    name: 'preview',
-    component: PreviewViewView,
-    meta: {
-      title: 'Preview',
-      requiresAuth: true
-    }
-  },
+  // {
+  //   path: '/preview',
+  //   name: 'preview',
+  //   component: PreviewViewView,
+  //   meta: {
+  //     title: 'Preview',
+  //     requiresAuth: true
+  //   }
+  // },
   
 ]
 

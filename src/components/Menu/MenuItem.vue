@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { formatNumber } from '@/service/Format'
 import { useRouter } from 'vue-router'
 import { PATH } from '@/router/pathName'
+import eventBus from '@/eventBus'
+import { showAlert } from '@/stores/alert'
 defineProps({
   id: Number,
   name: String,
@@ -19,6 +21,9 @@ const menuDetail = (menu) => {
   localStorage.setItem('menuDetail', JSON.stringify(menu))
   router.push(PATH.MENU_DETAIL)
 }
+const refreshCart = () => {
+  eventBus.emit('refresh')
+}
 const addToCart = async (menu) => {
   // Get existing cart or create empty array if none exists
   const existingCart = JSON.parse(localStorage.getItem('cart')) || []
@@ -28,14 +33,27 @@ const addToCart = async (menu) => {
   if (itemExists) {
     return
   }
-
+  showAlert(
+    'Add to cart',
+    'Success',
+    'success',
+    'Yes',
+    'cancel',
+    '#86e54c',
+    '#28a745',
+    '#dc3545',
+    false,
+    false,
+    2000
+  )
   // Add new item to cart
   const updatedCart = [...existingCart, menu]
 
   // Save back to localStorage
   localStorage.setItem('cart', JSON.stringify(updatedCart))
   cart.value = updatedCart
-  // Optional: You might want to show a notification or feedback here
+  //
+  refreshCart()
 }
 </script>
 
@@ -74,6 +92,13 @@ const addToCart = async (menu) => {
             Signature
           </span>
         </div>
+
+        <button
+          v-if="cart.some((item) => item.code_id === id)"
+          class="bg-blue-500 text-white text-xs px-2 py-1 rounded"
+        >
+          Added
+        </button>
         <button
           @click.prevent="
             addToCart({
@@ -85,10 +110,10 @@ const addToCart = async (menu) => {
               description: description
             })
           "
+          v-else
           class="bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-400 hover:font-bold"
         >
-          <span v-if="cart.some((item) => item.code_id === id)"> Added </span>
-          <span v-else> Add to cart </span>
+          Add to cart
         </button>
       </div>
     </div>
