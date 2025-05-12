@@ -30,7 +30,7 @@ const logOut = () => {
 }
 </script>
 <template>
-  <div class="hidden sm:block relative">
+  <div class="hidden lg:block relative mb-5">
     <div class="flex items-center">
       <div v-if="userData" class="block text-black text-left text-user">
         <p>{{ fullName }}</p>
@@ -42,7 +42,7 @@ const logOut = () => {
       </div>
       <button
         v-if="userData"
-        class="hidden sm:block absolute right-0 h-9 w-9 mb-2 focus:outline-none"
+        class="hidden lg:block absolute right-0 h-9 w-9 mb-2 focus:outline-none"
         @click="logOut"
       >
         <svg

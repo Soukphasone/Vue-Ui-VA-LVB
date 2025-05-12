@@ -45,6 +45,7 @@
               :key="item.id"
               :id="item.id"
               :name="item.name"
+              :menu_id="item.menu_id"
               :description="item.description"
               :price="item.price"
               :imageUrl="item.imageUrl"
@@ -163,33 +164,37 @@ const starters = ref([
   {
     id: 1,
     name: 'Papaya Slad',
+    menu_id: 28,
     description: 'Lao food',
-    price: '30000',
+    price: 30000,
     imageUrl: 'https://images.sbs.com.au/drupal/food/public/papaya-salad.jpg',
     isPopular: true
   },
   {
     id: 2,
     name: 'Lap',
+    menu_id: 27,
     description: 'Lao food',
     imageUrl:
       'https://www.seriouseats.com/thmb/WMOA8afy7biHj6zHi7HHw9InaVU=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2018__05__20180503-Guide-to-Lao-Food-Laab-Ped-Jai-Williams-1500x1125-156c9f763ed5416e9d9f355e3ffd1c21.jpg',
-    price: '80000'
+    price: 80000
   },
   {
     id: 3,
-    name: 'Sticky rice',
+    name: 'Sticky Rice',
+    menu_id: 26,
     description: 'Lao food',
-    price: '20000',
+    price: 20000,
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4de6r4RvopRykcteh4EPeUnLFkXASe-OcipqYtQ962i7q56qUOIgzBYl4m8C390jDUt8&usqp=CAU',
     isPopular: true
   },
   {
     id: 4,
-    name: 'Rice vercicell soup',
+    name: 'Rice Vercicell Soup',
+    menu_id: 29,
     description: 'Lao food',
-    price: '40000',
+    price: 40000,
     imageUrl:
       'https://i0.wp.com/tasteofelsewhere.com/wp-content/uploads/2021/10/6-Kao-Poon-Spicy.jpg?fit=%2C&ssl=1',
     isVegetarian: true

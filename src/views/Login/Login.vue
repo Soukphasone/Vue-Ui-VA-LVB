@@ -26,17 +26,14 @@ const {
       </span>
     </div>
     <div
-      class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-change-pass"
+      class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-login"
     >
       <div class="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
-        <div class="p-6 space-y-8">
+        <div class="p-6 space-y-2">
           <div>
             <div class="flex justify-center">
-              <img src="@/assets/images/logo/LVB.png" alt="loginLogo" class="w-50" />
+              <img src="@/assets/images/logo/shop-online.png" alt="loginLogo" class="w-40" />
             </div>
-            <p class="flex justify-center text-xl font-bold text-gray-700 mt-4">
-              {{ $t('welcome_') }}
-            </p>
           </div>
           <form class="space-y-6" @submit.prevent="handleLogin">
             <div
@@ -70,7 +67,6 @@ const {
                 </svg>
                 <input
                   v-model="userName"
-                  @input="validateNumber"
                   type="text"
                   :placeholder="$t('enter_name')"
                   class="text-gray-900 placeholder-gray-500 outline-none w-full"

@@ -8,8 +8,9 @@ import { showAlert } from '@/stores/alert'
 defineProps({
   id: Number,
   name: String,
+  menu_id: Number,
   description: String,
-  price: String,
+  price: Number,
   imageUrl: String,
   isPopular: Boolean,
   isVegetarian: Boolean,
@@ -29,7 +30,7 @@ const addToCart = async (menu) => {
   const existingCart = JSON.parse(localStorage.getItem('cart')) || []
 
   // Check if item already exists in cart
-  const itemExists = existingCart.some((item) => item.code_id === menu.code_id)
+  const itemExists = existingCart.some((item) => item.id === menu.id)
   if (itemExists) {
     return
   }
@@ -94,7 +95,7 @@ const addToCart = async (menu) => {
         </div>
 
         <button
-          v-if="cart.some((item) => item.code_id === id)"
+          v-if="cart.some((item) => item.id === id)"
           class="bg-blue-500 text-white text-xs px-2 py-1 rounded"
         >
           Added
@@ -102,8 +103,9 @@ const addToCart = async (menu) => {
         <button
           @click.prevent="
             addToCart({
-              code_id: id,
+              id: id,
               name: name,
+              menu_id: menu_id,
               price: price,
               quantity: 1,
               img: imageUrl,

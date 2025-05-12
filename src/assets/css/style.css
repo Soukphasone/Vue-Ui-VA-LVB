@@ -39,8 +39,8 @@
     background-size: cover;
     background-position: top;
 }
-.bg-change-pass{
-    background-image: url('../images/background/bg-nav10.jpg');
+.bg-login{
+    background-image: url('../images/background/login-shop.jpg');
     background-repeat: repeat;
     background-size: cover;
 }

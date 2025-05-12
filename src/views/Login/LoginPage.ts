@@ -19,10 +19,10 @@ export default function useLoginPage() {
     isShowEye.value = !isShowEye.value
   }
   const validateNumber = (event: any) => {
-    userName.value = event.target.value.replace(/\D/g, "");
-  };
+    userName.value = event.target.value.replace(/\D/g, '')
+  }
   const handleLogin = async () => {
-    if (!userName.value || !passWord.value ) {
+    if (!userName.value || !passWord.value) {
       checkError.value = true
       errorMessage.value = t('please_check_again')
       return
@@ -30,34 +30,22 @@ export default function useLoginPage() {
     isLoading.value = true
     try {
       const userLogin = {
-        username: userName.value,
-        password: passWord.value
+        Username: userName.value,
+        Password: passWord.value
       }
-      const body = {
-        data: encryptData(JSON.stringify(userLogin))
-      }
-      const _dataLogin = await Login(body)
+      // const body = {
+      //   data: encryptData(JSON.stringify(userLogin))
+      // }
+      const _dataLogin = await Login(userLogin)
+      console.log('Login_data', _dataLogin)
       if (_dataLogin?.data?.TOKEN) {
         localStorage.setItem('authToken', _dataLogin.data.TOKEN)
         localStorage.setItem('userData', JSON.stringify(_dataLogin.data.USER_DATA))
-        if (_dataLogin.data.USER_DATA?.FIRST_LOGIN === 'Y') {
-          router.push(PATH.CHANGE_PASSWORD)
-        } else {
-          router.push(PATH.HOME)
-        }
-      } else {
-        if (_dataLogin?.data === 'User or pass is incorrect') {
-          errorMessage.value = t('User_pass_incorrect')
-          setTimeout(() => {
-            errorMessage.value = ''
-          }, 5000)
-        } else {
-          errorMessage.value = t('error')
-          setTimeout(() => {
-            errorMessage.value = ''
-          }, 5000)
-        }
+        router.push(PATH.HOME)
+        console.log("HI");
       }
+    } catch (error) {
+      console.log(error)
     } finally {
       isLoading.value = false
     }

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, onBeforeUnmount } from 'vue'
 import { useSidebarStore } from '@/stores/sidebar'
-import ChangeLanguage from '../ChangeLanguage/ChangeLanguage.vue'
+import Button from '../LogOut/Button.vue'
 import { useRouter } from 'vue-router'
 import { PATH } from '@/router/pathName'
 import eventBus from '@/eventBus'
@@ -78,7 +78,11 @@ onBeforeUnmount(() => {
         <div class="flex items-center gap-4 2xsm:gap-10">
           <ul class="flex items-center gap-2 2xsm:gap-4">
             <li class="py-2">
-              <div @click.prevent="router.push(PATH.CART)" class="relative inline-block">
+              <div
+                v-if="userData"
+                @click.prevent="router.push(PATH.CART)"
+                class="relative inline-block mr-4"
+              >
                 <!-- Cart Icon -->
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +94,6 @@ onBeforeUnmount(() => {
                     d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
                   />
                 </svg>
-
                 <!-- Item Count Badge -->
                 <span
                   v-if="cartNumber > 0"
@@ -99,10 +102,29 @@ onBeforeUnmount(() => {
                   {{ cartNumber }}
                 </span>
               </div>
+              <div v-else class="relative inline-block">
+                <!-- Cart Icon -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-9 w-9"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                  />
+                </svg>
+                <span
+                  v-if="cartNumber > 0"
+                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                >
+                  {{ cartNumber }}
+                </span>
+              </div>
             </li>
-            <!-- <li class="px-4">
-              <ChangeLanguage />
-            </li> -->
+            <li>
+              <Button />
+            </li>
           </ul>
         </div>
       </div>
