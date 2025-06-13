@@ -24,7 +24,6 @@ const handleItemClick = (index) => {
           }"
         >
           <!-- {{ childItem.label }} -->
-            {{$t('change_password')}}
         </router-link>
       </li> 
     </template>

@@ -4,7 +4,15 @@ import HeaderArea from '@/components/Header/HeaderArea.vue'
 import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
 import { currentLanguage } from '@/i18n'
 import { useRoute } from 'vue-router'
+import showModals from '@/components/Modals/showModals.vue'
+import { storeToRefs } from 'pinia'
+import { useOpenModalStore } from '@/stores/modal'
 
+const openModalStore = useOpenModalStore()
+// const { isOpenModal } = openModalStore
+const show = ref(false)
+const titleModal = ref('')
+const messageModal = ref('')
 const currentPage = useRoute().name
 const check = ref(currentLanguage.value)
 watch(currentLanguage, (newLanguage) => {
@@ -38,5 +46,11 @@ watch(currentLanguage, (newLanguage) => {
       </div>
     </div>
     <!-- ===== Page Wrapper End ===== -->
+    <showModals
+      :show-logout-modal="openModalStore.isOpenModal"
+      :title="titleModal"
+      :message="messageModal"
+      @close="openModalStore.isOpenModal = false"
+    />
   </div>
 </template>

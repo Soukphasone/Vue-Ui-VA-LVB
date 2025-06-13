@@ -1,15 +1,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Login } from '@/service/GetPostAPI'
-import { encryptData } from '@/stores/EncryptDecrypt'
 import { PATH } from '@/router/pathName'
 import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
   // const userName = ref('')
-  const userName = ref('')
-  const passWord = ref('')
+  const userName = ref('SOUKPHASONE')
+  const passWord = ref('B99110019@b.')
   const checkError = ref(false)
   const errorMessage = ref('')
   const isLoading = ref(false)
@@ -30,19 +29,25 @@ export default function useLoginPage() {
     isLoading.value = true
     try {
       const userLogin = {
-        Username: userName.value,
-        Password: passWord.value
+        Project_id: 'PRJ100000000092',
+        Request: {
+          RequestID: '3',
+          Username: userName.value,
+          Password: passWord.value,
+          SearchDetail: 'Username'
+        }
       }
-      // const body = {
-      //   data: encryptData(JSON.stringify(userLogin))
-      // }
       const _dataLogin = await Login(userLogin)
       console.log('Login_data', _dataLogin)
-      if (_dataLogin?.data?.TOKEN) {
-        localStorage.setItem('authToken', _dataLogin.data.TOKEN)
-        localStorage.setItem('userData', JSON.stringify(_dataLogin.data.USER_DATA))
+      if (_dataLogin?.error_desc == 'LOGIN SUCCESS') {
+        localStorage.setItem('userData', JSON.stringify(_dataLogin?.user_data))
         router.push(PATH.HOME)
-        console.log("HI");
+        errorMessage.value = 'User is locked'
+      }
+      if (_dataLogin?.error_desc == 'User is locked') {
+        errorMessage.value = 'User is locked'
+      } else {
+        errorMessage.value = 'Sorry please try again'
       }
     } catch (error) {
       console.log(error)

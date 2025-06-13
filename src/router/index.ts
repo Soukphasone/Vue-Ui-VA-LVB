@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Dashboard/Home.vue'
 import Login from '@/views/Login/Login.vue'
-import ListCartVue from '@/components/Cart/ListCart.vue'
-import MenuDetailVue from '@/components/Menu/MenuDetail.vue'
 // import PreviewViewView from '@/views/Previews/PreviewView.vue'
 import { PATH } from './pathName'
 const routes = [
@@ -23,22 +21,7 @@ const routes = [
       title: 'Login'
     }
   },
-  {
-    path: PATH.MENU_DETAIL,
-    name: 'Menu-detail',
-    component: MenuDetailVue,
-    meta: {
-      title: 'Menu-detail'
-    }
-  },
-  {
-    path: PATH.CART,
-    name: 'Cart',
-    component: ListCartVue,
-    meta: {
-      title: 'Cart'
-    }
-  },
+
 
   
 ]
@@ -52,8 +35,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title} | BO-SHOP`
-  const isAuthenticated = !!localStorage.getItem('authToken')
+  document.title = `${to.meta.title} | VA-PROJECT`
+  const isAuthenticated = !!localStorage.getItem('userData')
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
     // next()

@@ -1,10 +1,12 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import Menu from '@/components/Menu/Menu.vue';
+import VaRegister from '@/components/VA-Register/VaRegister.vue'
+import TableReport from '@/components/Tables/TableReport.vue'
+// import index from '@/components/Home/index.vue';
 </script>
 <template>
   <DefaultLayout>
-    <!-- <div class="flex items-center justify-center h-screen text-2xl">Home</div> -->
-     <Menu/>
+    <!-- <VaRegister/> -->
+    <TableReport />
   </DefaultLayout>
 </template>

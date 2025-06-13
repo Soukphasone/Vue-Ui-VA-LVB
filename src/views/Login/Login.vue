@@ -31,8 +31,8 @@ const {
       <div class="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
         <div class="p-6 space-y-2">
           <div>
-            <div class="flex justify-center">
-              <img src="@/assets/images/logo/shop-online.png" alt="loginLogo" class="w-40" />
+            <div class="flex justify-center mb-4">
+              <img src="@/assets/images/logo/LVB.png" alt="loginLogo" class="w-40" />
             </div>
           </div>
           <form class="space-y-6" @submit.prevent="handleLogin">

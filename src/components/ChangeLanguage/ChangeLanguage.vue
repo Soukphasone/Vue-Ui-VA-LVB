@@ -83,7 +83,6 @@ const getImagePath = (img) => {
         </li>
       </ul>
     </div>
-    <div class="flex items-center text-gray-700 dark:text-whiter text-lg">{{ $t('lg') }}</div>
   </div>
 </template>
 
