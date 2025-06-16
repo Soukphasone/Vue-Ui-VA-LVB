@@ -67,59 +67,58 @@ const dayListViet = ref([
   { id: 5, name: '60 ngày trước', value: 'last60days', color: 'white' },
   { id: 6, name: '90 ngày trước', value: 'last90days', color: 'white' }
 ])
- const filteredItems = ref([
-        {
-          BRANCH_ID: 'BR001',
-          CIF: 'CIF10001',
-          CREATE_DATE: '2023-05-15T08:30:00',
-          FULLNAME: 'John Doe',
-          AUTH_STATUS: 'Approved',
-          DES: 'New customer registration',
-          USER_CREATE: 'jane.smith',
-          AUTH_USER: 'admin1'
-        },
-        {
-          BRANCH_ID: 'BR002',
-          CIF: 'CIF10002',
-          CREATE_DATE: '2023-05-16T09:15:00',
-          FULLNAME: 'Alice Johnson',
-          AUTH_STATUS: 'Pending',
-          DES: 'Account upgrade request',
-          USER_CREATE: 'mike.brown',
-          AUTH_USER: ''
-        },
-        {
-          BRANCH_ID: 'BR001',
-          CIF: 'CIF10003',
-          CREATE_DATE: '2023-05-17T10:45:00',
-          FULLNAME: 'Robert Chen',
-          AUTH_STATUS: 'Rejected',
-          DES: 'Loan application',
-          USER_CREATE: 'sarah.wang',
-          AUTH_USER: 'admin2'
-        },
-        {
-          BRANCH_ID: 'BR003',
-          CIF: 'CIF10004',
-          CREATE_DATE: '2023-05-18T11:20:00',
-          FULLNAME: 'Emily Davis',
-          AUTH_STATUS: 'Approved',
-          DES: 'Credit card application',
-          USER_CREATE: 'david.miller',
-          AUTH_USER: 'admin1'
-        },
-        {
-          BRANCH_ID: 'BR002',
-          CIF: 'CIF10005',
-          CREATE_DATE: '2023-05-19T14:10:00',
-          FULLNAME: 'Michael Wilson',
-          AUTH_STATUS: 'Pending',
-          DES: 'Address change request',
-          USER_CREATE: 'lisa.jones',
-          AUTH_USER: ''
-        }
-      ]
-      )
+const filteredItems = ref([
+  {
+    BRANCH_ID: 'BR001',
+    CIF: 'CIF10001',
+    CREATE_DATE: '2023-05-15T08:30:00',
+    FULLNAME: 'John Doe',
+    AUTH_STATUS: 'Approved',
+    DES: 'New customer registration',
+    USER_CREATE: 'jane.smith',
+    AUTH_USER: 'admin1'
+  },
+  {
+    BRANCH_ID: 'BR002',
+    CIF: 'CIF10002',
+    CREATE_DATE: '2023-05-16T09:15:00',
+    FULLNAME: 'Alice Johnson',
+    AUTH_STATUS: 'Pending',
+    DES: 'Account upgrade request',
+    USER_CREATE: 'mike.brown',
+    AUTH_USER: ''
+  },
+  {
+    BRANCH_ID: 'BR001',
+    CIF: 'CIF10003',
+    CREATE_DATE: '2023-05-17T10:45:00',
+    FULLNAME: 'Robert Chen',
+    AUTH_STATUS: 'Rejected',
+    DES: 'Loan application',
+    USER_CREATE: 'sarah.wang',
+    AUTH_USER: 'admin2'
+  },
+  {
+    BRANCH_ID: 'BR003',
+    CIF: 'CIF10004',
+    CREATE_DATE: '2023-05-18T11:20:00',
+    FULLNAME: 'Emily Davis',
+    AUTH_STATUS: 'Approved',
+    DES: 'Credit card application',
+    USER_CREATE: 'david.miller',
+    AUTH_USER: 'admin1'
+  },
+  {
+    BRANCH_ID: 'BR002',
+    CIF: 'CIF10005',
+    CREATE_DATE: '2023-05-19T14:10:00',
+    FULLNAME: 'Michael Wilson',
+    AUTH_STATUS: 'Pending',
+    DES: 'Address change request',
+    USER_CREATE: 'lisa.jones',
+    AUTH_USER: ''
+  }
+])
 const checkToken = () => {
   const token = localStorage.getItem('authToken')
   if (isTokenExpired(token)) {
@@ -567,27 +566,23 @@ watch(dataReport, (setData) => {
         <tr class="bg-gray-100 border-t border-b text-center">
           <th class="p-2 px-4 font-medium text-black">{{ t('stt') }}</th>
           <th class="p-2 px-4 font-medium text-black">Alias Number</th>
+          <th class="p-2 px-4 font-medium text-black">Branch</th>
           <th class="min-w-[140px] p-2 px-4 font-medium text-black">CIF</th>
           <th class="min-w-[200px] p-2 px-4 min-w-[150px] font-medium text-black">
-          Account Number
+            Account Number
           </th>
-          <th class="p-2 px-4 font-medium text-black">
-            Account Name
+          <th class="p-2 px-4 font-medium text-black">Account Name</th>
+          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
+            Alias Type
           </th>
           <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            {{ t('customer_name') }}
-          </th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-``            {{ t('status') }}
-          </th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            {{ t('description') }}
+            CCY
           </th>
           <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
             {{ t('maker_id') }}
           </th>
           <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            {{ t('authorize_id') }}
+            {{ t('created_at') }}
           </th>
         </tr>
       </thead>
@@ -620,9 +615,6 @@ watch(dataReport, (setData) => {
           </td>
           <td class="px-1 border-b text-center">
             <p class="text-black">{{ customer.USER_CREATE }}</p>
-          </td>
-          <td class="px-1 border-b text-center">
-            <p class="text-black">{{ customer.AUTH_USER }}</p>
           </td>
         </tr>
       </tbody>

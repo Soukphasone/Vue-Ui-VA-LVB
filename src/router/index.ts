@@ -38,8 +38,8 @@ router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | VA-PROJECT`
   const isAuthenticated = !!localStorage.getItem('userData')
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/login')
-    // next()
+    // next('/login')
+    next()
   } else {
     next()
   }
