@@ -1,14 +1,16 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Login } from '@/service/GetPostAPI'
+import { Login } from '@/service/Get_Post_API'
 import { PATH } from '@/router/pathName'
 import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
   // const userName = ref('')
-  const userName = ref('SOUKPHASONE')
-  const passWord = ref('B99110019@b.')
+  // const userName = ref('')
+  // const passWord = ref('')
+  const userName = ref('')
+  const passWord = ref('adminlvb')
   const checkError = ref(false)
   const errorMessage = ref('')
   const isLoading = ref(false)
@@ -29,28 +31,22 @@ export default function useLoginPage() {
     isLoading.value = true
     try {
       const userLogin = {
-        Project_id: 'PRJ100000000092',
-        Request: {
-          RequestID: '3',
-          Username: userName.value,
-          Password: passWord.value,
-          SearchDetail: 'Username'
-        }
+        USER: userName.value,
+        PASSWORD: passWord.value
       }
-      const _dataLogin = await Login(userLogin)
-      console.log('Login_data', _dataLogin)
-      if (_dataLogin?.error_desc == 'LOGIN SUCCESS') {
-        localStorage.setItem('userData', JSON.stringify(_dataLogin?.user_data))
+      const _res = await Login(userLogin)
+      console.log('Login', _res)
+      if (_res?.error === '00') {
+        localStorage.setItem('authToken', _res?.data.TOKEN)
+        localStorage.setItem('userData', JSON.stringify(_res?.data?.DATA_USER_LOGIN))
         router.push(PATH.HOME)
-        errorMessage.value = 'User is locked'
       }
-      if (_dataLogin?.error_desc == 'User is locked') {
-        errorMessage.value = 'User is locked'
-      } else {
-        errorMessage.value = 'Sorry please try again'
+      if (_res?.error === '03' || _res?.error === '04') {
+        errorMessage.value = _res?.message
       }
     } catch (error) {
       console.log(error)
+      errorMessage.value = t('sorry_try_later')
     } finally {
       isLoading.value = false
     }

@@ -1,9 +1,9 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import index from '@/components/Home/index.vue'
+import CustomerList from '@/components/Tables/CustomerList.vue'
 </script>
 <template>
   <DefaultLayout>
-    <index />
+    <CustomerList />
   </DefaultLayout>
 </template>

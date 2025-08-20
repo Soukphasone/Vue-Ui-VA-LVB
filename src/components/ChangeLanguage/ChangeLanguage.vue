@@ -50,9 +50,9 @@ const selectOption = (option) => {
   localStorage.setItem('language', option)
 }
 const getImagePath = (img) => {
-  var la = 'laos-flag2.png'
-  var en = 'england-flag2.png'
-  var vn = 'vietnam-flag2.png'
+  let la = 'laos-flag2.png'
+  let en = 'england-flag2.png'
+  let vn = 'vietnam-flag2.png'
   if (img === 'la') {
     return new URL(`/src/assets/images/flags/${la}`, import.meta.url).href
   }
@@ -71,18 +71,18 @@ const getImagePath = (img) => {
       <button
         class="flex items-center bt-change-language focus:outline-none"
         @click="toggleDropdown"
-        @keydown.esc="isOpen=false"
+        @keydown.esc="isOpen = false"
       >
         <span> <img :src="getImagePath(check)" alt="flag" class="flag-bt" /></span>
       </button>
       <ul v-if="isOpen" class="dropdown-bt-change-language">
         <li v-for="option in options" :key="option.value" @click="selectOption(option.value)">
           <img :src="getImagePath(option.img)" alt="flag" class="flag-icon-change-language" />
-
           <span style="margin-top: -3px"> {{ option.lg }}</span>
         </li>
       </ul>
     </div>
+    <div class="flex items-center text-primary text-user absolute bottom-0 left-9">{{ $t('lg') }}</div>
   </div>
 </template>
 

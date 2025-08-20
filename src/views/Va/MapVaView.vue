@@ -1,9 +1,9 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import index from '@/components/Home/index.vue'
+import MapVaTab from '@/components/VA-Register/MapVaTab.vue';
 </script>
 <template>
   <DefaultLayout>
-    <index />
+   <MapVaTab/>
   </DefaultLayout>
 </template>

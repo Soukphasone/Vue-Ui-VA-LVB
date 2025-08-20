@@ -1,9 +1,9 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import index from '@/components/Home/index.vue'
+import VaRegister from '@/components/VA-Register/VaRegister.vue'
 </script>
 <template>
   <DefaultLayout>
-    <index />
+    <VaRegister/>
   </DefaultLayout>
 </template>

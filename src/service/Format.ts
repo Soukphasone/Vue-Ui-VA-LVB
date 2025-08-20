@@ -2,6 +2,9 @@ import { format } from "date-fns";
 export function formatNumber(number: number) {
   return new Intl.NumberFormat().format(number)
 }
+export function dateSearch(date: string) {
+  return format(new Date(date), "yyyy-MM-dd");
+}
 export function formatDate(date: string) {
   return format(new Date(date), "dd/MM/yyyy");
 }

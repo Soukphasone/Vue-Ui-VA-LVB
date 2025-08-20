@@ -1,9 +1,9 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import index from '@/components/Home/index.vue'
+import Authorization from '@/components/Tables/Authorization.vue'
 </script>
 <template>
   <DefaultLayout>
-    <index />
+    <Authorization />
   </DefaultLayout>
 </template>

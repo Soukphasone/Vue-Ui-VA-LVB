@@ -52,7 +52,11 @@
     background-position: right;
 
 }
-
+.bg-bill{
+    background-image: url('../images/background/bg-2.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+}
 /* alert button */
 .custom-swal {
     font-family: 'NotoSansLao', sans-serif !important;
@@ -102,3 +106,23 @@
   transform: scale(0.9);
 }
 /* Fade and Scale Animation */
+/* print */
+@media print {
+    body * {
+      visibility: hidden;
+    }
+  
+    .print-area, .print-area * {
+      visibility: visible;
+      background-color: none;
+
+    }
+    .print-area {
+      position: fixed; 
+      top: 20%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+      width: 100%; 
+      padding: 20px;
+    }
+  }

@@ -1,10 +1,9 @@
 import axios from 'axios'
 
 const service = axios.create()
-
 service.interceptors.request.use(
   (consfig) => {
-    consfig.headers['access-token'] = localStorage.getItem('authToken')
+    consfig.headers['authorization'] = `LVB ${localStorage.getItem('authToken')}`
     return consfig
   },
   (err) => {

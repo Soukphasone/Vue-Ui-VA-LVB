@@ -7,14 +7,11 @@ defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <div
-    class="border rounded-2 py-1 px-4"
-    :class="{ 'border border-gray-400': currentPage === 'Home', 'border border-blue-400' : currentPage === 'Login' }"
-  >
+  <div class="border border-gray-400 rounded-2 py-1 px-4">
     <div class="relative">
       <div class="absolute top-1/2 left-0 -translate-y-1/2">
         <svg
-          :class="{ 'fill-gray-500': currentPage === 'Home', 'fill-blue-400': currentPage != 'Home' }"
+          class="fill-gray-500"
           width="20"
           height="20"
           viewBox="0 0 20 20"
@@ -41,11 +38,7 @@ defineEmits(['update:modelValue'])
         :placeholder="$t('search')"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        class="w-full xl:w-60 bg-transparent pr-4 pl-9 focus:outline-none"
-        :class="{
-          'placeholder-gray-00 text-gray-700': currentPage === 'Home',
-          'placeholder-blue-400 text-blue-400': currentPage != 'Home'
-        }"
+        class="w-full xl:w-60 bg-transparent placeholder-gray-400 text-gray-700 pr-4 pl-9 focus:outline-none"
       />
     </div>
   </div>

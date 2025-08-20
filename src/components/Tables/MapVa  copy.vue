@@ -8,7 +8,7 @@ import { formatNumber, formatDate, formatDateShort, formatDateTime } from '@/ser
 import Loading from '@/components/Loading/Loading.vue'
 import { useRouter } from 'vue-router'
 import { currentLanguage } from '@/i18n'
-// import { branchesLao, branches } from '@/stores/branchBankList'
+import { branchesLao, branches } from '@/stores/branchBankList'
 import { showAlert } from '@/stores/alert'
 import { useSearchStore } from '@/stores/search'
 
@@ -20,8 +20,8 @@ const userDataLogin = JSON.parse(localStorage.getItem('userData'))
 // const accountStore = useAccountStore()
 // const accountNumber = computed(() => accountStore.value)
 const target = ref(null)
-const target2 = ref(null)
-const target3 = ref(null)
+const targetBranch = ref(null)
+const targetDays = ref(null)
 const flatPickerInstance = ref(null)
 const datePicker = ref(null)
 const selectedValueDate = ref('')
@@ -182,22 +182,22 @@ const queryDate = async () => {
 //   )
 // )
 
-// const calculateDateRange = (daysAgo) => {
-//   const startDate = new Date()
-//   startDate.setDate(today.getDate() - daysAgo)
-//   return { startDate, endDate: today }
-// }
-// const toggleDropdown = (item) => {
-//   if (item === 'customer-type') {
-//     isDropdownOpenCtTpye.value = !isDropdownOpenCtTpye.value
-//   }
-//   if (item === 'days') {
-//     isDropdownOpenDays.value = !isDropdownOpenDays.value
-//   }
-//   if (item === 'branch') {
-//     isDropdownOpenBranch.value = !isDropdownOpenBranch.value
-//   }
-// }
+const calculateDateRange = (daysAgo) => {
+  const startDate = new Date()
+  startDate.setDate(today.getDate() - daysAgo)
+  return { startDate, endDate: today }
+}
+const toggleDropdown = (item) => {
+  if (item === 'customer-type') {
+    isDropdownOpenCtTpye.value = !isDropdownOpenCtTpye.value
+  }
+  if (item === 'days') {
+    isDropdownOpenDays.value = !isDropdownOpenDays.value
+  }
+  if (item === 'branch') {
+    isDropdownOpenBranch.value = !isDropdownOpenBranch.value
+  }
+}
 const selectAccountBranch = async (branch) => {
   branchReport.value = branch
   selectedNameBranch.value = branch
@@ -277,10 +277,10 @@ onMounted(async () => {
 onClickOutside(target, () => {
   isDropdownOpenCtTpye.value = false
 })
-onClickOutside(target2, () => {
+onClickOutside(targetBranch, () => {
   isDropdownOpenBranch.value = false
 })
-onClickOutside(target3, () => {
+onClickOutside(targetDays, () => {
   isDropdownOpenDays.value = false
 })
 //Button view
@@ -302,8 +302,8 @@ watch(dataReport, (setData) => {
     <div class="flex flex-grow items-center justify-between py-3 px-4">
       <div class="flex justify-center items-center">
         <div class="inline-flex items-center rounded-2 border border-strok w-[350px] text-sm">
-          <!-- <div>
-            <div class="dropdown-container flex border-r border-stroke text-gray-500">
+          <div>
+            <!-- <div class="dropdown-container flex border-r border-stroke text-gray-500">
               <button
                 class="dropdown-date text-left focus:outline-none"
                 @click="toggleDropdown('customer-type')"
@@ -347,14 +347,14 @@ watch(dataReport, (setData) => {
                   </li>
                 </ul>
               </button>
-            </div>
-          </div> -->
+            </div> -->
+          </div>
           <div class="dropdown-container">
             <button
               class="dropdown-date text-left focus:outline-none w-[350px]"
               @click="toggleDropdown('branch')"
               @keydown.esc="isDropdownOpenBranch = false"
-              ref="target2"
+              ref="targetBranch"
             >
               <div class="flex items-center dropdown-selected-date">
                 <p>
@@ -379,7 +379,7 @@ watch(dataReport, (setData) => {
                   </svg>
                 </div>
               </div>
-              <!-- <ul v-if="isDropdownOpenBranch" class="dropdown-list-date max-h-100 overflow-y-auto">
+              <ul v-if="isDropdownOpenBranch" class="dropdown-list-date max-h-100 overflow-y-auto">
                 <li
                   v-for="branch in check === 'la' ? branchesLao : branches"
                   :key="branch.id"
@@ -391,7 +391,7 @@ watch(dataReport, (setData) => {
                 >
                   {{ branch.branch_id }} - {{ branch.name }}
                 </li>
-              </ul> -->
+              </ul>
             </button>
           </div>
         </div>
@@ -403,7 +403,7 @@ watch(dataReport, (setData) => {
                 class="dropdown-date text-left focus:outline-none"
                 @click="toggleDropdown('days')"
                 @keydown.esc="isDropdownOpenDays = false"
-                ref="target3"
+                ref="targetDays"
               >
                 <div class="flex items-center dropdown-selected-date w-[130px]">
                   <p v-if="!hideNameDay">
@@ -565,25 +565,7 @@ watch(dataReport, (setData) => {
       <thead>
         <tr class="bg-gray-100 border-t border-b text-center">
           <th class="p-2 px-4 font-medium text-black">{{ t('stt') }}</th>
-          <th class="p-2 px-4 font-medium text-black">Alias Number</th>
-          <th class="p-2 px-4 font-medium text-black">Branch</th>
-          <th class="min-w-[140px] p-2 px-4 font-medium text-black">CIF</th>
-          <th class="min-w-[200px] p-2 px-4 min-w-[150px] font-medium text-black">
-            Account Number
-          </th>
-          <th class="p-2 px-4 font-medium text-black">Account Name</th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            Alias Type
-          </th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            CCY
-          </th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            {{ t('maker_id') }}
-          </th>
-          <th class="min-w-[200px] p-2 px-4 font-medium text-black text-center">
-            {{ t('created_at') }}
-          </th>
+          <th class="p-2 px-4 font-medium text-black">Service name</th>
         </tr>
       </thead>
       <tbody>
@@ -595,26 +577,10 @@ watch(dataReport, (setData) => {
             <p class="text-black">{{ customer.BRANCH_ID }}</p>
           </td>
           <td class="items-center px-4 border-b">
-            <p class="text-black text-center">{{ customer.BRANCH_ID }}</p>
+            <p class="text-black text-center"></p>
           </td>
           <td class="py-3 px-4 border-b text-center">
-            <p class="text-black text-center">{{ customer.CIF }}</p>
-          </td>
-
-          <td class="py-3 px-4 border-b text-center">
-            <p class="text-black">{{ formatDate(customer.CREATE_DATE) }}</p>
-          </td>
-          <td class="px-1 border-b text-center">
-            <p class="text-black">{{ customer.FULLNAME }}</p>
-          </td>
-          <td class="px-1 border-b text-center">
-            <p class="text-black">{{ customer.AUTH_STATUS }}</p>
-          </td>
-          <td class="px-1 border-b text-center">
-            <p class="text-black">{{ customer.DES }}</p>
-          </td>
-          <td class="px-1 border-b text-center">
-            <p class="text-black">{{ customer.USER_CREATE }}</p>
+            <p class="text-black text-center"></p>
           </td>
         </tr>
       </tbody>

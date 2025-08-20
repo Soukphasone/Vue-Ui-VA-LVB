@@ -22,7 +22,7 @@ const {
       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-9999"
     >
       <span class="mt-45">
-        <Loading size="45px" />
+        <Loading/>
       </span>
     </div>
     <div
