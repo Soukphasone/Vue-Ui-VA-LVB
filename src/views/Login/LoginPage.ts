@@ -41,8 +41,17 @@ export default function useLoginPage() {
         localStorage.setItem('userData', JSON.stringify(_res?.data?.DATA_USER_LOGIN))
         router.push(PATH.HOME)
       }
-      if (_res?.error === '03' || _res?.error === '04') {
-        errorMessage.value = _res?.message
+      if (_res?.error === '03') {
+        errorMessage.value = 'invalid_username'
+      }
+      if (_res?.error === '04') {
+        if (_res?.message === 'The user or password is incorrect') {
+          errorMessage.value = 'invalid_username_or_password'
+        }
+        else {
+          errorMessage.value = 'user_locked'
+        }
+
       }
     } catch (error) {
       console.log(error)

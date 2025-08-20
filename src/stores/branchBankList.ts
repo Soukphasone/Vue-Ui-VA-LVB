@@ -60,7 +60,8 @@ export const dayList = [
   { id: 3, name: 'Last 15 Days', value: 'last15days', color: 'white' },
   { id: 4, name: 'Last 30 Days', value: 'last30days', color: 'white' },
   { id: 5, name: 'Last 60 Days', value: 'last60days', color: 'white' },
-  { id: 6, name: 'Last 90 Days', value: 'last90days', color: 'white' }
+  { id: 6, name: 'Last 90 Days', value: 'last90days', color: 'white' },
+  { id: 7, name: 'All', value: 'all', color: 'white' },
 ]
 export const dayListLao = [
   { id: 1, name: 'ມື້ນີ້', value: 'today', color: 'white', country: 'la' },
@@ -68,7 +69,8 @@ export const dayListLao = [
   { id: 3, name: '15 ມື້ກ່ອນ', value: 'last15days', color: 'white' },
   { id: 4, name: '30 ມື້ກ່ອນ', value: 'last30days', color: 'white' },
   { id: 5, name: '60 ມື້ກ່ອນ', value: 'last60days', color: 'white' },
-  { id: 6, name: '90 ມື້ກ່ອນ', value: 'last90days', color: 'white' }
+  { id: 6, name: '90 ມື້ກ່ອນ', value: 'last90days', color: 'white' },
+  { id: 6, name: 'ທັງໝົດ', value: 'all', color: 'white' }
 ]
 export const dayListViet = [
   { id: 1, name: 'Hôm nay', value: 'today', color: 'white', country: 'vn' },
@@ -76,5 +78,6 @@ export const dayListViet = [
   { id: 3, name: '15 ngày trước', value: 'last15days', color: 'white' },
   { id: 4, name: '30 ngày trước', value: 'last30days', color: 'white' },
   { id: 5, name: '60 ngày trước', value: 'last60days', color: 'white' },
-  { id: 6, name: '90 ngày trước', value: 'last90days', color: 'white' }
+  { id: 6, name: '90 ngày trước', value: 'last90days', color: 'white' },
+  { id: 6, name: 'Tất cả', value: 'all', color: 'white' }
 ]

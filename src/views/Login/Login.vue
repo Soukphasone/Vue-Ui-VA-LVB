@@ -176,7 +176,7 @@ const {
                   clip-rule="evenodd"
                 />
               </svg>
-              {{ errorMessage }}
+              {{ $t(errorMessage) }}
             </div>
           </form>
         </div>

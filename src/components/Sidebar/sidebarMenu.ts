@@ -103,28 +103,6 @@ export const menuIcon = [
   </svg>`,
     label: 'Authorization',
   }
-  // {
-  //   icon: `<svg
-  //   xmlns="http://www.w3.org/2000/svg"
-  //   class="w-6 h-6"
-  //   fill="none"
-  //   viewBox="0 0 24 24"
-  //   stroke="currentColor"
-  //   stroke-width="1.5"
-  // >
-  //   <!-- User icon -->
-  //   <circle cx="5" cy="7" r="2" />
-  //   <!-- First line -->
-  //   <line x1="10" y1="6" x2="20" y2="6" stroke-linecap="round" />
-  //   <!-- Second user -->
-  //   <circle cx="5" cy="12" r="2" />
-  //   <line x1="10" y1="11" x2="20" y2="11" stroke-linecap="round" />
-  //   <!-- Third user -->
-  //   <circle cx="5" cy="17" r="2" />
-  //   <line x1="10" y1="16" x2="20" y2="16" stroke-linecap="round" />
-  // </svg>`,
-  //   label: 'Authorization',
-  // }
 ]
 export const menuGroups = [
   {

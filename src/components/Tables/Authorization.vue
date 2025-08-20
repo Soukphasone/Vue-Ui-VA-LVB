@@ -42,6 +42,7 @@ const selectedItems = ref([]) // ChexBox
 const checkItemData = ref(false)
 const showError = ref(false)
 const titleModal = ref('')
+const messageModal = ref('')
 // Computed property to check if all are selected
 const isAllSelected = computed(
   () => selectedItems.value.length > 0 && selectedItems.value.length === dataReport.value.length
@@ -109,7 +110,7 @@ const toggleModal = (name, data) => {
 }
 const fetchData = async () => {
   const data = {
-    BRANCH: '015',
+    BRANCH: '',
     // BRANCH: userData.HR_BRN_CODE,
     STATUS: 0,
     DATE_FROM: dateFrom.value,
@@ -478,6 +479,7 @@ onUnmounted(() => {
             <th class="min-w-[120px] px-4">{{ t('account_number_cif') }}</th>
             <th class="min-w-[210px] px-4">{{ t('account_number') }}</th>
             <th class="min-w-[200px] px-2">{{ t('account_name') }}</th>
+            <th class="min-w-[140px] px-2">{{ t('status') }}</th>
             <th class="min-w-[100px] px-2 text-center">
               <span>{{ t('view_detail') }}</span>
             </th>
@@ -516,6 +518,56 @@ onUnmounted(() => {
             </td>
             <td class="px-2 border-b">
               <p class="text-black">{{ customer.ACCTNAME }}</p>
+            </td>
+                 <td class="px-2 border-b text-gray-800">
+              <div
+                v-if="customer.STATUS === 0"
+                class="relative border-b border-gray-400 rounded-sm px-1 py-0.5"
+              >
+                <div class="flex gap-1">
+                  <p>
+                    {{ t('unauthorized') }}
+                  </p>
+                  <span class="absolute right-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-5 h-5 text-red-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                v-else-if="customer.STATUS === 1"
+                class="relative border-b border-gray-400 rounded-sm px-1 py-0.5"
+              >
+                <div class="flex gap-1">
+                  <p>
+                    {{ t('authorized') }}
+                  </p>
+                  <span class="absolute right-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-6 h-6 text-green-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
             </td>
             <td class="px-2 border-b text-center">
               <button
@@ -579,7 +631,7 @@ onUnmounted(() => {
   />
   <showModals
     :show-error-modal="showError"
-    :title="t(titleModal)"
+    :title="titleModal"
     :message="messageModal"
     @close="showError = false"
   />

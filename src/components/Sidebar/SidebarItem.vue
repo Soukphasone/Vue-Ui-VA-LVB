@@ -3,9 +3,8 @@ import { useSidebarStore } from '@/stores/sidebar'
 import { useRoute } from 'vue-router'
 import { menuIcon } from './sidebarMenu'
 const sidebarStore = useSidebarStore()
-const props = defineProps(['item', 'index'])
-const currentPage = useRoute().name
-sidebarStore.page = currentPage
+defineProps(['item', 'index'])
+sidebarStore.page = useRoute().name
 interface SidebarItem {
   EN_NAME: string
 }
@@ -26,7 +25,7 @@ interface SidebarItem {
           <span v-html="menu.icon" class="flex-shrink-0"></span>
         </div>
       </div>
-      <div class="px-4">{{ item.EN_NAME }}</div>
+      <div class="px-4">{{ $t(item.VI_NAME) }}</div>
       </div>
     </router-link>
   </li>

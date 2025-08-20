@@ -8,9 +8,10 @@ import SearchInput from '../Search/SearchInput.vue'
 import BillRegisterModal from '../Modals/BillRegisterModal.vue'
 import { useOpenModalBill } from '@/stores/modal'
 import { dateSearch } from '@/service/Format'
+
 const userData = JSON.parse(localStorage.getItem('userData'))
-const steps = ['Service Name', 'Customer Information', 'Review']
 const { t } = useI18n()
+const steps = ['service_name', 'customer_information', 'review']
 const currentStep = ref(1)
 const showSuccess = useOpenModalBill()
 const showError = ref(false)
@@ -21,7 +22,7 @@ const itemsPerPage = ref(10)
 const currentPage = ref(1)
 const selectedIndex = ref(null)
 const titleModal = ref('')
-const messageModal = ref('' || 'Please try check again')
+const messageModal = ref('' || 'check_again')
 const serviceName = ref('')
 const accountNumberList = ref([])
 const dropdownAccountNo = ref(false)
@@ -60,40 +61,34 @@ const toggleDropdownAcNo = () => {
 async function nextStep() {
   if (currentPage.value === 1) {
     if (!formData.value.serviceName || formData.value.serviceName === '') {
-      titleModal.value = 'Choose a service name'
-      messageModal.value = 'Please check again'
+      titleModal.value = 'pl_choose_service_name'
+      messageModal.value = 'check_again'
       showError.value = true
       return
     }
   }
   if (currentStep.value === 2) {
     if (!formData.value.cif) {
-      messageModal.value = 'Please check again'
-      titleModal.value = 'Plese enter CIF number'
+      titleModal.value = 'pl_enter_cif'
+      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (formData.value.cif.length !== 9) {
-      messageModal.value = 'Please check again'
-      titleModal.value = 'Please enter a CIF number with exactly 9 digits'
-      showError.value = true
-      return
-    }
-    if (checkCIF.value === false) {
-      messageModal.value = 'Please check again'
-      titleModal.value = 'Incorrect CIF number'
+      titleModal.value = 'pl_enter_cif_9_digits'
+      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (!formData.value.accountNumber) {
-      messageModal.value = 'Please check again'
-      titleModal.value = 'Please select a account number'
+      titleModal.value = 'pl_select_account_no'
+      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (!formData.value.aliasType) {
-      messageModal.value = 'Please check again'
       titleModal.value = 'Choose an alias type'
+      messageModal.value = 'check_again'
       showError.value = true
       return
     }
@@ -228,7 +223,7 @@ watch(
         accountNumberList.value = res.data[0].ACCOUNT_DETAILS
       }
     } else {
-      titleModal.value = 'Incorrect CIF number'
+      titleModal.value = 'invalid_cif'
       showError.value = true
       checkError.value = '2'
       formData.value.accountName = ''
@@ -270,7 +265,7 @@ async function resetForm() {
     <div class="max-w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden">
       <!-- Form Header -->
       <div class="bg-primary py-4 px-6">
-        <h1 class="text-2xl font-bold text-white md:text-center">VA Customer Registration</h1>
+        <h1 class="text-2xl font-bold text-white md:text-center">{{ t('registration') }}</h1>
       </div>
 
       <!-- Progress Steps -->
@@ -293,7 +288,7 @@ async function resetForm() {
                 'text-gray-500': currentStep < index + 16
               }"
             >
-              {{ step }}
+              {{ t(step) }}
             </span>
           </div>
         </div>

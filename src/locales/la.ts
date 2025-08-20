@@ -110,7 +110,7 @@ export const la = {
   select_customer_type: 'ເລືອກປະເພດລູກຄ້າ',
   wrong_email: 'ອິເມວບໍ່ຖືກຕ້ອງ',
   wrong_phone_number: 'ໝາຍເລກໂທລະສັບບໍ່ຖືກຕ້ອງ',
-  wrong_cif: 'ກະລຸນາກວດຄືນເລກ CIF ອີກຄັ້ງ',
+  invalid_cif: 'ເລກລະຫັດ CIF ບໍ່ຖືກຕ້ອງ',
   duplicate_cif: 'CIF ຊໍ້າກັນ, ບັນຊີນີ້ໄດ້ລົງທະບຽນແລ້ວ',
   unique_id: 'ເລກບັດປະຈຳຕົວ / ໜັງສືຜ່ານແດນ',
   enter_unique_id: 'ປ້ອນ ເລກບັດປະຈຳຕົວ / ໜັງສືຜ່ານແດນ',
@@ -163,6 +163,23 @@ export const la = {
   do_you_want_approve: 'ທ່ານຕ້ອງການອະນຸມັດແທ້ບໍ?',
   please_select_some_items: 'ກະລຸນາເລືອກລາຍການໃດໜຶ່ງ',
   sorry_try_later: 'ຂໍອະໄພ ກະລຸນາລອງໃໝ່ພາຍຫຼັງ',
-  cm_register_list: 'ລາຍຊື່ລູກຄ້າລົງທະບຽນ'
+  cm_register_list: 'ລາຍຊື່ລູກຄ້າລົງທະບຽນ',
+  registration: 'ລົງທະບຽນລູກຄ້າ',
+  add_customer_service: "ເພີ່ມຊື່ບໍລິການ",
+  list_customer_service: "ລາຍຊື່ບໍລິການ",
+  review: 'ກວດເບິ່ງຄືນ',
+  add_to_register: "ເພິ່ມລາຍຊື່ລົງທະບຽນ",
+  add_list: 'ລາຍຊື່ສຳລັບລົງທະບຽນ',
+  check_again: 'ກວດສອບຄືນອີກຄັ້ງ',
+  pl_choose_service_name: 'ກະລຸນາເລືອກຊື່ບໍລິການ',
+  pl_enter_cif: 'ກະລຸນາປ້ອນເລກລະຫັດ CIF',
+  pl_enter_cif_9_digits: "ກະລຸນາປ້ອນເລກລະຫັດ CIF ໃຫ້ຄົບ 9 ຕົວເລກ",
+  pl_select_account_no: "ກະລຸນາເລືອກເລກບັນຊີ",
+  pl_choose_payment: "ກະລຸນາເລືອກປະເພດຊຳລະ",
+  close: 'ປິດ',
+  done:'ສຳເລັດ',
+  invalid_username: 'ຊື່ຜູ້ໃຊ້ບໍ່ຖືກຕ້ອງ',
+  invalid_username_or_password:'ຊື່ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ',
+  user_locked: 'ບັນຊີຜູ້ໃຊ້ຖືກລັອກ'
 
 }

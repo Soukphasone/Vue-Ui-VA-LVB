@@ -16,14 +16,14 @@ const activeTabs = (tab) => {
   <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden"
   style="margin-top: -15px;">
       <div class="bg-primary py-4 px-6">
-        <h1 class="text-2xl font-bold text-white md:text-center">VA Customer Map</h1>
+        <h1 class="text-2xl font-bold text-white md:text-center">{{ $t('list_customer_service') }}</h1>
       </div>
     <!-- Tab Buttons -->
     <div
       class="sticky top-15 flex items-center justify-center w-full bg-gray-100 p-6 z-99"
     >
     
-      <div class="flex border border-gray-300 rounded-lg w-full md:w-100">
+      <div class="flex border border-gray-300 rounded-lg w-full md:w-[450px]">
         <button
           v-for="tab in tabs"
           :key="tab"
@@ -63,7 +63,7 @@ const activeTabs = (tab) => {
                   stroke-linejoin="round"
                   d="M19 8v4m2-2h-4"
                 /></svg></span
-            ><span>Add To Register</span>
+            ><span>{{ $t('add_to_register') }}</span>
           </div>
           <div v-else-if="tab === 'Added List'" class="flex gap-2">
             <span
@@ -85,7 +85,7 @@ const activeTabs = (tab) => {
                 <!-- Third user -->
                 <circle cx="5" cy="17" r="2" />
                 <line x1="10" y1="16" x2="20" y2="16" stroke-linecap="round" /></svg></span
-            ><span>Added List</span>
+            ><span>{{ $t('add_list') }}</span>
           </div>
         </button>
       </div>

@@ -1,8 +1,6 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import { useOpenModalStore } from '@/stores/modal'
 
-const { t } = useI18n()
 const userData = JSON.parse(localStorage.getItem('userData'))
 const toggleLogOut = useOpenModalStore()
 </script>
@@ -27,7 +25,7 @@ const toggleLogOut = useOpenModalStore()
             d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10V19H5V5H10V3ZM21 12L16 7V10H9V14H16V17L21 12Z"
           />
         </svg>
-        <p class="text-user text-red-500">{{ t('exit') }}</p>
+        <p class="text-user text-red-500">{{ $t('exit') }}</p>
       </button>
     </div>
   </div>

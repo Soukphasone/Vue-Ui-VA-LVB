@@ -129,6 +129,9 @@ const selectDay = async (data) => {
     case 'last90days':
       range = calculateDateRange(90)
       break
+    case 'all':
+      range = { startDate: null, endDate: null }
+      break
     default:
       range = { startDate: null, endDate: null }
       break
@@ -140,6 +143,10 @@ const selectDay = async (data) => {
     dateFrom.value = dateSearch(range.startDate)
     dateTo.value = dateSearch(range.endDate)
     hideNameDay.value = false
+  } else {
+    flatPickerInstance.value.setDate()
+    dateFrom.value = ""
+    dateTo.value = ""
   }
 }
 onMounted(async () => {
@@ -187,7 +194,7 @@ onUnmounted(() => {
 <template>
   <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
     <div class="bg-primary py-4 px-6">
-      <h1 class="text-2xl font-bold text-white md:text-center">{{t('cm_register_list')}}</h1>
+      <h1 class="text-2xl font-bold text-white md:text-center">{{ t('cm_register_list') }}</h1>
     </div>
     <div class="max-w-full overflow-x-auto border border-gray-200 bg-gray-50">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
@@ -350,7 +357,7 @@ onUnmounted(() => {
         :class="{
           'h-40': isDropdownOpenCtTpye,
           'h-100': isDropdownOpenBranch,
-          'h-60': isDropdownOpenDays
+          'h-70': isDropdownOpenDays
         }"
       >
         <thead>
@@ -427,6 +434,28 @@ onUnmounted(() => {
                 <div class="flex gap-1">
                   <p>
                     {{ t('authorized') }}
+                  </p>
+                  <span class="absolute right-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-6 h-6 text-green-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div
+                v-else-if="customer.STATUS === 2"
+                class="relative border-b border-gray-400 rounded-sm px-1 py-0.5"
+              >
+                <div class="flex gap-1">
+                  <p>
+                    {{ t('reject') }}
                   </p>
                   <span class="absolute right-1">
                     <svg

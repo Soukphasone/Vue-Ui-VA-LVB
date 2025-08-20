@@ -154,7 +154,7 @@ const handleAuthorize = async () => {
             @click="closeSuccessModal"
             class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
           >
-            Done
+          {{ $t('done') }}
           </button>
         </div>
       </div>
@@ -223,16 +223,16 @@ const handleAuthorize = async () => {
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">{{ title }}</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">{{ $t(title) }}</h2>
         <p class="text-gray-600 text-center mb-6">
-          {{ message }}
+          {{ $t(message) }}
         </p>
         <div class="flex justify-center">
           <button
             @click="closeErrorModal"
             class="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none"
           >
-            Close
+            {{ $t('close') }}
           </button>
         </div>
       </div>

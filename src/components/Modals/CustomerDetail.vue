@@ -72,7 +72,7 @@ watch(
           </h2>
           <div class="space-y-2.5">
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('alias_number') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -80,7 +80,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('service_name') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -88,7 +88,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('branch') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -103,7 +103,7 @@ watch(
               </span>
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('account_number_cif') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -111,7 +111,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('account_name') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -119,7 +119,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('account_number') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -127,7 +127,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('payment_type') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -140,7 +140,7 @@ watch(
               </span>
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('user_create') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -148,7 +148,7 @@ watch(
               >
             </div>
             <div v-if="data.USER_APPROVE" class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('user_approve') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -156,7 +156,7 @@ watch(
               >
             </div>
             <div v-if="data.USER_EDIT" class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('user_edit') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -164,7 +164,7 @@ watch(
               >
             </div>
             <div class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('created_at') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -172,7 +172,7 @@ watch(
               >
             </div>
             <div v-if="data.DATE_EDIT" class="flex gap-3 items-center">
-              <label class="font-medium text-gray-900 w-[200px]">
+              <label class="font-medium text-gray-900 w-[250px]">
                 {{ t('updated_at') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
