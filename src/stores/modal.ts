@@ -6,8 +6,9 @@ export const useOpenModalStore = defineStore('open-modal', () => {
   const isEdit = ref(false)
   const isDeleteVA = ref(false)
   const isAuthorizeVA = ref(false)
+  const isRejectVA = ref(false)
   const isSuccess = ref(false)
-  return { isLogOut, isDetail, isEdit, isDeleteVA, isAuthorizeVA, isSuccess }
+  return { isLogOut, isDetail, isEdit, isDeleteVA, isAuthorizeVA, isRejectVA, isSuccess }
 })
 export const useOpenModalBill = defineStore('open-bill', () => {
   const isOpenModal = ref(false)

@@ -126,3 +126,37 @@
       padding: 20px;
     }
   }
+
+  /* Date dropdown */
+  .dropdown-container {
+  position: relative;
+}
+.dropdown-date {
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+}
+.dropdown-selected-date {
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+.dropdown-list-date {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.dropdown-item-date {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.dropdown-item-date:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+  /* Date dropdown */

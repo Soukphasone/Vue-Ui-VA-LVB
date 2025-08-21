@@ -185,5 +185,11 @@ export const en = {
   done:'Done',
   invalid_username: 'Username is correct',
   invalid_username_or_password:'The user or password is incorrect',
-  user_locked: 'User Locked'
+  user_locked: 'User Locked',
+  fail: 'Fail',
+  reject: 'Reject',
+  rejected: 'Rejected',
+  do_want_to_reject: 'Do you want to reject?',
+  pl_select_date : 'Please select date',
+  wait_authorization: 'Wait authorization'
 }

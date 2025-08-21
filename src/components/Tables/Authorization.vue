@@ -75,9 +75,9 @@ const toggleSelection = (item) => {
   checkItemData.value = newSelectedItems.length > 0
 }
 const queryDate = async () => {
-  if(!dateFrom.value || !dateTo.value){
-    titleModal.value = 'Please select day'
-    showError.value= true
+  if (!dateFrom.value || !dateTo.value) {
+    titleModal.value = 'pl_select_date'
+    showError.value = true
   }
   fetchData()
 }
@@ -97,6 +97,15 @@ const toggleModal = (name, data) => {
     }
     titleModal.value = 'authorize'
     isOpen.isAuthorizeVA = true
+  }
+  if (name === 'reject') {
+    if (!checkItemData.value) {
+      titleModal.value = 'please_select_some_items'
+      showError.value = true
+      return
+    }
+    titleModal.value = 'reject'
+    isOpen.isRejectVA = true
   }
   if (name === 'delete') {
     if (!checkItemData.value) {
@@ -143,6 +152,8 @@ onMounted(fetchData)
 const reSet = () => {
   fetchData()
   selectedItems.value = []
+  checkItemData.value = false
+  
 }
 const calculateDateRange = (daysAgo) => {
   const startDate = new Date()
@@ -185,6 +196,9 @@ const selectDay = async (data) => {
     case 'last90days':
       range = calculateDateRange(90)
       break
+    case 'all':
+      range = { startDate: null, endDate: null }
+      break
     default:
       range = { startDate: null, endDate: null }
       break
@@ -196,6 +210,11 @@ const selectDay = async (data) => {
     dateFrom.value = dateSearch(range.startDate)
     dateTo.value = dateSearch(range.endDate)
     hideNameDay.value = false
+  } else {
+    selectedNameDay.value = data
+    flatPickerInstance.value.setDate()
+    dateFrom.value = ''
+    dateTo.value = ''
   }
 }
 onMounted(async () => {
@@ -306,8 +325,6 @@ onUnmounted(() => {
                 <!-- Calendar Icon SVG -->
                 <svg
                   class="fill-current"
-                  width="20"
-                  height="20"
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -369,12 +386,12 @@ onUnmounted(() => {
           </div>
           <button
             class="flex gap-1 items-center rounded-lg hover:bg-gray-100 px-2 py-0.5 ml-2 text-gray-800 focus:outline-none"
-            :class="dateFrom && dateTo? 'border border-primary':'border border-primary-200'"
+            :class="dateFrom && dateTo ? 'border border-primary' : 'border border-primary-200'"
             @click="queryDate"
           >
             <svg
               class="w-5 h-5 transition duration-200"
-              :class="dateFrom && dateTo? 'text-primary':'text-primary-300'"
+              :class="dateFrom && dateTo ? 'text-primary' : 'text-primary-300'"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -409,6 +426,35 @@ onUnmounted(() => {
                 </svg>
               </span>
               <span> {{ t('delete') }}</span>
+            </button>
+            <button
+              @click.prevent="toggleModal('reject')"
+              class="flex items-center gap-1 text-gray-800 rounded-lg px-2 py-0.5 hover:bg-gray-100"
+              :class="checkItemData ? 'border border-red-500' : 'border border-red-200'"
+            >
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    :class="checkItemData ? 'text-red-500' : 'text-red-200'"
+                  />
+                  <path
+                    d="M7 17L17 7"
+                    :class="checkItemData ? 'text-red-500' : 'text-red-200'"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+              <span> {{ t('reject') }}</span>
             </button>
             <button
               @click.prevent="toggleModal('authorize')"
@@ -452,7 +498,7 @@ onUnmounted(() => {
         :class="{
           'h-40': isDropdownOpenCtTpye,
           'h-100': isDropdownOpenBranch,
-          'h-60': isDropdownOpenDays
+          'h-70': isDropdownOpenDays
         }"
       >
         <thead>
@@ -519,7 +565,7 @@ onUnmounted(() => {
             <td class="px-2 border-b">
               <p class="text-black">{{ customer.ACCTNAME }}</p>
             </td>
-                 <td class="px-2 border-b text-gray-800">
+            <td class="px-2 border-b text-gray-800">
               <div
                 v-if="customer.STATUS === 0"
                 class="relative border-b border-gray-400 rounded-sm px-1 py-0.5"
@@ -648,7 +694,15 @@ onUnmounted(() => {
     :id="selectedItems"
     :title="$t('do_you_want_approve')"
     :message="$t('confirm')"
-    value="authorize-va"
+    value="1"
     @close="isOpen.isAuthorizeVA = false"
+  />
+  <showModals
+    :show-confirm-modal="isOpen.isRejectVA"
+    :id="selectedItems"
+    :title="$t('do_want_to_reject')"
+    :message="$t('confirm')"
+    value="2"
+    @close="isOpen.isRejectVA = false"
   />
 </template>

@@ -515,7 +515,7 @@ async function resetForm() {
                 </span>
               </div>
               <div class="flex w-full">
-                <span class="text-primary w-[30%]">CIF:</span>
+                <span class="text-primary w-[30%]">{{t('account_number_cif')}}:</span>
                 <span class="text-red-500 w-[70%]">
                   {{ formData.cif }}
                 </span>

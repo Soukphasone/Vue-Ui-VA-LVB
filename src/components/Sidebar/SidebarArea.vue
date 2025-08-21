@@ -7,13 +7,14 @@ import { menuGroups } from './sidebarMenu'
 import DropdownUser from '../Header/DropdownUser.vue'
 import { useRoute } from 'vue-router'
 import logo from '@/assets/images/logo/LVB-Logo.png'
-import { MenuList } from '@/service/Get_Post_API'
+import { MenuList, CustomerRegisterList } from '@/service/Get_Post_API'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
 const currentPage = useRoute().name
 const target = ref(null)
 const sidebarStore = useSidebarStore()
 const menuList = ref(null)
+const notificationBell = ref(0)
 onClickOutside(target, () => {
   sidebarStore.isSidebarOpen = false
 })
@@ -24,9 +25,30 @@ const Menu = async () => {
   try {
     const _res = await MenuList(body)
     menuList.value = _res.data
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
+}
+const notificationCount = async () => {
+  const data = {
+    BRANCH: '',
+    // BRANCH: userData.HR_BRN_CODE,
+    STATUS: 0,
+    DATE_FROM: '',
+    DATE_TO: ''
+  }
+  try {
+    const _res = await CustomerRegisterList(data)
+    if (_res.data.length > 0) {
+      notificationBell.value = _res.data.length
+      console.log('count:', _res.data.length)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 onMounted(Menu)
+onMounted(notificationCount)
 </script>
 <template>
   <div>
@@ -52,7 +74,12 @@ onMounted(Menu)
               <template v-for="menuGroup in menuList" :key="menuGroup.EN_NAME">
                 <div>
                   <ul class="mb-2 flex flex-col gap-1.5">
-                    <SidebarItem :item="menuGroup" :key="index" :index="index" />
+                    <SidebarItem
+                      :item="menuGroup"
+                      :key="index"
+                      :index="index"
+                      :count="notificationBell"
+                    />
                   </ul>
                 </div>
               </template>

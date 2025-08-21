@@ -58,11 +58,12 @@ const closeConfirmModal = () => {
   openModal.isLogOut = false
   openModal.isDeleteVA = false
   openModal.isAuthorizeVA = false
+  openModal.isRejectVA = false
 }
 function confirm(value) {
-  if (value === 'authorize-va') {
-    console.log('authorie')
-    handleAuthorize()
+  if (value === '1' || value === '2') {
+    console.log('value', value)
+    handleStatus()
   }
   if (value === 'delete-va') {
     handleDeleteVA()
@@ -86,8 +87,8 @@ const handleDeleteVA = async () => {
       refreshVA()
     }
     if (!_res.data) {
-      titleModal.value = 'Fail'
-      messageModal.value = 'Please try again'
+      titleModal.value = 'fail'
+      messageModal.value = 'try_again'
       showError.value = true
     }
     return
@@ -95,7 +96,41 @@ const handleDeleteVA = async () => {
     isLoading.value = false
   }
 }
-const handleAuthorize = async () => {
+const handleStatus = async () => {
+  isLoading.value = true
+  try {
+    if (props.value === '1' || props.value === '2') {
+      console.log('Status:', props.value)
+      const data = {
+        IDS: props.id,
+        STATUS: props.value,
+        USER_APPROVE: userDataLogin.EMPNAME
+      }
+      const _res = await UpdateVA(data)
+      if (_res.message === 'Success') {
+        closeConfirmModal()
+        openModal.isSuccess = true
+        refreshVA()
+      }
+    }
+    titleModal.value = 'fail'
+    messageModal.value = 'try_again'
+    showError.value = true
+
+    // if (props.value === 'reject-va') {
+    //   console.log('Re')
+    // }
+
+    // if (!_res.data) {
+    //   titleModal.value = 'fail'
+    //   messageModal.value = 'try_again'
+    //   showError.value = true
+    // }
+  } finally {
+    isLoading.value = false
+  }
+}
+const handleReject = async () => {
   const data = {
     IDS: props.id,
     USER_APPROVE: userDataLogin.EMPNAME
@@ -110,8 +145,8 @@ const handleAuthorize = async () => {
       refreshVA()
     }
     if (!_res.data) {
-      titleModal.value = 'Fail'
-      messageModal.value = 'Please try again'
+      titleModal.value = 'fail'
+      messageModal.value = 'try_again'
       showError.value = true
     }
   } finally {
@@ -154,7 +189,7 @@ const handleAuthorize = async () => {
             @click="closeSuccessModal"
             class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
           >
-          {{ $t('done') }}
+            {{ $t('done') }}
           </button>
         </div>
       </div>
@@ -298,6 +333,21 @@ const handleAuthorize = async () => {
               stroke-width="2"
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <svg
+              v-if="openModal.isRejectVA"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-9 h-9 animate-pulse"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-4h2a2 2 0 012 2v2H7V5a2 2 0 012-2z"
+              />
             </svg>
           </div>
         </div>

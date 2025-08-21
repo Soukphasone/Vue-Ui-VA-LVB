@@ -55,7 +55,7 @@ export default function useLoginPage() {
       }
     } catch (error) {
       console.log(error)
-      errorMessage.value = t('sorry_try_later')
+      errorMessage.value = 'sorry_try_later'
     } finally {
       isLoading.value = false
     }

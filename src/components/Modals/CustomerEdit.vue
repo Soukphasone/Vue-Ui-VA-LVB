@@ -226,24 +226,27 @@ const refreshVA = () => {
 
                 <button
                   @click.prevent="handleCheckCIF"
-                  class="flex border border-primary hover:bg-gray-100 py-1 px-2 rounded-lg text-primary min-w-[110px]"
+                  class="flex items-center gap-1 border border-primary hover:bg-gray-100 py-1 px-2 rounded-lg text-primary min-w-[110px]"
                   :class="{ 'border border-red-500 text-red-500': checkCIF === '1' }"
                 >
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      fill="none"
                       stroke="currentColor"
-                      class="w-6 h-6 text-primary cursor-pointer"
-                      :class="{ 'text-red-500': checkCIF === '1' }"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-5 h-5"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 9V5.25a1.5 1.5 0 00-3 0V9m0 0V3.75a1.5 1.5 0 00-3 0v5.25m0 0V6.75a1.5 1.5 0 00-3 0v6a5.25 5.25 0 0010.5 0V9h-4.5z"
-                      />
+                      <!-- Corners -->
+                      <path d="M7 3H5a2 2 0 0 0-2 2v2" />
+                      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                      <path d="M3 17v2a2 2 0 0 0 2 2h2" />
+                      <!-- Scan line -->
+                      <path d="M3 12h18" />
                     </svg>
                   </span>
                   <span>{{ t('check') }}</span>

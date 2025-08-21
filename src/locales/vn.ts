@@ -178,5 +178,12 @@ export const vn = {
   close: 'Đóng',
   done:'Xong',
   invalid_username_or_password:'Tên đăng nhập hoặc mật khẩu không đúng',
-  user_locked: 'Tài khoản bị khóa'
+  user_locked: 'Tài khoản bị khóa',
+  fail: 'Bị lỗi',
+  reject: 'Từ chối',
+  rejected: 'Bị từ chối"',
+  do_want_to_reject: 'Bạn có muốn từ chối không?',
+  authorization: 'Ủy quyền',
+  pl_select_date : 'Vui lòng chọn ngày',
+  wait_authorization: 'Chờ cấp quyền'
 }

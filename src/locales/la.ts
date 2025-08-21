@@ -120,6 +120,7 @@ export const la = {
   authorize: 'ອະນຸມັດ',
   authorized: 'ອະນຸມັດແລ້ວ',
   unauthorized: 'ຍັງບໍ່ທັນອະນຸມັດ',
+  authorization: 'ອະນຸມັດສິດ',
   please_select_ct_type: 'ກະລຸນາເລືອກປະເພດລູກຄ້າ',
   please_select_account_authorize: 'ກະລຸນາເລືອກບັນຊີເພື່ອອະນຸມັດ',
   thank_you: 'ຂໍຂອບໃຈ',
@@ -177,9 +178,14 @@ export const la = {
   pl_select_account_no: "ກະລຸນາເລືອກເລກບັນຊີ",
   pl_choose_payment: "ກະລຸນາເລືອກປະເພດຊຳລະ",
   close: 'ປິດ',
-  done:'ສຳເລັດ',
+  done: 'ສຳເລັດ',
   invalid_username: 'ຊື່ຜູ້ໃຊ້ບໍ່ຖືກຕ້ອງ',
-  invalid_username_or_password:'ຊື່ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ',
-  user_locked: 'ບັນຊີຜູ້ໃຊ້ຖືກລັອກ'
-
+  invalid_username_or_password: 'ຊື່ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ',
+  user_locked: 'ບັນຊີຜູ້ໃຊ້ຖືກລັອກ',
+  fail: 'ເກີດຂໍ້ຜິດພາດ',
+  reject: 'ປະຕິເສດ',
+  rejected: 'ຖືກປະຕິເສດ',
+  do_want_to_reject: 'ທ່ານຕ້ອງການປະຕິເສດລາຍການນີ້ບໍ?',
+  pl_select_date: 'ກະລຸນາເລືອກວັນທີ',
+  wait_authorization: 'ລໍການອະນຸມັດ'
 }
