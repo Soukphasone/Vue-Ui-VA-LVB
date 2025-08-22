@@ -162,7 +162,7 @@ const handleReject = async () => {
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-999"
     >
       <div class="bg-white rounded-lg max-w-md w-full p-6">
-        <div class="flex justify-center mb-4">
+        <div class="flex justify-center mb-6">
           <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
             <svg
               class="w-10 h-10 text-green-600"
@@ -180,16 +180,13 @@ const handleReject = async () => {
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">{{ title }}</h2>
-        <p class="text-gray-600 text-center mb-6">
-          {{ message }}
-        </p>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ $t(title) }}</h2>
         <div class="flex justify-center">
           <button
             @click="closeSuccessModal"
             class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
           >
-            {{ $t('done') }}
+            {{ $t('close') }}
           </button>
         </div>
       </div>
@@ -219,10 +216,7 @@ const handleReject = async () => {
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">{{ title }}</h2>
-        <p class="text-gray-600 text-center mb-6">
-          {{ message }}
-        </p>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">{{ title }}</h2>
         <div class="flex justify-center">
           <button
             @click="closeWarningModal"
@@ -240,7 +234,7 @@ const handleReject = async () => {
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-999"
     >
       <div class="bg-white rounded-lg max-w-md w-full p-6">
-        <div class="flex justify-center mb-4">
+        <div class="flex justify-center mb-6">
           <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
             <svg
               class="w-10 h-10 text-red-600"
@@ -258,10 +252,7 @@ const handleReject = async () => {
             </svg>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">{{ $t(title) }}</h2>
-        <p class="text-gray-600 text-center mb-6">
-          {{ $t(message) }}
-        </p>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ $t(title) }}</h2>
         <div class="flex justify-center">
           <button
             @click="closeErrorModal"
@@ -288,7 +279,7 @@ const handleReject = async () => {
         </span>
       </div>
       <div class="bg-white rounded-lg max-w-md w-full p-6 mx-4">
-        <div class="flex justify-center mb-4">
+        <div class="flex justify-center mb-6">
           <div
             class="w-16 h-16 transition-colors rounded-full flex items-center justify-center"
             :class="openModal.isAuthorizeVA ? 'bg-green-100' : 'bg-red-100 text-red-500'"

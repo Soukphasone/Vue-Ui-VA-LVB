@@ -1,5 +1,5 @@
 export const svgIcons = {
-    Authorized: ` <svg
+  Authorized: ` <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -8,7 +8,7 @@ export const svgIcons = {
                     >
                       <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>`,
-    Reject: `<svg
+  Reject: `<svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   class=""
@@ -28,7 +28,7 @@ export const svgIcons = {
                     stroke-linecap="round"
                   />
                 </svg>`,
-    Delete: ` <svg
+  Delete: ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -37,7 +37,7 @@ export const svgIcons = {
                 >
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>`,
-    Unauthorized: ` <svg
+  Unauthorized: ` <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -56,7 +56,7 @@ export const svgIcons = {
       d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
     ></path>
   </svg>`,
-    Calendar: `  <svg
+  Calendar: `  <svg
                   width="20"
                   height="20"
                   viewBox="0 0 20 20"
@@ -107,7 +107,7 @@ export const svgIcons = {
                     fill=""
                   />
                 </svg>`,
-    Search: `<svg
+  Search: `<svg
           width="20"
           height="20"
           viewBox="0 0 20 20"
@@ -126,7 +126,7 @@ export const svgIcons = {
             fill=""
           />
         </svg>`,
-    ArrowDropDown: `<svg
+  ArrowDropDown: `<svg
                         width="20"
                         height="20"
                         viewBox="0 0 20 20"
@@ -139,7 +139,7 @@ export const svgIcons = {
                           fill=""
                         />
                       </svg>`,
-    EyeView: `<svg
+  EyeView: `<svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -157,29 +157,23 @@ export const svgIcons = {
                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                   />
                 </svg>`,
-    Edit: `  <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6 21H3v-3L16.732 3.732z"
-                  />
-                </svg>`,
-    NoData: ` <svg
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="50" cy="50" r="40" class="opacity-50" />
-            <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
-            <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-          </svg>`
+  Edit: `<svg
+     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+     aria-hidden="true">
+  <path d="M3 21l3.8-.8c.3-.1.6-.3.8-.5L20.7 6.6c.9-.9.9-2.3 0-3.1l-.2-.2c-.9-.9-2.3-.9-3.1 0L4.3 16.5c-.2.2-.4.5-.5.8L3 21z"/>
+  <path d="M14 5l5 5"/>
+</svg>`,
+  NoData: `<svg
+              viewBox="0 0 100 100"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="50" cy="50" r="40" class="opacity-50" />
+              <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
+              <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
+            </svg>`
 }

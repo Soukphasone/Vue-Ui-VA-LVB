@@ -1,6 +1,16 @@
-<!-- Example in any page/component -->
-<script setup lang="ts">
+<script setup>
 import ImageSlider from '@/components/Slider/ImageSlier.vue'
+import { isTokenExpired } from '@/stores/checkToken'
+import { logout } from '@/stores/clearStorage'
+import { onMounted } from 'vue'
+
+const checkToken = () => {
+  const token = localStorage.getItem('authToken')
+  if (isTokenExpired(token)) {
+    logout()
+  }
+}
+onMounted(checkToken)
 
 const slides = [
   // { src: "/src/assets/images/slide-images/1.jpg", caption: "" },

@@ -8,6 +8,7 @@ import SearchInput from '../Search/SearchInput.vue'
 import BillRegisterModal from '../Modals/BillRegisterModal.vue'
 import { useOpenModalBill } from '@/stores/modal'
 import { dateSearch } from '@/service/Format'
+import { svgIcons } from '@/stores/svgIcons'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
@@ -315,27 +316,15 @@ async function resetForm() {
             class="flex flex-col justify-center items-center"
           >
             <div class="flex flex-col items-center justify-center mt-20">
-              <svg
-                class="w-20 h-20 text-red-600 animate-pulse"
-                viewBox="0 0 100 100"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="50" cy="50" r="40" class="opacity-50" />
-                <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
-                <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-              </svg>
-              <p class="mt-2 text-gray-500 text-sm">No Data</p>
+              <span v-html="svgIcons.NoData" class="w-20 h-20 text-red-600 animate-pulse"></span>
+              <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
             </div>
           </div>
           <table v-else class="w-full table-auto">
             <thead>
               <tr class="bg-gray-50 border-b text-center">
                 <th class="p-2 w-[65px] font-medium text-black">{{ t('stt') }}</th>
-                <th class="px-2 font-medium text-black">{{ t('choose') }}</th>
+                <th class="px-2 max-w-[50px] font-medium text-black">{{ t('choose') }}</th>
                 <th class="py-2 px-8 font-medium text-black text-left">{{ t('service_name') }}</th>
                 <th></th>
               </tr>
@@ -375,7 +364,7 @@ async function resetForm() {
                 class="p-0.5 px-6 border border-gray-300 bg-white rounded-xl hover:bg-gray-100"
                 @click="loadMore"
               >
-                More ...
+                {{ t('more') }} ...
               </button>
             </div>
           </div>
@@ -515,7 +504,7 @@ async function resetForm() {
                 </span>
               </div>
               <div class="flex w-full">
-                <span class="text-primary w-[30%]">{{t('account_number_cif')}}:</span>
+                <span class="text-primary w-[30%]">{{ t('account_number_cif') }}:</span>
                 <span class="text-red-500 w-[70%]">
                   {{ formData.cif }}
                 </span>

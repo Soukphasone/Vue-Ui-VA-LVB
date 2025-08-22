@@ -92,6 +92,39 @@
 }
 
 /* scrollbar  */
+/*  */
+/* Works in Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  height: 10px;              /* horizontal scrollbar height */
+  width: 10px;               /* vertical scrollbar width */
+}
+
+/* The track (background of the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f0f0f0;        /* light gray background */
+  border-radius: 10px;
+}
+
+/* The draggable part of scrollbar */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #4f46e5, #3b82f6); /* indigo → blue */
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;  /* gap between thumb and track */
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #4338ca, #2563eb);
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;               /* auto | thin | none */
+  scrollbar-color: #3b82f6 #f0f0f0;    /* thumb color | track color */
+}
+
+/*  */
+
 /* Fade and Scale Animation */
 .fade-scale-enter-active,
 .fade-scale-leave-active {

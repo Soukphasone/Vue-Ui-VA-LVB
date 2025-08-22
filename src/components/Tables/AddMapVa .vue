@@ -6,7 +6,7 @@ import { currentLanguage } from '@/i18n'
 import { MapVA, Service } from '@/service/Get_Post_API'
 import showModals from '@/components/Modals/showModals.vue'
 import SearchInput from '../Search/SearchInput.vue'
-
+import { svgIcons } from '@/stores/svgIcons'
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
@@ -44,7 +44,7 @@ const toggleSelection = (item) => {
 }
 const addToRegister = async () => {
   if (!checkItemData.value) {
-    titleModal.value = 'Plese choose a service name'
+    titleModal.value = 'pl_choose_service_name'
     messageModal.value = 'Please check again'
     showError.value = true
     return
@@ -57,15 +57,15 @@ const addToRegister = async () => {
   try {
     const _res = await MapVA(data)
     if (_res.data.length > 0) {
-      titleModal.value = 'Add To Registration'
-      messageModal.value = 'Success'
+      titleModal.value = 'success_add_to_register'
       showSuccess.value = true
       selectedItems.value = []
       checkItemData.value = false
+      isLoading.value = false
       fetchSericeData()
     }
-  } finally {
-    isLoading.value = false
+  } catch (error) {
+    console.log(error)
   }
 }
 const fetchSericeData = async () => {
@@ -137,29 +137,17 @@ const loadMore = () => {
             </ul>
           </div>
         </div>
-        <div v-if="isLoading" class="flex flex-col justify-center items-center">
-          <div class="mt-15">
-            <Loading/>
+        <div v-if="isLoading" class="flex flex-col justify-center items-center min-h-screen">
+          <div class="mb-80">
+            <Loading />
           </div>
         </div>
         <div
           v-else-if="!isLoading && filteredItems.length <= 0"
-          class="flex flex-col justify-center items-center"
+          class="flex flex-col justify-center items-center min-h-screen"
         >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-20 h-20 text-red-600 animate-pulse"
-              viewBox="0 0 100 100"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="50" cy="50" r="40" class="opacity-50" />
-              <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
-              <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-            </svg>
+          <div class="flex flex-col items-center justify-center mb-80">
+            <span v-html="svgIcons.NoData" class="w-20 h-20 text-red-600 animate-pulse"></span>
             <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
           </div>
         </div>
@@ -167,7 +155,7 @@ const loadMore = () => {
           <thead>
             <tr class="bg-gray-50 border-b text-center">
               <th class="p-2 w-[65px] font-medium text-black">{{ t('stt') }}</th>
-              <th class="px-2 max-w-[5px] font-medium text-black">{{ t('choose') }}</th>
+              <th class="px-2 max-w-[50px] font-medium text-black">{{ t('choose') }}</th>
               <th class="py-2 px-8 font-medium text-black text-left">{{ t('service_name') }}</th>
               <th></th>
             </tr>
@@ -206,7 +194,7 @@ const loadMore = () => {
               class="p-0.5 px-6 border border-gray-300 bg-white rounded-xl hover:bg-gray-100"
               @click="loadMore"
             >
-              More ...
+              {{ t('more') }} ...
             </button>
           </div>
         </div>

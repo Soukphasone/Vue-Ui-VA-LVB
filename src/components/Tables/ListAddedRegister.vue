@@ -2,11 +2,11 @@
 import { onMounted, ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Loading from '@/components/Loading/Loading.vue'
-import { useSearchStore } from '@/stores/search'
 import { currentLanguage } from '@/i18n'
 import { DeleteListAddedMap, ServiceRegsiter } from '@/service/Get_Post_API'
 import showModals from '@/components/Modals/showModals.vue'
 import SearchInput from '../Search/SearchInput.vue'
+import { svgIcons } from '@/stores/svgIcons'
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
@@ -60,27 +60,35 @@ const toggleSelection = (item) => {
   selectedItems.value = newSelectedItems
   checkItemData.value = newSelectedItems.length > 0
 }
+const reset = async () => {
+  selectedItems.value = []
+  messageModal.value = 'success'
+  titleModal.value = 'delete_success'
+  showSuccess.value = true
+  await fetchSericeData()
+}
 const removeListAdded = async () => {
   if (!checkItemData.value) {
-    titleModal.value = 'Please choose a service name'
-    messageModal.value = 'Please check again'
+    titleModal.value = 'pl_choose_service_name'
+    messageModal.value = 'check_again'
     showError.value = true
     return
   }
   const data = {
     IDS: selectedItems.value
   }
-  // isLoading.value = true
+  isLoading.value = true
   try {
     const _res = await DeleteListAddedMap(data)
-    if (_res.data.length > 0) {
-      messageModal.value = 'Success'
-      titleModal.value = 'Delete'
-      showSuccess.value = true
-      fetchSericeData()
+    if (_res.message === 'SUCCESS') {
+      await reset()
+      return
     }
-  } finally {
-    isLoading.value = false
+    showError.value = true
+    titleModal.value = 'fail'
+    messageModal.value = 'check_again'
+  } catch (error) {
+    console.log(error)
   }
 }
 const fetchSericeData = async () => {
@@ -90,12 +98,13 @@ const fetchSericeData = async () => {
   isLoading.value = true
   try {
     const _res = await ServiceRegsiter(data)
-    console.log('service:', _res)
     if (_res.data.length > 0) {
       serviceListAddedData.value = _res.data
     } else {
       serviceListAddedData.value = []
     }
+  } catch (error) {
+    console.log(error)
   } finally {
     setTimeout(() => {
       isLoading.value = false
@@ -135,17 +144,8 @@ const loadMore = () => {
                 @click.prevent="removeListAdded"
                 class="flex items-center border border-gray-200 bg-whiter hover:bg-gray-100 py-0.5 px-2 text-black rounded-lg gap-2"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  class="w-6 h-6 text-red-500"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              {{ t('delete') }}
+                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500"></span>
+                {{ t('delete') }}
               </button></span
             >
           </div>
@@ -157,29 +157,17 @@ const loadMore = () => {
             </ul>
           </div>
         </div>
-        <div v-if="isLoading" class="flex flex-col justify-center items-center">
-          <div class="mt-15">
+        <div v-if="isLoading" class="flex flex-col justify-center items-center min-h-screen">
+          <div class="mb-80">
             <Loading />
           </div>
         </div>
         <div
           v-else-if="!isLoading && filteredItems.length <= 0"
-          class="flex flex-col justify-center items-center"
+          class="flex flex-col justify-center items-center min-h-screen"
         >
-          <div class="flex flex-col items-center justify-center">
-            <svg
-              class="w-20 h-20 text-red-600 animate-pulse"
-              viewBox="0 0 100 100"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="50" cy="50" r="40" class="opacity-50" />
-              <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
-              <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-            </svg>
+          <div class="flex flex-col items-center justify-center mb-80">
+            <span v-html="svgIcons.NoData" class="w-20 h-20 text-red-600 animate-pulse"></span>
             <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
           </div>
         </div>

@@ -70,7 +70,7 @@ export const dayListLao = [
   { id: 4, name: '30 ມື້ກ່ອນ', value: 'last30days', color: 'white' },
   { id: 5, name: '60 ມື້ກ່ອນ', value: 'last60days', color: 'white' },
   { id: 6, name: '90 ມື້ກ່ອນ', value: 'last90days', color: 'white' },
-  { id: 6, name: 'ທັງໝົດ', value: 'all', color: 'white' }
+  { id: 7, name: 'ທັງໝົດ', value: 'all', color: 'white' }
 ]
 export const dayListViet = [
   { id: 1, name: 'Hôm nay', value: 'today', color: 'white', country: 'vn' },
@@ -79,5 +79,5 @@ export const dayListViet = [
   { id: 4, name: '30 ngày trước', value: 'last30days', color: 'white' },
   { id: 5, name: '60 ngày trước', value: 'last60days', color: 'white' },
   { id: 6, name: '90 ngày trước', value: 'last90days', color: 'white' },
-  { id: 6, name: 'Tất cả', value: 'all', color: 'white' }
+  { id: 7, name: 'Tất cả', value: 'all', color: 'white' }
 ]

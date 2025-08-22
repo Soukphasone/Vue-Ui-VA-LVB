@@ -148,6 +148,7 @@ const selectDay = async (data) => {
     flatPickerInstance.value.setDate()
     dateFrom.value = ''
     dateTo.value = ''
+    hideNameDay.value = false
   }
 }
 onMounted(async () => {
@@ -193,7 +194,7 @@ onUnmounted(() => {
     <div class="bg-primary py-4 px-6">
       <h1 class="text-2xl font-bold text-white md:text-center">{{ t('cm_register_list') }}</h1>
     </div>
-    <div class="max-w-full overflow-x-auto border border-gray-200 bg-gray-50">
+    <div class="max-w-full overflow-x-auto border border-gray-200">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
         <div class="flex justify-center items-center">
           <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm">
@@ -350,29 +351,29 @@ onUnmounted(() => {
                 </div>
               </div>
             </td>
-            <td class="px-2 border-b text-center">
+            <td class="p-2 border-b text-center">
               <button
                 @click="toggleModal('detail', customer)"
-                class="p-2 rounded hover:bg-gray-200 w-10"
+                class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.EyeView" class="h-6 w-6 text-gray-600 hover:text-blue-500">
+                <span v-html="svgIcons.EyeView" class="h-6 w-6 text-orange-300 hover:text-orange-500">
                 </span>
               </button>
             </td>
-            <td class="px-2 border-b text-center">
+            <td class="p-2 border-b text-center">
               <button
                 @click="toggleModal('edit', customer)"
-                class="p-2 rounded hover:bg-gray-200 transition w-10"
+                class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.Edit" class="w-5 h-5 text-blue-600"> </span>
+                <span v-html="svgIcons.Edit" class="w-6 h-6 text-blue-400 hover:text-blue-500"> </span>
               </button>
             </td>
-            <td class="px-2 border-b text-center">
+            <td class="p-2 border-b text-center">
               <button
                 @click="toggleModal('delete', customer)"
-                class="p-2 rounded hover:bg-gray-200 transition w-10"
+                class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500"> </span>
+                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-400 hover:text-red-500"> </span>
               </button>
             </td>
           </tr>
@@ -383,7 +384,7 @@ onUnmounted(() => {
         class="flex flex-col justify-center items-center bg-gray-100 min-h-screen border-t"
       >
         <div class="flex flex-col items-center justify-center mb-60">
-          <span v-html="svgIcons.Delete" class="w-20 h-20 text-red-600 animate-pulse"> </span>
+          <span v-html="svgIcons.NoData" class="w-20 h-20 text-red-600 animate-pulse"></span>
           <p class="mt-2 text-gray-500 text-sm">{{ t('no_data') }}</p>
         </div>
       </div>
