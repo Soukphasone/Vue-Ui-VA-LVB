@@ -151,8 +151,7 @@ async function handleSubmit() {
       resetForm()
     }
     if (_res.message === 'This account is already registered') {
-      titleModal.value = 'This account is already registered'
-      messageModal.value = 'Please try again'
+      titleModal.value = 'account_already_registered'
       showError.value = true
     }
     if (!_res.data) {

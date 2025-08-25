@@ -1,16 +1,12 @@
-<script setup lang="ts">
+<script setup>
 import { useSidebarStore } from '@/stores/sidebar'
 import { useRoute } from 'vue-router'
 import { menuIcon } from './sidebarMenu'
 const sidebarStore = useSidebarStore()
 defineProps(['item', 'index', 'count'])
 sidebarStore.page = useRoute().name
-interface SidebarItem {
-  EN_NAME: string
-}
 </script>
 <template>
-  <!-- <li v-if="userData"> -->
   <li>
     <router-link
       :to="item.MENU_PATH"

@@ -26,7 +26,7 @@ export const la = {
   branch: 'ສາຂາ',
   branch_name: 'ຊື່ສາຂາ',
   branch_code: 'ລະຫັດສາຂາ',
-  branch_register: 'ລົງທະບຽນ ສາຂາ',
+  branch_register: 'ສາຂາລົງທະບຽນ',
   select_branch: 'ເລືອກສາຂາ',
   branch_in: 'ສາຂາໃນ FCC',
   full_name: 'ຊື່ ແລະ ນາມສະກຸນ',
@@ -189,5 +189,7 @@ export const la = {
   rejected: 'ຖືກປະຕິເສດ',
   do_want_to_reject: 'ທ່ານຕ້ອງການປະຕິເສດລາຍການນີ້ບໍ?',
   pl_select_date: 'ກະລຸນາເລືອກວັນທີ',
-  wait_authorization: 'ລໍການອະນຸມັດ'
+  wait_authorization: 'ລໍການອະນຸມັດ',
+  no_such_user: 'ບໍ່ມີຊື່ໃນລະບົບ',
+  account_already_registered: 'ບັນຊີນີ້ໄດ້ລົງທະບຽນແລ້ວ'
 }

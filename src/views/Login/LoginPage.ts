@@ -42,7 +42,12 @@ export default function useLoginPage() {
         router.push(PATH.HOME)
       }
       if (_res?.error === '03') {
-        errorMessage.value = 'invalid_username'
+        if (_res?.message === 'The user or password is incorrect') {
+          errorMessage.value = 'invalid_username'
+        }
+        else{
+          errorMessage.value = 'no_such_user'
+        }
       }
       if (_res?.error === '04') {
         if (_res?.message === 'The user or password is incorrect') {

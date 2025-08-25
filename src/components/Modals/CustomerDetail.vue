@@ -4,15 +4,14 @@ import { useI18n } from 'vue-i18n'
 import { currentLanguage } from '@/i18n'
 import { defineProps } from 'vue'
 import { useOpenModalStore } from '@/stores/modal'
-// import { formatDate } from '@/service/Format.ts'
 import showModals from '@/components/Modals/showModals.vue'
-import eventBus from '@/eventBus'
 import { branchesLao, branches } from '@/stores/branchBankList'
 import { formatDateTime } from '@/service/Format'
 
 const props = defineProps({
   data: Object,
-  value: String
+  value: String,
+  role: String
 })
 const check = ref(currentLanguage.value)
 const { t } = useI18n()
@@ -89,7 +88,7 @@ watch(
             </div>
             <div class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
-                {{ t('branch') }}
+                {{ t('branch_register') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 <div
@@ -165,7 +164,7 @@ watch(
             </div>
             <div class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
-                {{ t('created_at') }}
+                {{ t('created_date') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 {{ formatDateTime(data.DATE_INSERT) }}</span
@@ -179,7 +178,7 @@ watch(
                 {{ formatDateTime(data.DATE_EDIT) }}</span
               >
             </div>
-            <div>
+            <div v-if="props.role === 'Maker'">
               <span class="flex gap-4 justify-center mt-10">
                 <button
                   @click="isOpen.isDeleteVA = true"

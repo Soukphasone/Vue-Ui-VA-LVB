@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { onMounted, onUnmounted, ref, computed, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
@@ -81,7 +82,7 @@ const queryDate = async () => {
     showError.value = true
     return
   }
-  fetchData()
+  reSet()
 }
 const toggleModal = (name, data) => {
   if (data) {
@@ -407,7 +408,7 @@ onUnmounted(() => {
         <thead>
           <tr class="bg-gray-100 border-t border-b text-left text-sm font-bold text-gray-600">
             <th class="p-2 w-[65px] font-medium text-black">{{ t('stt') }}</th>
-            <th class="px-4 w-[10px] font-medium text-black text-left">
+            <th class="px-4 min-w-[100px] font-medium text-black text-left">
               <div v-if="dataReport.length > 1" class="flex items-center gap-2">
                 <span>
                   <label class="flex items-center justify-center space-x-2 cursor-pointer">
@@ -423,7 +424,7 @@ onUnmounted(() => {
               </div>
               <div v-else>{{ t('choose') }}</div>
             </th>
-            <th class="py-2 px-4 min-w-[120px]">{{ t('created_at') }}</th>
+            <th class="py-2 px-4 min-w-[120px]">{{ t('created_date') }}</th>
             <th class="py-2 px-4 min-w-[250px]">{{ t('service_name') }}</th>
             <th class="min-w-[120px] px-4">{{ t('account_number_cif') }}</th>
             <th class="min-w-[210px] px-4">{{ t('account_number') }}</th>
@@ -471,8 +472,7 @@ onUnmounted(() => {
             <td class="px-2 border-b text-gray-800">
               <div v-if="customer.STATUS === 0" class="relative rounded-sm px-1 py-0.5">
                 <div class="flex items-center gap-2">
-                  <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500">
-                  </span>
+                  <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500"> </span>
                   <p>
                     {{ t('unauthorized') }}
                   </p>

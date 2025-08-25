@@ -120,7 +120,7 @@
 /* Firefox support */
 * {
   scrollbar-width: thin;               /* auto | thin | none */
-  scrollbar-color: #3b82f6 #f0f0f0;    /* thumb color | track color */
+  scrollbar-color: #a4a7ac #f0f0f0;    /* thumb color | track color */
 }
 
 /*  */

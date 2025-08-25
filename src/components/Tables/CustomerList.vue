@@ -36,6 +36,7 @@ const today = new Date()
 const dateFrom = ref('')
 const dateTo = ref('')
 const search = ref('')
+const branch = ref('')
 const dataDeail = ref([])
 const dataEdit = ref([])
 const idDeleteVa = ref([])
@@ -59,8 +60,13 @@ const toggleModal = (name, data) => {
   }
 }
 const fetchData = async () => {
+  if (userData.ROLE_NAME === 'Maker' || userData.ROLE_NAME === 'Cheker') {
+    branch.value = userData.HR_BRN_CODE
+  } else if (userData.ROLE_NAME === 'Admin') {
+    branch.value = ''
+  }
   const data = {
-    BRANCH: userData.HR_BRN_CODE,
+    BRANCH: branch.value,
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value
   }
@@ -193,6 +199,7 @@ onUnmounted(() => {
   <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
     <div class="bg-primary py-4 px-6">
       <h1 class="text-2xl font-bold text-white md:text-center">{{ t('cm_register_list') }}</h1>
+      <div class="text-white">{{ userData }}</div>
     </div>
     <div class="max-w-full overflow-x-auto border border-gray-200">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
@@ -295,10 +302,10 @@ onUnmounted(() => {
             <th class="min-w-[100px] px-2 text-center">
               <span>{{ t('view_detail') }}</span>
             </th>
-            <th class="px-2 text-center">
+            <th v-if="userData.ROLE_NAME === 'Maker'" class="px-2 text-center">
               <span>{{ t('edit') }}</span>
             </th>
-            <th class="min-w-[100px] px-2 text-center">
+            <th v-if="userData.ROLE_NAME === 'Maker'" class="min-w-[100px] px-2 text-center">
               <span>{{ t('delete') }}</span>
             </th>
           </tr>
@@ -356,24 +363,29 @@ onUnmounted(() => {
                 @click="toggleModal('detail', customer)"
                 class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.EyeView" class="h-6 w-6 text-orange-300 hover:text-orange-500">
+                <span
+                  v-html="svgIcons.EyeView"
+                  class="h-6 w-6 text-orange-300 hover:text-orange-500"
+                >
                 </span>
               </button>
             </td>
-            <td class="p-2 border-b text-center">
+            <td v-if="userData.ROLE_NAME === 'Maker'" class="p-2 border-b text-center">
               <button
                 @click="toggleModal('edit', customer)"
                 class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.Edit" class="w-6 h-6 text-blue-400 hover:text-blue-500"> </span>
+                <span v-html="svgIcons.Edit" class="w-6 h-6 text-blue-400 hover:text-blue-500">
+                </span>
               </button>
             </td>
-            <td class="p-2 border-b text-center">
+            <td v-if="userData.ROLE_NAME === 'Maker'" class="p-2 border-b text-center">
               <button
                 @click="toggleModal('delete', customer)"
                 class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
-                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-400 hover:text-red-500"> </span>
+                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-400 hover:text-red-500">
+                </span>
               </button>
             </td>
           </tr>
@@ -390,11 +402,11 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <CustomerDetail :data="dataDeail" />
+  <CustomerDetail :data="dataDeail" :role="userData.ROLE_NAME" />
   <CustomerEdit :data="dataEdit" />
   <showModals
     :show-success-modal="isOpen.isSuccess"
-    title="Delete"
+    title="delete_success"
     message="Success"
     @close="isOpen.isSuccess = false"
   />

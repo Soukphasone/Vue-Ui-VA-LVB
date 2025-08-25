@@ -27,7 +27,7 @@ export const en = {
   to_date: 'To Date',
   account: 'Account',
   customer_information: 'Customer Information',
-  branch_register: 'Branch Register',
+  branch_register: 'Register Branch',
   branch: 'Branch',
   branch_name: 'Branch name',
   branch_code: 'Branch code',
@@ -193,5 +193,7 @@ export const en = {
   rejected: 'Rejected',
   do_want_to_reject: 'Do you want to reject?',
   pl_select_date : 'Please select date',
-  wait_authorization: 'Wait authorization'
+  wait_authorization: 'Wait authorization',
+  no_such_user:'No such user in system',
+  account_already_registered: 'This account is already registered'
 }

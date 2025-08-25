@@ -26,7 +26,7 @@ export const vn = {
   branch: 'Chi nhánh',
   branch_name: 'Tên chi nhánh',
   branch_code: 'Mã chi nhánh',
-  branch_register: 'Branch Register',
+  branch_register: 'Đăng ký chi nhánh',
   select_branch: 'Chọn chi nhánh',
   branch_in: 'Chi nhánh trong FCC',
   full_name: 'Họ và tên',
@@ -178,14 +178,17 @@ export const vn = {
   pl_select_account_no: "Vui lòng chọn số tài khoản",
   pl_choose_payment: "Vui lòng chọn loại thanh toán",
   close: 'Đóng',
-  done:'Xong',
-  invalid_username_or_password:'Tên đăng nhập hoặc mật khẩu không đúng',
+  done: 'Xong',
+  invalid_username_or_password: 'Tên đăng nhập hoặc mật khẩu không đúng',
   user_locked: 'Tài khoản bị khóa',
   fail: 'Bị lỗi',
   reject: 'Từ chối',
   rejected: 'Bị từ chối',
   do_want_to_reject: 'Bạn có muốn từ chối không?',
   authorization: 'Ủy quyền',
-  pl_select_date : 'Vui lòng chọn ngày',
-  wait_authorization: 'Chờ cấp quyền'
+  pl_select_date: 'Vui lòng chọn ngày',
+  wait_authorization: 'Chờ cấp quyền',
+  no_such_user: 'Không có tài khoản này trong hệ thống',
+  account_already_registered: 'Tài khoản này đã được đăng ký'
+
 }
