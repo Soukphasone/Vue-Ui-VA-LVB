@@ -2,10 +2,11 @@
 import { useOpenModalStore } from '@/stores/modal'
 import { logout } from '@/stores/clearStorage'
 import { useRouter } from 'vue-router'
-import { DeleteVA, UpdateVA } from '@/service/Get_Post_API'
+import {UpdateVA } from '@/service/Get_Post_API'
 import eventBus from '@/eventBus'
 import { ref } from 'vue'
 import Loading from '../Loading/Loading.vue'
+import { svgIcons } from '@/stores/svgIcons'
 
 const props = defineProps({
   showSuccessModal: {
@@ -62,7 +63,6 @@ const closeConfirmModal = () => {
 }
 function confirm(value) {
   if (value === '1' || value === '2') {
-    console.log('value', value)
     handleStatus()
   }
   if (value === 'delete-va') {
@@ -73,34 +73,33 @@ function confirm(value) {
     logout(router)
   }
 }
-const handleDeleteVA = async () => {
-  const data = {
-    IDS: props.id
-  }
-  isLoading.value = true
-  try {
-    const _res = await DeleteVA(data)
-    if (_res.message === 'Success') {
-      openModal.isDeleteVA = false
-      openModal.isDetail = false
-      openModal.isSuccess = true
-      refreshVA()
-    }
-    if (!_res.data) {
-      titleModal.value = 'fail'
-      messageModal.value = 'try_again'
-      showError.value = true
-    }
-    return
-  } finally {
-    isLoading.value = false
-  }
-}
+// const handleDeleteVA = async () => {
+//   const data = {
+//     IDS: props.id
+//   }
+//   isLoading.value = true
+//   try {
+//     const _res = await DeleteVA(data)
+//     if (_res.message === 'Success') {
+//       openModal.isDeleteVA = false
+//       openModal.isDetail = false
+//       openModal.isSuccess = true
+//       refreshVA()
+//     }
+//     if (!_res.data) {
+//       titleModal.value = 'fail'
+//       messageModal.value = 'try_again'
+//       showError.value = true
+//     }
+//     return
+//   } finally {
+//     isLoading.value = false
+//   }
+// }
 const handleStatus = async () => {
   isLoading.value = true
   try {
     if (props.value === '1' || props.value === '2') {
-      console.log('Status:', props.value)
       const data = {
         IDS: props.id,
         STATUS: props.value,
@@ -130,29 +129,29 @@ const handleStatus = async () => {
     isLoading.value = false
   }
 }
-const handleReject = async () => {
-  const data = {
-    IDS: props.id,
-    USER_APPROVE: userDataLogin.EMPNAME
-  }
-  isLoading.value = true
-  try {
-    const _res = await UpdateVA(data)
-    if (_res.message === 'Success') {
-      openModal.isAuthorizeVA = false
-      openModal.isDetail = false
-      openModal.isSuccess = true
-      refreshVA()
-    }
-    if (!_res.data) {
-      titleModal.value = 'fail'
-      messageModal.value = 'try_again'
-      showError.value = true
-    }
-  } finally {
-    isLoading.value = false
-  }
-}
+// const handleReject = async () => {
+//   const data = {
+//     IDS: props.id,
+//     USER_APPROVE: userDataLogin.EMPNAME
+//   }
+//   isLoading.value = true
+//   try {
+//     const _res = await UpdateVA(data)
+//     if (_res.message === 'Success') {
+//       openModal.isAuthorizeVA = false
+//       openModal.isDetail = false
+//       openModal.isSuccess = true
+//       refreshVA()
+//     }
+//     if (!_res.data) {
+//       titleModal.value = 'fail'
+//       messageModal.value = 'try_again'
+//       showError.value = true
+//     }
+//   } finally {
+//     isLoading.value = false
+//   }
+// }
 </script>
 
 <template>
@@ -299,47 +298,24 @@ const handleReject = async () => {
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
               />
             </svg>
-            <svg
+            <span
               v-if="openModal.isDeleteVA"
-              xmlns="http://www.w3.org/2000/svg"
+              v-html="svgIcons.Delete_Bin"
               class="w-9 h-9 animate-pulse"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-4h2a2 2 0 012 2v2H7V5a2 2 0 012-2z"
-              />
-            </svg>
-            <svg
+            </span>
+            <span
               v-if="openModal.isAuthorizeVA"
-              xmlns="http://www.w3.org/2000/svg"
+              v-html="svgIcons.Authorized"
               class="w-9 h-9 text-green-600 animate-pulse"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <svg
+            </span>
+            <span
               v-if="openModal.isRejectVA"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-9 h-9 animate-pulse"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
+              v-html="svgIcons.Reject"
+              class="w-9 h-9 text-red-500 animate-pulse"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-4h2a2 2 0 012 2v2H7V5a2 2 0 012-2z"
-              />
-            </svg>
+            </span>
           </div>
         </div>
         <h2 class="text-2xl font-bold text-center text-gray-600 mb-10">{{ title }}</h2>

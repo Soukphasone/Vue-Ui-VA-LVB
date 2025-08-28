@@ -6,7 +6,7 @@ import { CustomerAccount, RegisterVA, ServiceRegsiter } from '@/service/Get_Post
 import showModals from '@/components/Modals/showModals.vue'
 import SearchInput from '../Search/SearchInput.vue'
 import BillRegisterModal from '../Modals/BillRegisterModal.vue'
-import { useOpenModalBill } from '@/stores/modal'
+import { useOpenModalStore } from '@/stores/modal'
 import { dateSearch } from '@/service/Format'
 import { svgIcons } from '@/stores/svgIcons'
 
@@ -14,7 +14,7 @@ const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
 const steps = ['service_name', 'customer_information', 'review']
 const currentStep = ref(1)
-const showSuccess = useOpenModalBill()
+const showSuccess = useOpenModalStore()
 const showError = ref(false)
 const serviceData = ref([])
 const isLoading = ref(false)
@@ -28,7 +28,7 @@ const serviceName = ref('')
 const accountNumberList = ref([])
 const dropdownAccountNo = ref(false)
 const selectedAccountNo = ref('')
-const checkCIF = ref(false)
+const checkCIF = ref()
 const search = ref('')
 const checkError = ref('')
 const dataBill = ref([])
@@ -71,25 +71,21 @@ async function nextStep() {
   if (currentStep.value === 2) {
     if (!formData.value.cif) {
       titleModal.value = 'pl_enter_cif'
-      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (formData.value.cif.length !== 9) {
       titleModal.value = 'pl_enter_cif_9_digits'
-      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (!formData.value.accountNumber) {
       titleModal.value = 'pl_select_account_no'
-      messageModal.value = 'check_again'
       showError.value = true
       return
     }
     if (!formData.value.aliasType) {
       titleModal.value = 'Choose an alias type'
-      messageModal.value = 'check_again'
       showError.value = true
       return
     }
@@ -147,7 +143,7 @@ async function handleSubmit() {
     const _res = await RegisterVA(data)
     if (_res.message === 'SUCCESS') {
       dataBill.value = _res.data[0]
-      showSuccess.isOpenModal = true
+      showSuccess.isBill = true
       resetForm()
     }
     if (_res.message === 'This account is already registered') {
@@ -375,7 +371,7 @@ async function resetForm() {
             class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-9999"
           >
             <span>
-              <Loading size="45px" />
+              <Loading />
             </span>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -393,7 +389,7 @@ async function resetForm() {
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-            <div>
+            <div class="relative block w-full">
               <input
                 type="text"
                 v-model="formData.cif"
@@ -405,6 +401,18 @@ async function resetForm() {
                   'border border-red-500 text-red-500': checkError === '2'
                 }"
               />
+              <span
+                v-if="checkCIF === true"
+                class="absolute inset-y-0 right-0 flex items-center px-4"
+              >
+                <span v-html="svgIcons.Authorized" class="w-9 h-9 text-green-500"></span>
+              </span>
+              <span
+                v-else-if="checkCIF === false"
+                class="absolute inset-y-0 right-0 flex items-center px-4"
+              >
+                <span v-html="svgIcons.Delete" class="w-9 h-9 text-red-500"></span>
+              </span>
             </div>
             <div
               class="dropdown-container border border-gray-300 rounded-md py-1 w-full md:w-[60%]"
@@ -421,22 +429,12 @@ async function resetForm() {
                   }}</span>
                   <span class="px-3" v-else> {{ t('account_number') }} </span>
                   <div class="absolute right-0 mr-5 px-2">
-                    <svg
+                    <span
+                      v-html="svgIcons.ArrowDropDown"
                       class="absolute top-1/2 -translate-y-1/2 fill-current"
                       :class="{ 'rotate-180': dropdownAccountNo }"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                        fill=""
-                      />
-                    </svg>
+                    </span>
                   </div>
                 </div>
                 <ul
@@ -568,17 +566,6 @@ async function resetForm() {
         </div>
       </form>
     </div>
-
-    <!-- Success Modal -->
-    <!-- <showModals
-      :show-success-modal="showSuccess"
-      :title="titleModal"
-      :message="messageModal"
-      @close="showSuccess = false"
-    /> -->
-    <!-- Warning Modal -->
-
-    <!-- Error Modal -->
     <showModals
       :show-error-modal="showError"
       :title="titleModal"
@@ -598,7 +585,6 @@ async function resetForm() {
 }
 .dropdown-selected-account-number {
   padding: 3px 0px;
-  /* border-radius: 5px; */
 }
 .dropdown-list-account-number {
   list-style: none;
@@ -610,6 +596,9 @@ async function resetForm() {
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
 }
 .dropdown-item-account-number {
   padding: 10px;

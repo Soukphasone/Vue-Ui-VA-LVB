@@ -110,24 +110,20 @@ const loadMore = () => {
         <div class="flex flex-grow items-center justify-between py-3 px-4">
           <div class="flex items-center gap-4">
             <span>{{ t('amount') }}: {{ serviceMapData.length }} </span>
-            <span
+            <span class="w-10"
               ><button
                 @click.prevent="addToRegister"
-                class="flex items-center border border-gray-200 bg-whiter hover:bg-gray-100 py-0.5 px-2 text-black rounded-lg gap-2 focus:outline-none"
+                class="flex items-center border hover:bg-gray-100 py-0.5 px-2 text-black rounded-lg gap-2 focus:outline-none"
+                :class="checkItemData ? 'border-green-600 ' : 'bg-whiter border-gray-200'"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
+                <span
+                  v-html="svgIcons.Add"
+                  class="w-5 h-5"
+                  :class="checkItemData ? 'text-green-600' : 'text-primary'"
+                ></span>
                 {{ t('add') }}
-              </button></span
-            >
+              </button>
+            </span>
           </div>
           <div class="flex items-center">
             <ul class="flex items-center gap-2">

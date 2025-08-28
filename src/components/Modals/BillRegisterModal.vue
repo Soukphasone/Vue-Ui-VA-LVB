@@ -2,15 +2,15 @@
 import { ref, watch } from 'vue'
 import { defineProps } from 'vue'
 import { formatDateTime } from '@/service/Format'
-import { useOpenModalBill } from '@/stores/modal'
-import { branchesLao, branches } from '@/stores/branchBankList'
+import { useOpenModalStore } from '@/stores/modal'
+import { branches } from '@/stores/branchBankList'
 import { useI18n } from 'vue-i18n'
 import { currentLanguage } from '@/i18n'
 const props = defineProps({
   service: String,
   data: Object
 })
-const isOpen = useOpenModalBill()
+const isOpen = useOpenModalStore()
 const data = ref(props.data)
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
@@ -31,7 +31,7 @@ watch(currentLanguage, (newLanguage) => {
 })
 const printPage = () => {
   window.print()
-  isOpen.isOpenModal = false
+  isOpen.isBill = false
 }
 </script>
 
@@ -41,14 +41,14 @@ const printPage = () => {
     <div class="flex items-center justify-center">
       <transition name="fade-scale">
         <div
-          v-if="isOpen.isOpenModal"
+          v-if="isOpen.isBill"
           class="fixed inset-0 bg-white bg-opacity-95 flex items-center justify-center z-999"
         >
           <!-- Modal Content -->
           <div class="p-4 rounded-2xl shadow-lg w-[650px] bg-bill">
             <div class="flex justify-start">
               <button
-                @click="isOpen.isOpenModal = false"
+                @click="isOpen.isBill = false"
                 class="flex items-center justify-center w-10 h-10 bg-red-400 rounded-max hover:bg-red-500"
               >
                 <svg
@@ -89,14 +89,11 @@ const printPage = () => {
                   </div>
                   <div class="flex w-full text-sm">
                     <div class="w-[30%]">{{ t('branch_register') }}:</div>
-                    <div
-                      v-for="branch_name in check === 'la' ? branchesLao : branches"
-                      :key="branch_name.branch_id"
-                    >
+                    <div v-for="branch_name in branches" :key="branch_name.BRNCODEFCC">
                       <span
                         class="w-[70%] text-red-500"
-                        v-if="branch_name.branch_id === data.BRANCH_CREATE"
-                        >{{ branch_name.branch_id + ' - ' + branch_name.name }}</span
+                        v-if="branch_name.BRNCODEFCC === data.BRANCH_CREATE"
+                        >{{ branch_name.UNITNAME }}</span
                       >
                     </div>
                   </div>
@@ -129,7 +126,7 @@ const printPage = () => {
             <div>
               <div class="flex gap-x-4 py-6">
                 <button
-                  @click="isOpen.isOpenModal = false"
+                  @click="isOpen.isBill = false"
                   class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-400 hover:bg-red-500 focus:outline-none"
                 >
                   {{ t('skip') }}

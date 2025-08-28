@@ -17,11 +17,10 @@ import eventBus from '@/eventBus'
 import { dayList, dayListLao, dayListViet } from '@/stores/branchBankList'
 import { svgIcons } from '@/stores/svgIcons'
 
+const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
 const isOpen = useOpenModalStore()
-const target = ref(null)
-const targetBranch = ref(null)
 const targetDays = ref(null)
 const flatPickerInstance = ref(null)
 const datePicker = ref(null)
@@ -29,8 +28,6 @@ const selectedValueDate = ref('')
 const selectedNameDay = ref(null)
 const hideNameDay = ref(false)
 const isDropdownOpenDays = ref(false)
-const isDropdownOpenBranch = ref(false)
-const isDropdownOpenCtTpye = ref(false)
 const dataReport = ref([])
 const isLoading = ref(false)
 const today = new Date()
@@ -77,11 +74,11 @@ const toggleSelection = (item) => {
   checkItemData.value = newSelectedItems.length > 0
 }
 const queryDate = async () => {
-  if (!checkDate.value) {
-    titleModal.value = 'pl_select_date'
-    showError.value = true
-    return
-  }
+  // if (!checkDate.value) {
+  //   titleModal.value = 'pl_select_date'
+  //   showError.value = true
+  //   return
+  // }
   reSet()
 }
 const toggleModal = (name, data) => {
@@ -98,7 +95,7 @@ const toggleModal = (name, data) => {
       showError.value = true
       return
     }
-    titleModal.value = 'authorize'
+    titleModal.value = 'authorize_auccess'
     isOpen.isAuthorizeVA = true
   }
   if (name === 'reject') {
@@ -107,17 +104,8 @@ const toggleModal = (name, data) => {
       showError.value = true
       return
     }
-    titleModal.value = 'reject'
+    titleModal.value = 'reject_success'
     isOpen.isRejectVA = true
-  }
-  if (name === 'delete') {
-    if (!checkItemData.value) {
-      titleModal.value = 'please_select_some_items'
-      showError.value = true
-      return
-    }
-    titleModal.value = 'delete'
-    isOpen.isDeleteVA = true
   }
 }
 const fetchData = async () => {
@@ -163,14 +151,8 @@ const calculateDateRange = (daysAgo) => {
   return { startDate, endDate: today }
 }
 const toggleDropdown = (item) => {
-  if (item === 'customer-type') {
-    isDropdownOpenCtTpye.value = !isDropdownOpenCtTpye.value
-  }
   if (item === 'days') {
     isDropdownOpenDays.value = !isDropdownOpenDays.value
-  }
-  if (item === 'branch') {
-    isDropdownOpenBranch.value = !isDropdownOpenBranch.value
   }
 }
 const selectDay = async (data) => {
@@ -241,12 +223,6 @@ onMounted(async () => {
     }
   })
 })
-onClickOutside(target, () => {
-  isDropdownOpenCtTpye.value = false
-})
-onClickOutside(targetBranch, () => {
-  isDropdownOpenBranch.value = false
-})
 onClickOutside(targetDays, () => {
   isDropdownOpenDays.value = false
 })
@@ -263,7 +239,9 @@ onUnmounted(() => {
 <template>
   <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
     <div class="bg-primary py-4 px-6">
-      <h1 class="text-2xl font-bold text-white md:text-center">Customer Registration List</h1>
+      <h1 class="text-2xl font-bold text-white md:text-center">
+        {{ t('customer_list_unauthorized') }}
+      </h1>
     </div>
     <div class="max-w-full overflow-x-auto border border-gray-300 bg-gray-50">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
@@ -293,19 +271,19 @@ onUnmounted(() => {
                   </div>
                   <ul v-if="isDropdownOpenDays" class="dropdown-list-date">
                     <li
-                      v-for="account in check === 'en'
+                      v-for="day in check === 'en'
                         ? dayList
                         : check === 'vn'
                           ? dayListViet
                           : dayListLao"
-                      :key="account.id"
+                      :key="day.id"
                       :style="{
-                        backgroundColor: account.id === selectedNameDay?.id ? 'lightgray' : ''
+                        backgroundColor: day.id === selectedNameDay?.id ? 'lightgray' : ''
                       }"
                       class="dropdown-item-date"
-                      @click="selectDay(account)"
+                      @click="selectDay(day)"
                     >
-                      {{ account.name }}
+                      {{ day.name }}
                     </li>
                   </ul>
                 </button>
@@ -326,7 +304,7 @@ onUnmounted(() => {
               />
             </div>
           </div>
-          <button
+          <!-- <button
             class="flex gap-1 items-center rounded-lg hover:bg-gray-100 px-2 py-0.5 ml-2 text-gray-800 focus:outline-none"
             :class="checkDate ? 'border border-primary' : 'border border-primary-200'"
             @click="queryDate"
@@ -337,10 +315,18 @@ onUnmounted(() => {
               :class="checkDate ? 'fill-primary' : 'fill-primary-300'"
             >
             </span>
-            {{ t('apply') }}
+            {{ t('search') }}
+          </button> -->
+          <button
+            class="flex gap-1 items-center bg-primary rounded-lg hover:bg-primary-700 px-2 py-0.5 ml-2 text-white focus:outline-none"
+            @click="queryDate"
+          >
+            <span v-html="svgIcons.Search" class="w-5 h-5 transition duration-200 fill-white">
+            </span>
+            {{ t('search') }}
           </button>
-          <div class="flex gap-2 ml-2">
-            <button
+          <div v-if="userData.ROLE_NAME === 'Checker'" class="flex gap-2 ml-2">
+            <!-- <button
               @click.prevent="toggleModal('delete')"
               class="flex items-center gap-1 text-gray-800 rounded-lg px-2 py-0.5 hover:bg-gray-100"
               :class="checkItemData ? 'border border-red-500' : 'border border-red-200'"
@@ -353,7 +339,7 @@ onUnmounted(() => {
               </span>
 
               <span> {{ t('delete') }}</span>
-            </button>
+            </button> -->
             <button
               @click.prevent="toggleModal('reject')"
               class="flex items-center gap-1 text-gray-800 rounded-lg px-2 py-0.5 hover:bg-gray-100"
@@ -400,14 +386,11 @@ onUnmounted(() => {
         v-else-if="!isLoading && dataReport.length"
         class="w-full table-auto"
         :class="{
-          'h-40': isDropdownOpenCtTpye,
-          'h-100': isDropdownOpenBranch,
           'h-70': isDropdownOpenDays
         }"
       >
         <thead>
           <tr class="bg-gray-100 border-t border-b text-left text-sm font-bold text-gray-600">
-            <th class="p-2 w-[65px] font-medium text-black">{{ t('stt') }}</th>
             <th class="px-4 min-w-[100px] font-medium text-black text-left">
               <div v-if="dataReport.length > 1" class="flex items-center gap-2">
                 <span>
@@ -429,17 +412,14 @@ onUnmounted(() => {
             <th class="min-w-[120px] px-4">{{ t('account_number_cif') }}</th>
             <th class="min-w-[210px] px-4">{{ t('account_number') }}</th>
             <th class="min-w-[200px] px-2">{{ t('account_name') }}</th>
-            <th class="min-w-[140px] px-2">{{ t('status') }}</th>
-            <th class="min-w-[100px] px-2 text-center">
+            <th class="min-w-[150px] px-2">{{ t('status') }}</th>
+            <th class="min-w-[95px] px-2 text-center">
               <span>{{ t('view_detail') }}</span>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(customer, index) in filteredItems" :key="index" class="text-sm">
-            <td class="p-2 w-[65px] border-b text-center border border">
-              <p>{{ index + 1 }}</p>
-            </td>
+          <tr v-for="customer in filteredItems" :key="customer.ALIAS" class="text-sm">
             <td class="px-4 w-[10px] border-b">
               <label class="flex items-center">
                 <input
@@ -546,7 +526,7 @@ onUnmounted(() => {
   <showModals
     :show-confirm-modal="isOpen.isAuthorizeVA"
     :id="selectedItems"
-    :title="$t('do_you_want_approve')"
+    :title="$t('do_you_want_authorize')"
     :message="$t('confirm')"
     value="1"
     @close="isOpen.isAuthorizeVA = false"

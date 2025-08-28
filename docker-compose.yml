@@ -1,0 +1,6 @@
+services:
+  vue-app:
+    build: .
+    ports:
+      - "8081:80"   # use 8081 instead of 8080
+    container_name: va-ui

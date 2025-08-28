@@ -13,7 +13,7 @@ import CustomerEdit from '../Modals/CustomerEdit.vue'
 import showModals from '../Modals/showModals.vue'
 import { useOpenModalStore } from '@/stores/modal'
 import eventBus from '@/eventBus'
-import { dayList, dayListLao, dayListViet } from '@/stores/branchBankList'
+import { dayList, dayListLao, dayListViet, statusList, branches } from '@/stores/branchBankList'
 import { svgIcons } from '@/stores/svgIcons'
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
@@ -26,10 +26,12 @@ const flatPickerInstance = ref(null)
 const datePicker = ref(null)
 const selectedValueDate = ref('')
 const selectedNameDay = ref(null)
+const selectStatus = ref(null)
+const selectBranch = ref(null)
 const hideNameDay = ref(false)
 const isDropdownOpenDays = ref(false)
 const isDropdownOpenBranch = ref(false)
-const isDropdownOpenCtTpye = ref(false)
+const isDropdownOpenStatus = ref(false)
 const dataReport = ref([])
 const isLoading = ref(false)
 const today = new Date()
@@ -66,10 +68,12 @@ const fetchData = async () => {
     branch.value = ''
   }
   const data = {
-    BRANCH: branch.value,
+    BRANCH: selectBranch?.value?.BRNCODEFCC || branch.value,
+    STATUS: selectStatus?.value?.value,
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value
   }
+  console.log('data', data)
   isLoading.value = true
   try {
     const _res = await CustomerRegisterList(data)
@@ -101,14 +105,23 @@ const calculateDateRange = (daysAgo) => {
   return { startDate, endDate: today }
 }
 const toggleDropdown = (item) => {
-  if (item === 'customer-type') {
-    isDropdownOpenCtTpye.value = !isDropdownOpenCtTpye.value
+  if (item === 'customer-status') {
+    isDropdownOpenStatus.value = !isDropdownOpenStatus.value
   }
   if (item === 'days') {
     isDropdownOpenDays.value = !isDropdownOpenDays.value
   }
   if (item === 'branch') {
     isDropdownOpenBranch.value = !isDropdownOpenBranch.value
+  }
+}
+const selectOption = (value, data) => {
+  if (value === 'status') {
+    selectStatus.value = data
+  }
+  if (value === 'branch') {
+    selectBranch.value = data
+    branch.value = data.BRNCODEFCC
   }
 }
 const selectDay = async (data) => {
@@ -176,7 +189,7 @@ onMounted(async () => {
   })
 })
 onClickOutside(target, () => {
-  isDropdownOpenCtTpye.value = false
+  isDropdownOpenStatus.value = false
 })
 onClickOutside(targetBranch, () => {
   isDropdownOpenBranch.value = false
@@ -199,12 +212,101 @@ onUnmounted(() => {
   <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
     <div class="bg-primary py-4 px-6">
       <h1 class="text-2xl font-bold text-white md:text-center">{{ t('cm_register_list') }}</h1>
-      <div class="text-white">{{ userData }}</div>
     </div>
     <div class="max-w-full overflow-x-auto border border-gray-200">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
         <div class="flex justify-center items-center">
           <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm">
+            <div>
+              <div
+                class="dropdown-container flex text-gray-500"
+                :class="userData.ROLE_NAME === 'Admin' ? 'border-r border-gray-300' : ''"
+              >
+                <button
+                  class="dropdown-date text-left focus:outline-none"
+                  @click="toggleDropdown('customer-status')"
+                  @keydown.esc="isDropdownOpenStatus = false"
+                  ref="target"
+                >
+                  <div class="flex items-center dropdown-selected-date w-[130px]">
+                    {{ selectStatus ? t(selectStatus.name) : t('status') }}
+                    <div class="absolute right-0 mr-4 px-2 px-2">
+                      <span
+                        v-html="svgIcons.ArrowDropDown"
+                        class="absolute top-1/2 -translate-y-1/2 fill-current"
+                        :class="{ 'rotate-180': isDropdownOpenStatus }"
+                      >
+                      </span>
+                    </div>
+                  </div>
+                  <ul v-if="isDropdownOpenStatus" class="dropdown-list-date">
+                    <li
+                      v-for="status in statusList"
+                      :key="status.id"
+                      :style="{
+                        backgroundColor: status.id === selectStatus?.id ? 'lightgray' : ''
+                      }"
+                      class="dropdown-item-date"
+                      @click="selectOption('status', status)"
+                    >
+                      <span :class="status.color">
+                        {{ t(status.name) }}
+                      </span>
+                    </li>
+                  </ul>
+                </button>
+              </div>
+            </div>
+            <div v-if="userData.ROLE_NAME === 'Admin'" class="relative flex items-center">
+              <div class="dropdown-container flex border-gray-300 text-gray-500">
+                <button
+                  class="dropdown-date text-left focus:outline-none"
+                  @click="toggleDropdown('branch')"
+                  @keydown.esc="isDropdownOpenBranch = false"
+                  ref="targetBranch"
+                >
+                  <div
+                    class="flex items-center dropdown-selected-date"
+                    :class="isDropdownOpenBranch || selectBranch ? 'w-[350px]' : 'w-[150px]'"
+                  >
+                    <p>
+                      {{
+                        selectBranch
+                          ? selectBranch.UNITNAME === 'all'
+                            ? t('all')
+                            : selectBranch.UNITNAME
+                          : t('branch')
+                      }}
+                    </p>
+
+                    <div class="absolute right-0 mr-4 px-2 px-2">
+                      <span
+                        v-html="svgIcons.ArrowDropDown"
+                        class="absolute top-1/2 -translate-y-1/2 fill-current"
+                        :class="{ 'rotate-180': isDropdownOpenBranch }"
+                      >
+                      </span>
+                    </div>
+                  </div>
+                  <ul v-if="isDropdownOpenBranch" class="dropdown-list-date">
+                    <li
+                      v-for="branch in branches"
+                      :key="branch.BRNCODEFCC"
+                      :style="{
+                        backgroundColor:
+                          branch.BRNCODEFCC === selectBranch?.BRNCODEFCC ? 'lightgray' : ''
+                      }"
+                      class="dropdown-item-date"
+                      @click="selectOption('branch', branch)"
+                    >
+                      {{ branch.UNITNAME === 'all' ? t('all') : branch.UNITNAME }}
+                    </li>
+                  </ul>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm ml-2">
             <div>
               <div class="dropdown-container flex border-r border-gray-300 text-gray-500">
                 <button
@@ -229,19 +331,19 @@ onUnmounted(() => {
                   </div>
                   <ul v-if="isDropdownOpenDays" class="dropdown-list-date">
                     <li
-                      v-for="account in check === 'en'
+                      v-for="day in check === 'en'
                         ? dayList
                         : check === 'vn'
                           ? dayListViet
                           : dayListLao"
-                      :key="account.id"
+                      :key="day.id"
                       :style="{
-                        backgroundColor: account.id === selectedNameDay?.id ? 'lightgray' : ''
+                        backgroundColor: day.id === selectedNameDay?.id ? 'lightgray' : ''
                       }"
                       class="dropdown-item-date"
-                      @click="selectDay(account)"
+                      @click="selectDay(day)"
                     >
-                      {{ account.name }}
+                      {{ day.name }}
                     </li>
                   </ul>
                 </button>
@@ -267,7 +369,7 @@ onUnmounted(() => {
             @click="queryDate"
           >
             <span v-html="svgIcons.Search" class="w-5 h-5 fill-whiter"> </span>
-            {{ t('apply') }}
+            {{ t('search') }}
           </button>
         </div>
         <div>
@@ -286,20 +388,20 @@ onUnmounted(() => {
         v-else-if="!isLoading && dataReport.length"
         class="w-full table-auto"
         :class="{
-          'h-40': isDropdownOpenCtTpye,
+          'h-40': isDropdownOpenStatus,
           'h-100': isDropdownOpenBranch,
           'h-70': isDropdownOpenDays
         }"
       >
         <thead>
           <tr class="bg-gray-100 border-t border-b text-left text-sm font-bold text-gray-600">
-            <th class="py-2 px-2 min-w-[120px]">{{ t('created_at') }}</th>
-            <th class="py-2 px-2 min-w-[250px]">{{ t('service_name') }}</th>
-            <th class="min-w-[100px] px-2">{{ t('account_number_cif') }}</th>
+            <th class="p-2 min-w-[120px]">{{ t('created_at') }}</th>
+            <th class="p-2 min-w-[250px]">{{ t('service_name') }}</th>
+            <th class="min-w-[110px] px-2">{{ t('account_number_cif') }}</th>
             <th class="min-w-[185px]">{{ t('account_number') }}</th>
             <th class="min-w-[200px]">{{ t('account_name') }}</th>
             <th class="min-w-[150px] px-2">{{ t('status') }}</th>
-            <th class="min-w-[100px] px-2 text-center">
+            <th class="min-w-[95px] px-2 text-center">
               <span>{{ t('view_detail') }}</span>
             </th>
             <th v-if="userData.ROLE_NAME === 'Maker'" class="px-2 text-center">
@@ -365,7 +467,7 @@ onUnmounted(() => {
               >
                 <span
                   v-html="svgIcons.EyeView"
-                  class="h-6 w-6 text-orange-300 hover:text-orange-500"
+                  class="h-6 w-6 text-orange-400 hover:text-orange-500"
                 >
                 </span>
               </button>

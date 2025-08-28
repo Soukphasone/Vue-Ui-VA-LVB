@@ -37,6 +37,19 @@ export const svgIcons = {
                 >
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>`,
+  Delete_Bin: ` <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-4h2a2 2 0 012 2v2H7V5a2 2 0 012-2z"
+              />
+            </svg>`,
   Unauthorized: ` <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -164,6 +177,15 @@ export const svgIcons = {
   <path d="M3 21l3.8-.8c.3-.1.6-.3.8-.5L20.7 6.6c.9-.9.9-2.3 0-3.1l-.2-.2c-.9-.9-2.3-.9-3.1 0L4.3 16.5c-.2.2-.4.5-.5.8L3 21z"/>
   <path d="M14 5l5 5"/>
 </svg>`,
+  Add: `<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                </svg>`,
   NoData: `<svg
               viewBox="0 0 100 100"
               fill="none"
@@ -175,5 +197,23 @@ export const svgIcons = {
               <circle cx="50" cy="50" r="40" class="opacity-50" />
               <line x1="30" y1="30" x2="70" y2="70" class="opacity-75" />
               <line x1="70" y1="30" x2="30" y2="70" class="opacity-75" />
-            </svg>`
+            </svg>`,
+  Scan_Check: `<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="w-5 h-5"
+                    >
+                      <!-- Corners -->
+                      <path d="M7 3H5a2 2 0 0 0-2 2v2" />
+                      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                      <path d="M3 17v2a2 2 0 0 0 2 2h2" />
+                      <!-- Scan line -->
+                      <path d="M3 12h18" />
+                    </svg>`
 }

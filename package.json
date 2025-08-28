@@ -14,16 +14,11 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.7.1",
-    "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "david-ai": "^1.0.5",
     "flatpickr": "^4.6.13",
-    "flowbite": "^2.5.2",
-    "flowbite-vue": "^0.1.6",
-    "html2canvas": "^1.4.1",
-    "html2pdf.js": "^0.10.2",
     "jsencrypt": "^3.3.2",
     "jspdf": "^2.5.2",
     "jsvectormap": "^1.6.0",
@@ -33,8 +28,7 @@
     "sweetalert2": "^11.6.13",
     "vue": "^3.3.11",
     "vue-i18n": "^11.0.1",
-    "vue-router": "^4.2.5",
-    "vue3-apexcharts": "^1.4.4"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",

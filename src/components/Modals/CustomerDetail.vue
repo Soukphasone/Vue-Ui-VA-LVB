@@ -5,7 +5,7 @@ import { currentLanguage } from '@/i18n'
 import { defineProps } from 'vue'
 import { useOpenModalStore } from '@/stores/modal'
 import showModals from '@/components/Modals/showModals.vue'
-import { branchesLao, branches } from '@/stores/branchBankList'
+import { branches } from '@/stores/branchBankList'
 import { formatDateTime } from '@/service/Format'
 
 const props = defineProps({
@@ -92,11 +92,11 @@ watch(
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 <div
-                  v-for="branch_name in check === 'la' ? branchesLao : branches"
-                  :key="branch_name.branch_id"
+                  v-for="branch_name in branches"
+                  :key="branch_name.BRNCODEFCC"
                 >
-                  <p v-if="branch_name.branch_id === data.BRANCH_CREATE">
-                    {{ branch_name.branch_id + ' - ' + branch_name.name }}
+                  <p v-if="branch_name.BRNCODEFCC === data.BRANCH_CREATE">
+                    {{ branch_name.UNITNAME}}
                   </p>
                 </div>
               </span>
@@ -148,7 +148,12 @@ watch(
             </div>
             <div v-if="data.USER_APPROVE" class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
+                <P v-if="data.STATUS === 1">
                 {{ t('user_approve') }}
+                </P>
+                <P v-else-if="data.STATUS === 2">
+                {{ t('user_reject') }}
+                </P>
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 {{ data.USER_APPROVE }}</span

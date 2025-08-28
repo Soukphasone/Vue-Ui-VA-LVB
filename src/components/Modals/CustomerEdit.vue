@@ -4,9 +4,11 @@ import { useI18n } from 'vue-i18n'
 import { defineProps, defineEmits } from 'vue'
 import { useOpenModalStore } from '@/stores/modal'
 import { CustomerAccount, UpdateVA } from '@/service/Get_Post_API'
-// import { formatDate } from '@/service/Format.ts'
 import showModals from '@/components/Modals/showModals.vue'
 import eventBus from '@/eventBus'
+import Loading from '@/components/Loading/Loading.vue'
+import { svgIcons } from '@/stores/svgIcons'
+
 const props = defineProps({
   data: Object
 })
@@ -75,24 +77,28 @@ watch(
   { deep: true }
 )
 const handleCheckCIF = async () => {
-  const _res = await getCustomerAccount()
-  if (_res) {
-    accountName.value = _res[0].AC_NAME
-    checkCIF.value = '0'
-    const _check = _res[0].ACCOUNT_DETAILS
-    if (_check.length === 1) {
-      accountNumber.value = _check[0].ACCOUNT_NUMBER
-      selectedAccountNo.value = _check[0]
+  isLoading.value = true
+  try {
+    const _res = await getCustomerAccount()
+    if (_res) {
+      accountName.value = _res[0].AC_NAME
+      checkCIF.value = '0'
+      const _check = _res[0].ACCOUNT_DETAILS
+      if (_check.length === 1) {
+        accountNumber.value = _check[0].ACCOUNT_NUMBER
+        selectedAccountNo.value = _check[0]
+      }
+      if (_check.length > 1) {
+        dropdownAccountNo.value = true
+      }
+    } else {
+      titleModal.value = 'invalid_cif'
+      showError.value = true
+      checkCIF.value = '1'
+      dropdownAccountNo.value = false
     }
-    if (_check.length > 1) {
-      dropdownAccountNo.value = true
-    }
-  } else {
-    messageModal.value = 'Please check again'
-    titleModal.value = 'Incorrect CIF number'
-    showError.value = true
-    checkCIF.value = '1'
-    dropdownAccountNo.value = false
+  } finally {
+    isLoading.value = false
   }
 }
 const getCustomerAccount = async () => {
@@ -116,6 +122,7 @@ const resetData = () => {
   selectedAliasType.value = ''
   dropdownAccountNo.value = false
   dropdownAliasType.value = false
+  isLoading.value = false
 }
 const handleUpdate = async () => {
   const data = {
@@ -128,29 +135,28 @@ const handleUpdate = async () => {
     USER_EDIT: userData.EMPNAME,
     CCY: ccy.value
   }
-  // isLoading.value = true
+  isLoading.value = true
   try {
     const _res = await UpdateVA(data)
     if (_res.message === 'Success') {
-      titleModal.value = 'Update'
-      messageModal.value = 'Success'
+      titleModal.value = 'update_success'
       showSuccess.value = true
       isOpen.isDetail = false
       refreshVA()
       resetData()
+      return
     }
     if (_res.message === 'This account is already') {
-      titleModal.value = 'This account is already'
-      messageModal.value = 'Please try again'
+      titleModal.value = 'account_already_registered'
       showError.value = true
+      isLoading.value = false
+      return
     }
-    if (!_res.data) {
-      titleModal.value = 'Fail'
-      messageModal.value = 'Please try again'
-      showError.value = true
-    }
-  } finally {
-    // isLoading.value = false
+    titleModal.value = 'Fail'
+    showError.value = true
+    isLoading.value = false
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -167,6 +173,14 @@ const refreshVA = () => {
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-999"
       >
         <!-- Modal Content -->
+        <div
+          v-if="isLoading"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-9999"
+        >
+          <span>
+            <Loading />
+          </span>
+        </div>
         <div class="bg-white p-6 rounded-2xl shadow-lg w-[600px]">
           <h2 class="flex justify-center font-bold text-xl text-gray-600 mb-4">
             {{ t('customer_information') }}
@@ -192,63 +206,21 @@ const refreshVA = () => {
                     v-if="checkCIF === '0'"
                     class="absolute inset-y-0 right-0 flex items-center px-2"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="w-5 h-5 text-green-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
+                    <span v-html="svgIcons.Authorized" class="w-5 h-5 text-green-600"></span>
                   </span>
                   <span
                     v-else-if="checkCIF === '1'"
                     class="absolute inset-y-0 right-0 flex items-center px-2"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="2"
-                      stroke="currentColor"
-                      class="w-6 h-6 text-red-500"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500"></span>
                   </span>
                 </span>
-
                 <button
                   @click.prevent="handleCheckCIF"
                   class="flex items-center gap-1 border border-primary hover:bg-gray-100 py-1 px-2 rounded-lg text-primary min-w-[110px]"
                   :class="{ 'border border-red-500 text-red-500': checkCIF === '1' }"
                 >
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="w-5 h-5"
-                    >
-                      <!-- Corners -->
-                      <path d="M7 3H5a2 2 0 0 0-2 2v2" />
-                      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-                      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
-                      <path d="M3 17v2a2 2 0 0 0 2 2h2" />
-                      <!-- Scan line -->
-                      <path d="M3 12h18" />
-                    </svg>
-                  </span>
+                  <span v-html="svgIcons.Scan_Check"></span>
                   <span>{{ t('check') }}</span>
                 </button>
               </div>
@@ -281,22 +253,12 @@ const refreshVA = () => {
                     {{ accountNumber + ' ' + ccy }}
                   </span>
                   <div class="absolute right-0 mr-5 px-2">
-                    <svg
+                    <span
+                      v-html="svgIcons.ArrowDropDown"
                       class="absolute top-1/2 -translate-y-1/2 fill-current"
                       :class="{ 'rotate-180': dropdownAccountNo }"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                        fill=""
-                      />
-                    </svg>
+                    </span>
                   </div>
                 </div>
                 <ul

@@ -3,7 +3,6 @@ import { useSidebarStore } from '@/stores/sidebar'
 import { onClickOutside } from '@vueuse/core'
 import { ref, onMounted } from 'vue'
 import SidebarItem from './SidebarItem.vue'
-import { menuGroups } from './sidebarMenu'
 import DropdownUser from '../Header/DropdownUser.vue'
 import { useRoute } from 'vue-router'
 import logo from '@/assets/images/logo/LVB-Logo.png'
@@ -25,6 +24,7 @@ const Menu = async () => {
   try {
     const _res = await MenuList(body)
     menuList.value = _res.data
+    console.log("Menu:", menuList.value);
   } catch (error) {
     console.log(error)
   }
@@ -41,7 +41,6 @@ const notificationCount = async () => {
     const _res = await CustomerRegisterList(data)
     if (_res.data.length > 0) {
       notificationBell.value = _res.data.length
-      console.log('count:', _res.data.length)
     }
   } catch (error) {
     console.log(error)
@@ -79,6 +78,7 @@ onMounted(notificationCount)
                       :key="index"
                       :index="index"
                       :count="notificationBell"
+                      :role="userData.ROLE_NAME"
                     />
                   </ul>
                 </div>

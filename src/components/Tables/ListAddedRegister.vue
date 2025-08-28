@@ -136,15 +136,20 @@ const loadMore = () => {
         <div class="flex flex-grow items-center justify-between py-3 px-4">
           <div class="flex items-center gap-4">
             <span v-if="serviceListAddedData.length > 0"
-              >Total: {{ serviceListAddedData.length }} customers</span
+              >{{ t('amount') }}: {{ serviceListAddedData.length }}</span
             >
             <span
               ><button
                 v-if="serviceListAddedData.length > 0"
                 @click.prevent="removeListAdded"
-                class="flex items-center border border-gray-200 bg-whiter hover:bg-gray-100 py-0.5 px-2 text-black rounded-lg gap-2"
+                class="flex items-center border hover:bg-gray-100 py-0.5 px-2 text-black rounded-lg gap-2"
+                :class="checkItemData ? 'border-red-500' : 'border-gray-200 bg-whiter'"
               >
-                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-500"></span>
+                <span
+                  v-html="svgIcons.Delete"
+                  class="w-6 h-6"
+                  :class="checkItemData ? 'text-red-500' : 'text-red-300'"
+                ></span>
                 {{ t('delete') }}
               </button></span
             >
@@ -187,7 +192,7 @@ const loadMore = () => {
                       />
                     </label>
                   </span>
-                  <span>All</span>
+                  <span>{{ t('all') }}</span>
                 </div>
                 <div v-else>{{ t('choose') }}</div>
               </th>

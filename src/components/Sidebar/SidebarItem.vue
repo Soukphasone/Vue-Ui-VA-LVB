@@ -3,7 +3,7 @@ import { useSidebarStore } from '@/stores/sidebar'
 import { useRoute } from 'vue-router'
 import { menuIcon } from './sidebarMenu'
 const sidebarStore = useSidebarStore()
-defineProps(['item', 'index', 'count'])
+defineProps(['item', 'index', 'count', 'role'])
 sidebarStore.page = useRoute().name
 </script>
 <template>
@@ -25,7 +25,7 @@ sidebarStore.page = useRoute().name
           <div class="px-4">{{ $t(item.VI_NAME) }}</div>
           <span v-if="item.VI_NAME === 'authorization'" class="absolute right-0 px-4">
             <div
-              v-if="count > 0"
+              v-if="count > 0 && role === 'Checker'"
               class="relative flex"
               :class="{ hidden: sidebarStore.page === 'Authorization' }"
             >
