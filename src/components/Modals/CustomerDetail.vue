@@ -4,9 +4,9 @@ import { useI18n } from 'vue-i18n'
 import { currentLanguage } from '@/i18n'
 import { defineProps } from 'vue'
 import { useOpenModalStore } from '@/stores/modal'
-import showModals from '@/components/Modals/showModals.vue'
 import { branches } from '@/stores/branchBankList'
 import { formatDateTime } from '@/service/Format'
+import { svgIcons } from '@/stores/svgIcons'
 
 const props = defineProps({
   data: Object,
@@ -17,15 +17,6 @@ const check = ref(currentLanguage.value)
 const { t } = useI18n()
 const isOpen = useOpenModalStore()
 const data = ref(props?.data || '')
-const titleModal = ref('')
-const messageModal = ref('')
-const toggleModal = (value) => {
-  if (value === 'approve') {
-    isOpen.isAuthorizeVA = true
-  } else {
-    isOpen.isEdit = true
-  }
-}
 watch(currentLanguage, (newLanguage) => {
   check.value = newLanguage
 })
@@ -54,16 +45,10 @@ watch(
               @click="isOpen.isDetail = false"
               class="flex items-center justify-center w-10 h-10"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
+              <span
+                v-html="svgIcons.Delete"
                 class="w-8 h-8 text-red-500 hover:text-red-600 rounded-lg border border-red-300 hover:bg-gray-50"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              ></span>
             </button>
           </div>
           <h2 class="flex justify-center font-bold text-xl text-gray-600 mb-4">
@@ -91,12 +76,9 @@ watch(
                 {{ t('branch_register') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
-                <div
-                  v-for="branch_name in branches"
-                  :key="branch_name.BRNCODEFCC"
-                >
+                <div v-for="branch_name in branches" :key="branch_name.BRNCODEFCC">
                   <p v-if="branch_name.BRNCODEFCC === data.BRANCH_CREATE">
-                    {{ branch_name.UNITNAME}}
+                    {{ branch_name.UNITNAME }}
                   </p>
                 </div>
               </span>
@@ -149,10 +131,13 @@ watch(
             <div v-if="data.USER_APPROVE" class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
                 <P v-if="data.STATUS === 1">
-                {{ t('user_approve') }}
+                  {{ t('user_approve') }}
                 </P>
                 <P v-else-if="data.STATUS === 2">
-                {{ t('user_reject') }}
+                  {{ t('user_reject') }}
+                </P>
+                <P v-else-if="data.STATUS === 0 && data.USER_EDIT">
+                  {{ t('ever_reject_by') }}
                 </P>
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
@@ -175,32 +160,59 @@ watch(
                 {{ formatDateTime(data.DATE_INSERT) }}</span
               >
             </div>
+            <div v-if="data.DATE_APPROVE" class="flex gap-3 items-center">
+              <label class="font-medium text-gray-900 w-[250px]">
+                <p v-if="data.STATUS === 1">{{ t('date_approve') }}</p>
+                <p v-else-if="data.STATUS === 2">{{ t('date_reject') }}</p>
+              </label>
+              <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
+                {{ formatDateTime(data.DATE_APPROVE) }}</span
+              >
+            </div>
             <div v-if="data.DATE_EDIT" class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
-                {{ t('updated_at') }}
+                {{ t('updated_date') }}
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 {{ formatDateTime(data.DATE_EDIT) }}</span
               >
             </div>
-            <div v-if="props.role === 'Maker'">
-              <span class="flex gap-4 justify-center mt-10">
+            <div>
+              <span class="flex gap-4 justify-center mt-4">
                 <button
+                  v-if="props.role === 'Checker' && value === 'Approve'"
+                  @click="isOpen.isRejectVA = true"
+                  class="flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-400 hover:bg-red-500 focus:outline-none"
+                >
+                  {{ t('reject') }}
+                </button>
+                <button
+                  v-if="props.role === 'Maker' && data.STATUS !== 1"
                   @click="isOpen.isDeleteVA = true"
                   class="flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-400 hover:bg-red-500 focus:outline-none"
                 >
                   {{ t('delete') }}
                 </button>
                 <button
-                  @click.prevent="toggleModal(value)"
+                  v-if="props.role === 'Checker' && value === 'Approve'"
+                  @click="isOpen.isAuthorizeVA = true"
                   class="flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none"
                 >
-                  <p v-if="value === 'approve'">
-                    {{ t('approve') }}
-                  </p>
-                  <p v-else>
-                    {{ t('edit') }}
-                  </p>
+                  {{ t('approve') }}
+                </button>
+                <button
+                  v-if="props.role === 'Maker' && data.STATUS !== 1"
+                  @click="isOpen.isEdit = true"
+                  class="flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none"
+                >
+                  {{ t('edit') }}
+                </button>
+                <button
+                  v-if="props.role === 'Maker' && data.STATUS === 1"
+                  @click="isOpen.isBill = true"
+                  class="flex justify-center py-2 px-8 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none"
+                >
+                  {{ t('print_bill') }}
                 </button>
               </span>
             </div>
@@ -209,16 +221,4 @@ watch(
       </div>
     </transition>
   </div>
-  <showModals
-    :show-success-modal="showSuccess"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showSuccess = false"
-  />
-  <showModals
-    :show-error-modal="showError"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showError = false"
-  />
 </template>

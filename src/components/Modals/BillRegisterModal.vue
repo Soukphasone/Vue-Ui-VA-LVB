@@ -14,14 +14,12 @@ const isOpen = useOpenModalStore()
 const data = ref(props.data)
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
-const date = ref(new Date())
 
 watch(
   () => props.data,
   (setData) => {
     if (setData) {
       data.value = setData || ''
-      date.value = new Date()
     }
   },
   { deep: true }
@@ -74,7 +72,7 @@ const printPage = () => {
                     <span class="text-sm">{{ t('lao_viet_bank') }}</span>
                   </div>
                   <div class="flex items-center text-sm">
-                    {{ formatDateTime(date) }}
+                    {{ formatDateTime(data.DATE_INSERT) }}
                   </div>
                 </div>
                 <div class="flex justify-center mt-5 font-semibold">
@@ -99,7 +97,7 @@ const printPage = () => {
                   </div>
                   <div class="flex w-full text-sm">
                     <div class="w-[30%]">{{ t('service_name') }}:</div>
-                    <div class="w-[70%] text-red-500">{{ props.service }}</div>
+                    <div class="w-[70%] text-red-500">{{ props.service || data.SERVICE_NAME}}</div>
                   </div>
                   <div class="flex w-full">
                     <div class="w-[30%]">{{ t('account_number_cif') }}:</div>

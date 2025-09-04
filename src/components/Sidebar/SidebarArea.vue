@@ -24,15 +24,13 @@ const Menu = async () => {
   try {
     const _res = await MenuList(body)
     menuList.value = _res.data
-    console.log("Menu:", menuList.value);
   } catch (error) {
     console.log(error)
   }
 }
 const notificationCount = async () => {
   const data = {
-    BRANCH: '',
-    // BRANCH: userData.HR_BRN_CODE,
+    BRANCH: userData.HR_BRN_CODE,
     STATUS: 0,
     DATE_FROM: '',
     DATE_TO: ''

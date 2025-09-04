@@ -2,7 +2,7 @@
 import { useOpenModalStore } from '@/stores/modal'
 import { logout } from '@/stores/clearStorage'
 import { useRouter } from 'vue-router'
-import {UpdateVA } from '@/service/Get_Post_API'
+import { DeleteVA, UpdateVA } from '@/service/Get_Post_API'
 import eventBus from '@/eventBus'
 import { ref } from 'vue'
 import Loading from '../Loading/Loading.vue'
@@ -56,46 +56,50 @@ const refreshVA = () => {
   eventBus.emit('refresh')
 }
 const closeConfirmModal = () => {
+  emit('close')
+}
+const resetModal = () => {
   openModal.isLogOut = false
   openModal.isDeleteVA = false
   openModal.isAuthorizeVA = false
   openModal.isRejectVA = false
+  openModal.isDetail = false
+  isLoading.value = false
 }
 function confirm(value) {
   if (value === '1' || value === '2') {
     handleStatus()
+    return
   }
   if (value === 'delete-va') {
     handleDeleteVA()
+    return
   }
   if (value === 'logout') {
     openModal.isLogOut = false
     logout(router)
+    return
   }
 }
-// const handleDeleteVA = async () => {
-//   const data = {
-//     IDS: props.id
-//   }
-//   isLoading.value = true
-//   try {
-//     const _res = await DeleteVA(data)
-//     if (_res.message === 'Success') {
-//       openModal.isDeleteVA = false
-//       openModal.isDetail = false
-//       openModal.isSuccess = true
-//       refreshVA()
-//     }
-//     if (!_res.data) {
-//       titleModal.value = 'fail'
-//       messageModal.value = 'try_again'
-//       showError.value = true
-//     }
-//     return
-//   } finally {
-//     isLoading.value = false
-//   }
-// }
+const handleDeleteVA = async () => {
+  const data = {
+    IDS: props.id
+  }
+  isLoading.value = true
+  try {
+    const _res = await DeleteVA(data)
+    if (_res.message === 'SUCCESS') {
+      openModal.isSuccess = true
+      resetModal()
+      refreshVA()
+      return
+    }
+    titleModal.value = 'fail'
+    showError.value = true
+  } catch (err) {
+    console.log(err)
+  }
+}
 const handleStatus = async () => {
   isLoading.value = true
   try {
@@ -106,52 +110,19 @@ const handleStatus = async () => {
         USER_APPROVE: userDataLogin.EMPNAME
       }
       const _res = await UpdateVA(data)
-      if (_res.message === 'Success') {
-        closeConfirmModal()
+      if (_res.message === 'SUCCESS') {
         openModal.isSuccess = true
+        resetModal()
         refreshVA()
+        return
       }
     }
     titleModal.value = 'fail'
-    messageModal.value = 'try_again'
     showError.value = true
-
-    // if (props.value === 'reject-va') {
-    //   console.log('Re')
-    // }
-
-    // if (!_res.data) {
-    //   titleModal.value = 'fail'
-    //   messageModal.value = 'try_again'
-    //   showError.value = true
-    // }
   } finally {
     isLoading.value = false
   }
 }
-// const handleReject = async () => {
-//   const data = {
-//     IDS: props.id,
-//     USER_APPROVE: userDataLogin.EMPNAME
-//   }
-//   isLoading.value = true
-//   try {
-//     const _res = await UpdateVA(data)
-//     if (_res.message === 'Success') {
-//       openModal.isAuthorizeVA = false
-//       openModal.isDetail = false
-//       openModal.isSuccess = true
-//       refreshVA()
-//     }
-//     if (!_res.data) {
-//       titleModal.value = 'fail'
-//       messageModal.value = 'try_again'
-//       showError.value = true
-//     }
-//   } finally {
-//     isLoading.value = false
-//   }
-// }
 </script>
 
 <template>
@@ -283,21 +254,7 @@ const handleStatus = async () => {
             class="w-16 h-16 transition-colors rounded-full flex items-center justify-center"
             :class="openModal.isAuthorizeVA ? 'bg-green-100' : 'bg-red-100 text-red-500'"
           >
-            <svg
-              v-if="openModal.isLogOut"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-9 h-9"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
-              />
-            </svg>
+            <span v-if="openModal.isLogOut" v-html="svgIcons.Logout" class="animate-pulse"> </span>
             <span
               v-if="openModal.isDeleteVA"
               v-html="svgIcons.Delete_Bin"
@@ -318,7 +275,7 @@ const handleStatus = async () => {
             </span>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-600 mb-10">{{ title }}</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-600 mb-10">{{ $t(title) }}</h2>
         <div class="flex justify-center space-x-4">
           <button
             @click="closeConfirmModal"
@@ -327,7 +284,7 @@ const handleStatus = async () => {
             {{ $t('cancel') }}
           </button>
           <button
-            @click="confirm(value)"
+            @click.prevent="confirm(value)"
             class="px-6 py-2 rounded-md focus:outline-none"
             :class="
               openModal.isAuthorizeVA

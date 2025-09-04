@@ -38,10 +38,9 @@ const dataDeail = ref([])
 const dataEdit = ref([])
 const selectedItems = ref([]) // ChexBox
 const checkItemData = ref(false)
-const checkDate = ref(false)
 const showError = ref(false)
 const titleModal = ref('')
-const messageModal = ref('')
+const checkSearch = ref(false)
 // Computed property to check if all are selected
 const isAllSelected = computed(
   () => selectedItems.value.length > 0 && selectedItems.value.length === dataReport.value.length
@@ -74,11 +73,6 @@ const toggleSelection = (item) => {
   checkItemData.value = newSelectedItems.length > 0
 }
 const queryDate = async () => {
-  // if (!checkDate.value) {
-  //   titleModal.value = 'pl_select_date'
-  //   showError.value = true
-  //   return
-  // }
   reSet()
 }
 const toggleModal = (name, data) => {
@@ -87,6 +81,8 @@ const toggleModal = (name, data) => {
       selectedItems.value = [data.ID]
       dataDeail.value = data
       isOpen.isDetail = true
+      checkItemData.value = true
+      titleModal.value = 'successfully'
     }
   }
   if (name === 'authorize') {
@@ -110,8 +106,7 @@ const toggleModal = (name, data) => {
 }
 const fetchData = async () => {
   const data = {
-    BRANCH: '',
-    // BRANCH: userData.HR_BRN_CODE,
+    BRANCH: userData.HR_BRN_CODE,
     STATUS: 0,
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value
@@ -156,6 +151,7 @@ const toggleDropdown = (item) => {
   }
 }
 const selectDay = async (data) => {
+  checkSearch.value = true
   selectedNameDay.value = data
   selectedValueDate.value = data.value
   !isDropdownOpenDays.value
@@ -194,14 +190,12 @@ const selectDay = async (data) => {
     dateFrom.value = dateSearch(range.startDate)
     dateTo.value = dateSearch(range.endDate)
     hideNameDay.value = false
-    checkDate.value = true
   } else {
     selectedItems.value = []
     flatPickerInstance.value.setDate()
     dateFrom.value = ''
     dateTo.value = ''
     hideNameDay.value = false
-    checkDate.value = true
   }
 }
 onMounted(async () => {
@@ -218,7 +212,7 @@ onMounted(async () => {
         dateTo.value = dateSearch(selectedDates[1])
         datePicker.value.value = formattedRange
         hideNameDay.value = true
-        checkDate.value = true
+        checkSearch.value = true
       }
     }
   })
@@ -248,7 +242,7 @@ onUnmounted(() => {
         <div class="flex justify-center items-center">
           <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm">
             <div>
-              <div class="dropdown-container flex border-r border-gray-300 text-gray-600">
+              <div class="dropdown-container flex border-r border-gray-300 text-gray-800">
                 <button
                   class="dropdown-date text-left focus:outline-none"
                   @click="toggleDropdown('days')"
@@ -295,29 +289,16 @@ onUnmounted(() => {
                 class="absolute left-0 pl-2 text-dark-5 fill-primary"
               >
               </span>
-              <!-- Date picker -->
               <input
                 :placeholder="t('date')"
                 ref="datePicker"
                 type="text"
-                class="w-full bg-transparent pl-[40px] text-gray-600 outline-none transition placeholder-gray-600"
+                class="w-full bg-transparent pl-[40px] text-gray-800 outline-none transition placeholder-gray-800"
               />
             </div>
           </div>
-          <!-- <button
-            class="flex gap-1 items-center rounded-lg hover:bg-gray-100 px-2 py-0.5 ml-2 text-gray-800 focus:outline-none"
-            :class="checkDate ? 'border border-primary' : 'border border-primary-200'"
-            @click="queryDate"
-          >
-            <span
-              v-html="svgIcons.Search"
-              class="w-5 h-5 transition duration-200"
-              :class="checkDate ? 'fill-primary' : 'fill-primary-300'"
-            >
-            </span>
-            {{ t('search') }}
-          </button> -->
           <button
+            v-if="checkSearch"
             class="flex gap-1 items-center bg-primary rounded-lg hover:bg-primary-700 px-2 py-0.5 ml-2 text-white focus:outline-none"
             @click="queryDate"
           >
@@ -325,21 +306,24 @@ onUnmounted(() => {
             </span>
             {{ t('search') }}
           </button>
-          <div v-if="userData.ROLE_NAME === 'Checker'" class="flex gap-2 ml-2">
-            <!-- <button
-              @click.prevent="toggleModal('delete')"
-              class="flex items-center gap-1 text-gray-800 rounded-lg px-2 py-0.5 hover:bg-gray-100"
-              :class="checkItemData ? 'border border-red-500' : 'border border-red-200'"
+          <button
+            v-else
+            class="flex justify-center ml-2 gap-1 text-green-500 border border-gray-300 px-2 py-0.5 rounded-lg hover:text-green-600"
+            @click="queryDate"
+          >
+            <span
+              v-if="isLoading"
+              v-html="svgIcons.Refresh"
+              class="w-5 h-5"
+              :class="isLoading ? 'animate-spin' : ''"
             >
-              <span
-                v-html="svgIcons.Delete"
-                class="w-6 h-6"
-                :class="checkItemData ? 'text-red-500' : 'text-red-200'"
-              >
-              </span>
-
-              <span> {{ t('delete') }}</span>
-            </button> -->
+            </span>
+            <span v-else v-html="svgIcons.Refresh_Arrows" class="w-5 h-6"> </span>
+            <span class="text-gray-800">
+              {{ t('refresh') }}
+            </span>
+          </button>
+          <div v-if="userData.ROLE_NAME === 'Checker'" class="flex gap-2 ml-2">
             <button
               @click.prevent="toggleModal('reject')"
               class="flex items-center gap-1 text-gray-800 rounded-lg px-2 py-0.5 hover:bg-gray-100"
@@ -501,41 +485,25 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <CustomerDetail :data="dataDeail" value="approve" />
+  <CustomerDetail :data="dataDeail" value="Approve" role="Checker" />
   <CustomerEdit :data="dataEdit" />
   <showModals
     :show-success-modal="isOpen.isSuccess"
-    :title="t(titleModal)"
-    :message="t('success')"
+    :title="titleModal"
     @close="isOpen.isSuccess = false"
   />
-  <showModals
-    :show-error-modal="showError"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showError = false"
-  />
-  <showModals
-    :show-confirm-modal="isOpen.isDeleteVA"
-    :id="selectedItems"
-    :title="$t('dou_you_want_delete_this_account')"
-    :message="$t('confirm')"
-    value="delete-va"
-    @close="isOpen.isDeleteVA = false"
-  />
+  <showModals :show-error-modal="showError" :title="titleModal" @close="showError = false" />
   <showModals
     :show-confirm-modal="isOpen.isAuthorizeVA"
     :id="selectedItems"
-    :title="$t('do_you_want_authorize')"
-    :message="$t('confirm')"
+    title="do_you_want_authorize"
     value="1"
     @close="isOpen.isAuthorizeVA = false"
   />
   <showModals
     :show-confirm-modal="isOpen.isRejectVA"
     :id="selectedItems"
-    :title="$t('do_want_to_reject')"
-    :message="$t('confirm')"
+    title="do_want_to_reject"
     value="2"
     @close="isOpen.isRejectVA = false"
   />

@@ -1,5 +1,3 @@
-import service from '@/service/service.guard'
-
 export const en = {
   language: 'Language',
   lg: 'EN',
@@ -67,6 +65,8 @@ export const en = {
   total_withdraw: 'Total withdraw',
   total_deposit: 'total deposit',
   date: 'Date',
+  date_approve: 'Date Approved',
+  date_reject: 'Date Rejected',  
   next: 'Next',
   previous: 'Previous',
   type: 'Type',
@@ -141,7 +141,7 @@ export const en = {
   apply: 'Apply',
   date_from: 'Date from',
   date_to: 'Data to',
-  user_create: 'User create',
+  user_create: 'User Create',
   report_customer_serviece: 'Report customer registration to use the service',
   report_by: 'Report by',
   phone_number: 'Phone number',
@@ -158,6 +158,7 @@ export const en = {
   payment_type: 'Type of payment',
   alias_number: 'Alias Number',
   success_ragister: 'Successful Registration',
+  successfully: 'Successfully',
   bill_va_register: 'BILL VA RAGISTRATION',
   dou_you_want_delete_this_account: 'Do you want to delete?',
   view_detail: 'View detail',
@@ -170,7 +171,7 @@ export const en = {
   user_edit: 'User Edit',
   do_you_want_authorize: 'Do you want to authorize?',
   please_select_some_items: 'Please select some items',
-  sorry_try_later: 'Please try again later',
+  sorry_try_later: 'Error. Please try again later.',
   cm_register_list: 'Customer Registration List',
   registration: 'Customer Registration',
   add_customer_service: "Add Customer Service",
@@ -194,7 +195,8 @@ export const en = {
   reject: 'Reject',
   reject_success: 'Rejection successfu',
   rejected: 'Rejected',
-  user_reject: 'User rejected',
+  ever_reject_by: 'Ever Rejected By',
+  user_reject: 'User Rejected',
   do_want_to_reject: 'Do you want to reject?',
   pl_select_date : 'Please select date',
   wait_authorization: 'Wait authorization',
@@ -202,4 +204,5 @@ export const en = {
   account_already_registered: 'This account is already registered',
   customer_list_unauthorized: 'Customer list unauthorized',
   more: 'More',
+  refresh: 'Refresh',
 }

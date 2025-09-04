@@ -1,31 +1,23 @@
 {
-  "name": "tailadmin-vue-free",
+  "name": "va-app-ui",
   "version": "1.0.3",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^10.7.1",
     "axios": "^1.7.9",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
-    "david-ai": "^1.0.5",
     "flatpickr": "^4.6.13",
     "jsencrypt": "^3.3.2",
-    "jspdf": "^2.5.2",
-    "jsvectormap": "^1.6.0",
     "jwt-decode": "^4.0.0",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
-    "sweetalert2": "^11.6.13",
     "vue": "^3.3.11",
     "vue-i18n": "^11.0.1",
     "vue-router": "^4.2.5"

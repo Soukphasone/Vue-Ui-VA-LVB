@@ -47,8 +47,8 @@ sidebarStore.page = useRoute().name
                 </svg>
               </span>
               <span
-                class="absolute flex items-center left-6 bg-red-500 rounded-max text-whiter text-user w-5 h-5 justify-center"
-                style="margin-top: -5px"
+                class="absolute flex items-center left-4 bg-red-500 rounded-max text-whiter text-user w-5 h-5 justify-center"
+                style="margin-top: -4px"
               >
                 {{ count }}
               </span>

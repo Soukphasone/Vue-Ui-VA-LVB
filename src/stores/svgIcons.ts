@@ -215,5 +215,110 @@ export const svgIcons = {
                       <path d="M3 17v2a2 2 0 0 0 2 2h2" />
                       <!-- Scan line -->
                       <path d="M3 12h18" />
-                    </svg>`
+                    </svg>`,
+  User: `<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 7.5a3.75 3.75 0 11-7.5 0
+                       3.75 3.75 0 017.5 0zM4.5 21a8.25 8.25 0 0115 0"
+                  />
+                </svg>`,
+  KetLock: `<svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 11V8a4 4 0 10-8 0v3M7 11h10a2 2 0 012 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6a2 2 0 012-2z"
+                  />
+                  <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+                </svg>`,
+  HideEye: `<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 4.5c-5 0-9.27 3.11-11 7.5 1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Zm0 12a4.5 4.5 0 1 1 4.5-4.5 4.5 4.5 0 0 1-4.5 4.5Z"
+                      />
+                      <path
+                        d="M3 3l18 18M12 12"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>`,
+  ShowEye: `<svg
+                      viewBox="'0 0 24 24'"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 4C7 4 2.73 7.11 1 12c1.73 4.89 6 8 11 8s9.27-3.11 11-8c-1.73-4.89-6-8-11-8Zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6Zm0-10a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+                      />
+                    </svg>`,
+  Warning: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+  <title id="warnTitle">Warning</title>
+  <path d="M10.3 3.9 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+  <path d="M12 8v6M12 17.5h.01"/>
+</svg>
+`,
+  Warning_Circle: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+  <title id="warnTitle3">Warning</title>
+  <circle cx="12" cy="12" r="9.2"/>
+  <path d="M12 7.5v6M12 17.5h.01"/>
+</svg>
+`,
+  Refresh: ` <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M21 9.75h-5.25a.75.75 0 0 1 0-1.5H19.5a8.25 8.25 0 1 0 2.414 5.836.75.75 0 1 1 1.493.178A9.75 9.75 0 1 1 19.5 4.5v-2.25a.75.75 0 0 1 1.5 0v6z"
+              />
+            </svg>`,
+  Refresh_Arrows: ` <svg
+              v-else
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h5M20 20v-5h-5M5.5 8a7 7 0 0113.5 0M18.5 16a7 7 0 01-13.5 0"
+              />
+            </svg>`,
+  Logout: ` <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-9 h-9"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
+              />
+            </svg>`
 }

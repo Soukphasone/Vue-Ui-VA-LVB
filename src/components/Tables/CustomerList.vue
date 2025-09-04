@@ -11,6 +11,7 @@ import SearchInput from '../Search/SearchInput.vue'
 import CustomerDetail from '../Modals/CustomerDetail.vue'
 import CustomerEdit from '../Modals/CustomerEdit.vue'
 import showModals from '../Modals/showModals.vue'
+import BillRegisterModal from '../Modals/BillRegisterModal.vue'
 import { useOpenModalStore } from '@/stores/modal'
 import eventBus from '@/eventBus'
 import { dayList, dayListLao, dayListViet, statusList, branches } from '@/stores/branchBankList'
@@ -42,6 +43,7 @@ const branch = ref('')
 const dataDeail = ref([])
 const dataEdit = ref([])
 const idDeleteVa = ref([])
+const checkSearch = ref(false)
 const queryDate = async () => {
   fetchData()
 }
@@ -73,7 +75,6 @@ const fetchData = async () => {
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value
   }
-  console.log('data', data)
   isLoading.value = true
   try {
     const _res = await CustomerRegisterList(data)
@@ -116,6 +117,7 @@ const toggleDropdown = (item) => {
   }
 }
 const selectOption = (value, data) => {
+  checkSearch.value = true
   if (value === 'status') {
     selectStatus.value = data
   }
@@ -125,6 +127,7 @@ const selectOption = (value, data) => {
   }
 }
 const selectDay = async (data) => {
+  checkSearch.value = true
   selectedNameDay.value = data
   selectedValueDate.value = data.value
   !isDropdownOpenDays.value
@@ -184,6 +187,7 @@ onMounted(async () => {
         dateTo.value = dateSearch(selectedDates[1])
         datePicker.value.value = formattedRange
         hideNameDay.value = true
+        checkSearch.value = true
       }
     }
   })
@@ -219,7 +223,7 @@ onUnmounted(() => {
           <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm">
             <div>
               <div
-                class="dropdown-container flex text-gray-500"
+                class="dropdown-container flex text-gray-800"
                 :class="userData.ROLE_NAME === 'Admin' ? 'border-r border-gray-300' : ''"
               >
                 <button
@@ -258,7 +262,7 @@ onUnmounted(() => {
               </div>
             </div>
             <div v-if="userData.ROLE_NAME === 'Admin'" class="relative flex items-center">
-              <div class="dropdown-container flex border-gray-300 text-gray-500">
+              <div class="dropdown-container flex border-gray-300 text-gray-800">
                 <button
                   class="dropdown-date text-left focus:outline-none"
                   @click="toggleDropdown('branch')"
@@ -308,7 +312,7 @@ onUnmounted(() => {
           </div>
           <div class="inline-flex items-center rounded-2 border border-gray-300 text-sm ml-2">
             <div>
-              <div class="dropdown-container flex border-r border-gray-300 text-gray-500">
+              <div class="dropdown-container flex border-r border-gray-300 text-gray-800">
                 <button
                   class="dropdown-date text-left focus:outline-none"
                   @click="toggleDropdown('days')"
@@ -355,21 +359,38 @@ onUnmounted(() => {
                 class="absolute left-0 pl-2 text-dark-5 fill-primary"
               >
               </span>
-              <!-- Date picker -->
               <input
                 :placeholder="t('date')"
                 ref="datePicker"
                 type="text"
-                class="w-full bg-transparent pl-[40px] text-dark-2 outline-none transition placeholder-gray-500"
+                class="w-full bg-transparent pl-[40px] text-gray-800 outline-none transition placeholder-gray-800"
               />
             </div>
           </div>
           <button
+            v-if="checkSearch"
             class="flex gap-1 items-center border border-stroke rounded-lg bg-primary hover:bg-blue-800 px-2 py-1 ml-2 text-whiter text-sm focus:outline-none"
             @click="queryDate"
           >
             <span v-html="svgIcons.Search" class="w-5 h-5 fill-whiter"> </span>
             {{ t('search') }}
+          </button>
+          <button
+            v-else
+            class="flex justify-center ml-2 gap-1 text-green-500 border border-gray-300 px-2 py-0.5 rounded-lg hover:text-green-600"
+            @click="queryDate"
+          >
+            <span
+              v-if="isLoading"
+              v-html="svgIcons.Refresh"
+              class="w-5 h-5"
+              :class="isLoading ? 'animate-spin' : ''"
+            >
+            </span>
+            <span v-else v-html="svgIcons.Refresh_Arrows" class="w-5 h-6"> </span>
+            <span class="text-gray-800">
+              {{ t('refresh') }}
+            </span>
           </button>
         </div>
         <div>
@@ -474,20 +495,34 @@ onUnmounted(() => {
             </td>
             <td v-if="userData.ROLE_NAME === 'Maker'" class="p-2 border-b text-center">
               <button
+                v-if="customer.STATUS !== 1"
                 @click="toggleModal('edit', customer)"
                 class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
                 <span v-html="svgIcons.Edit" class="w-6 h-6 text-blue-400 hover:text-blue-500">
                 </span>
               </button>
+              <button
+                v-else
+                class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
+              >
+                <span v-html="svgIcons.Edit" class="w-6 h-6 text-blue-300"> </span>
+              </button>
             </td>
             <td v-if="userData.ROLE_NAME === 'Maker'" class="p-2 border-b text-center">
               <button
+                v-if="customer.STATUS !== 1"
                 @click="toggleModal('delete', customer)"
                 class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
               >
                 <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-400 hover:text-red-500">
                 </span>
+              </button>
+              <button
+                v-else
+                class="p-2 rounded hover:bg-gray-200 transition w-10 border-b border-gray-300"
+              >
+                <span v-html="svgIcons.Delete" class="w-6 h-6 text-red-300"> </span>
               </button>
             </td>
           </tr>
@@ -515,9 +550,9 @@ onUnmounted(() => {
   <showModals
     :show-confirm-modal="isOpen.isDeleteVA"
     :id="idDeleteVa"
-    :title="$t('dou_you_want_delete_this_account')"
-    :message="$t('confirm')"
+    title="dou_you_want_delete_this_account"
     value="delete-va"
     @close="isOpen.isDeleteVA = false"
   />
+  <BillRegisterModal :data="dataEdit" />
 </template>

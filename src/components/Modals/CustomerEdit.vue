@@ -1,9 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { defineProps, defineEmits } from 'vue'
+import { defineProps } from 'vue'
 import { useOpenModalStore } from '@/stores/modal'
 import { CustomerAccount, UpdateVA } from '@/service/Get_Post_API'
+import { onClickOutside } from '@vueuse/core'
 import showModals from '@/components/Modals/showModals.vue'
 import eventBus from '@/eventBus'
 import Loading from '@/components/Loading/Loading.vue'
@@ -12,8 +13,6 @@ import { svgIcons } from '@/stores/svgIcons'
 const props = defineProps({
   data: Object
 })
-const userData = JSON.parse(localStorage.getItem('userData'))
-const emit = defineEmits(['update:data'])
 const { t } = useI18n()
 const isOpen = useOpenModalStore()
 const cif = ref(props.data?.CIF || '')
@@ -32,12 +31,14 @@ const showSuccess = ref(false)
 const showError = ref(false)
 const titleModal = ref('')
 const messageModal = ref('')
+const targetAccount = ref(null)
+const targetAliaType = ref(null)
 const aliasType = [
   { id: 1, label: 'va_tranfer' },
   { id: 2, label: 'bill_payment' }
 ]
 const validateCIF = (event) => {
-  cif.value = event.target.value.replace(/\D/g, '').slice(0, 9) // Limits to 9 digits
+  cif.value = event.target.value.replace(/\D/g, '').slice(0, 9)
 }
 const toggleDropdown = (value) => {
   if (value === 'acc-no') {
@@ -132,13 +133,12 @@ const handleUpdate = async () => {
     ALIAS_TYPE: aliasT.value,
     CIF: cif.value,
     CUSTOMER_NAME: accountName.value,
-    USER_EDIT: userData.EMPNAME,
-    CCY: ccy.value
+    CCY: ccy.value,
   }
   isLoading.value = true
   try {
     const _res = await UpdateVA(data)
-    if (_res.message === 'Success') {
+    if (_res.message === 'SUCCESS') {
       titleModal.value = 'update_success'
       showSuccess.value = true
       isOpen.isDetail = false
@@ -159,7 +159,12 @@ const handleUpdate = async () => {
     console.log(error)
   }
 }
-
+onClickOutside(targetAccount, () => {
+  dropdownAccountNo.value = false
+})
+onClickOutside(targetAliaType, () => {
+  dropdownAliasType.value = false
+})
 const refreshVA = () => {
   eventBus.emit('refresh')
 }
@@ -220,7 +225,15 @@ const refreshVA = () => {
                   class="flex items-center gap-1 border border-primary hover:bg-gray-100 py-1 px-2 rounded-lg text-primary min-w-[110px]"
                   :class="{ 'border border-red-500 text-red-500': checkCIF === '1' }"
                 >
-                  <span v-html="svgIcons.Scan_Check"></span>
+                  <span
+                    v-html="svgIcons.Scan_Check"
+                    class="animate-pulse"
+                    :class="{
+                      'text-orange-600': checkCIF === '',
+                      'text-green-600': checkCIF === '0',
+                      'text-red-500': checkCIF === '1'
+                    }"
+                  ></span>
                   <span>{{ t('check') }}</span>
                 </button>
               </div>
@@ -244,6 +257,7 @@ const refreshVA = () => {
                 class="dropdown-account-number text-left focus:outline-none w-full bg-gray-50 rounded-lg border-b border-gray-300 mr-1"
                 @click.prevent="toggleDropdown('acc-no')"
                 @keydown.esc="dropdownAccountNo = false"
+                ref="targetAccount"
               >
                 <div class="flex items-center dropdown-selected-account-number">
                   <span class="text-red-600 px-2 py-0.5" v-if="selectedAccountNo">{{
@@ -297,6 +311,7 @@ const refreshVA = () => {
                 class="dropdown-account-number text-left focus:outline-none w-full bg-gray-50 rounded-lg border-b border-gray-300 mr-1"
                 @click.prevent="toggleDropdown('alias-type')"
                 @keydown.esc="dropdownAliasType = false"
+                ref="targetAliaType"
               >
                 <div class="flex items-center dropdown-selected-account-number">
                   <span class="text-red-600 px-2 py-0.5" v-if="selectedAliasType">{{
@@ -307,22 +322,12 @@ const refreshVA = () => {
                     <p v-else-if="aliasT === 2">{{ t('bill_payment') }}</p>
                   </span>
                   <div class="absolute right-0 mr-5 px-2">
-                    <svg
+                    <span
+                      v-html="svgIcons.ArrowDropDown"
                       class="absolute top-1/2 -translate-y-1/2 fill-current"
                       :class="{ 'rotate-180': dropdownAliasType }"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                        fill=""
-                      />
-                    </svg>
+                    </span>
                   </div>
                 </div>
                 <ul

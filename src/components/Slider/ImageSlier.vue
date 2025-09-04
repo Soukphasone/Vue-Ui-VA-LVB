@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
   rounded?: string; // e.g. "rounded-2xl"
 }>(), {
   autoplay: true,
-  intervalMs: 3500,
+  intervalMs: 6000,
   loop: true,
   aspect: "aspect-video",
   rounded: "rounded-2xl",

@@ -7,7 +7,6 @@ import showModals from '@/components/Modals/showModals.vue'
 import SearchInput from '../Search/SearchInput.vue'
 import BillRegisterModal from '../Modals/BillRegisterModal.vue'
 import { useOpenModalStore } from '@/stores/modal'
-import { dateSearch } from '@/service/Format'
 import { svgIcons } from '@/stores/svgIcons'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
@@ -104,19 +103,15 @@ function getAlisType(value) {
   const type = aliasType.find((type) => type.value === value)
   return type ? type.label : ''
 }
-// For CIF input
 const validateCif = (event) => {
   formData.value.cif = event.target.value.replace(/\D/g, '').slice(0, 9) // Limits to 9 digits
 }
 
 const toggleSelection = (service) => {
-  // If this service is already selected
   if (selectedIndex.value === service.SERVICE_PROFILE) {
-    // Toggle off - reset the selection
     selectedIndex.value = null
-    formData.value.serviceName = null // or "" if you prefer empty string
+    formData.value.serviceName = null 
   } else {
-    // Toggle on - set the new selection
     selectedIndex.value = service.SERVICE_PROFILE
     formData.value.serviceId = service.SERVICE_ID
     formData.value.serviceProfile = service.SERVICE_PROFILE
@@ -131,7 +126,6 @@ async function handleSubmit() {
     ALIAS_TYPE: formData.value.aliasTypeValue,
     CIF: formData.value.cif,
     CUSTOMER_NAME: formData.value.accountName,
-    DATE_INSERT: dateSearch(new Date()),
     BRANCE_CREATE: userData.HR_BRN_CODE,
     SERVICE_ID: formData.value.serviceId,
     API_TYPE: 1,
@@ -200,38 +194,47 @@ const canLoadMore = computed(() => {
   return filteredItems.value.length < serviceData.value.length
 })
 watch(
-  () => formData.value.cif.length === 9 && currentStep.value === 2,
-  async () => {
-    const res = await checkCustomerCIF()
-    if (res.data.length > 0) {
-      checkError.value = '0'
-      showError.value = false
-      checkCIF.value = true
-      formData.value.accountName = res.data[0].AC_NAME
-      const accountNumber = res.data[0].ACCOUNT_DETAILS
-      if (accountNumber.length === 1) {
-        selectedAccountNo.value = accountNumber[0]
-        formData.value.accountNumber = accountNumber[0].ACCOUNT_NUMBER
-        formData.value.ccy = accountNumber[0].CCY
-      }
-      if (accountNumber.length > 1) {
-        dropdownAccountNo.value = !dropdownAccountNo.value
-        accountNumberList.value = res.data[0].ACCOUNT_DETAILS
+  () => formData.value.cif,
+  async (newVal) => {
+    // Only run when length is 9 and step is 2
+    if (newVal.length === 9 && currentStep.value === 2) {
+      const res = await checkCustomerCIF()
+      if (res.data.length > 0) {
+        checkError.value = '0'
+        showError.value = false
+        checkCIF.value = true
+        formData.value.accountName = res.data[0].AC_NAME
+        const accountNumber = res.data[0].ACCOUNT_DETAILS
+        if (accountNumber.length === 1) {
+          selectedAccountNo.value = accountNumber[0]
+          formData.value.accountNumber = accountNumber[0].ACCOUNT_NUMBER
+          formData.value.ccy = accountNumber[0].CCY
+        }
+        if (accountNumber.length > 1) {
+          dropdownAccountNo.value = true
+          accountNumberList.value = res.data[0].ACCOUNT_DETAILS
+        }
+      } else {
+        titleModal.value = 'invalid_cif'
+        showError.value = true
+        checkError.value = '2'
+        formData.value.accountName = ''
+        formData.value.accountNumber = ''
+        selectedAccountNo.value = ''
+        accountNumberList.value = []
+        dropdownAccountNo.value = false
+        checkCIF.value = false
       }
     } else {
-      titleModal.value = 'invalid_cif'
-      showError.value = true
-      checkError.value = '2'
-      formData.value.accountName = ''
-      formData.value.accountNumber = ''
+      // Reset if user deletes numbers or length < 9
       selectedAccountNo.value = ''
       accountNumberList.value = []
       dropdownAccountNo.value = false
       checkCIF.value = false
-      return 0
     }
   }
 )
+
 const loadMore = () => {
   isLoadingMore.value = true
   setTimeout(() => {
@@ -575,37 +578,3 @@ async function resetForm() {
   </div>
   <BillRegisterModal :data="dataBill" :service="serviceName" />
 </template>
-<style>
-.dropdown-container {
-  position: relative;
-}
-.dropdown-account-number {
-  cursor: pointer;
-  position: relative;
-}
-.dropdown-selected-account-number {
-  padding: 3px 0px;
-}
-.dropdown-list-account-number {
-  list-style: none;
-  margin: 10px 0 0 0;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-}
-.dropdown-item-account-number {
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.dropdown-item-account-number:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-</style>

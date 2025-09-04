@@ -6,21 +6,18 @@ import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
   const { t } = useI18n()
   const router = useRouter()
-  // const userName = ref('')
-  // const userName = ref('')
-  // const passWord = ref('')
   const userName = ref('')
-  const passWord = ref('adminlvb')
+  const passWord = ref('')
   const checkError = ref(false)
   const errorMessage = ref('')
   const isLoading = ref(false)
   const isShowEye = ref(false)
 
+  const toUppercase = (event: any) => {
+    userName.value = event.target.value.toUpperCase()
+  }
   const handleShowEye = () => {
     isShowEye.value = !isShowEye.value
-  }
-  const validateNumber = (event: any) => {
-    userName.value = event.target.value.replace(/\D/g, '')
   }
   const handleLogin = async () => {
     if (!userName.value || !passWord.value) {
@@ -35,7 +32,6 @@ export default function useLoginPage() {
         PASSWORD: passWord.value
       }
       const _res = await Login(userLogin)
-      console.log('Login', _res)
       if (_res?.error === '00') {
         localStorage.setItem('authToken', _res?.data.TOKEN)
         localStorage.setItem('userData', JSON.stringify(_res?.data?.DATA_USER_LOGIN))
@@ -53,9 +49,11 @@ export default function useLoginPage() {
         }
 
       }
+      if(_res?.error === '2'){
+          errorMessage.value = 'sorry_try_later'
+      }
     } catch (error) {
       console.log(error)
-      errorMessage.value = 'sorry_try_later'
     } finally {
       isLoading.value = false
     }
@@ -67,7 +65,7 @@ export default function useLoginPage() {
     errorMessage,
     isLoading,
     isShowEye,
-    validateNumber,
+    toUppercase,
     handleShowEye,
     handleLogin
   }
