@@ -5,6 +5,9 @@ export function formatNumber(number: number) {
 export function dateSearch(date: string) {
   return format(new Date(date), "yyyy-MM-dd");
 }
+export function dateExchange(date: string) {
+  return format(new Date(date), "MM/dd/yyyy");
+}
 export function formatDate(date: string) {
   return format(new Date(date), "dd/MM/yyyy");
 }

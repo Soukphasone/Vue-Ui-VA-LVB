@@ -1,5 +1,6 @@
 import { post_service } from '@/service/service'
-import { LOGIN, SERVICE, CURRENT_ALIAS_ID, VA_REGISTER, CUSTOMER_ACCOUNT, MA_VA, SERVICE_REGISTER, DELETE_LIST_ADDED, CUSTOMERZ_REGISTER_LIST, VA_UPDATE, VA_DELETE, MENU_LIST} from '@/util/url'
+import { LOGIN, SERVICE, CURRENT_ALIAS_ID, VA_REGISTER, CUSTOMER_ACCOUNT, MA_VA, SERVICE_REGISTER, DELETE_LIST_ADDED, CUSTOMERZ_REGISTER_LIST, VA_UPDATE, VA_DELETE, MENU_LIST, EXCHANGE, IMAGES} from '@/util/url'
+import { da } from 'date-fns/locale'
 export async function Login(body: any) {
   const { errorStatus, message, data } = await post_service(LOGIN, body)
   if (errorStatus == '1') {
@@ -100,8 +101,26 @@ export async function CustomerRegisterList(body: any) {
   }
 }
 export async function MenuList(body: any) {
-  console.log("body", body);
   const { errorStatus, message, data } = await post_service(MENU_LIST, body)
+  if (errorStatus == '1') {
+    console.error(message)
+    console.error(data)
+  } else {
+    return data
+  }
+}
+export async function Images(body: any) {
+  const { errorStatus, message, data } = await post_service(IMAGES, body)
+  if (errorStatus == '1') {
+    console.error(message)
+    console.error(data)
+  } else {
+    console.log("images", data);
+    return data
+  }
+}
+export async function ExchangeCurrency(body: any) {
+  const { errorStatus, message, data } = await post_service(EXCHANGE, body)
   if (errorStatus == '1') {
     console.error(message)
     console.error(data)

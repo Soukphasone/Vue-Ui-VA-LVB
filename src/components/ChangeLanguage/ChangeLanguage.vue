@@ -1,18 +1,14 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { currentLanguage } from '@/i18n'
-// Handle language switching
 const { locale } = useI18n()
 const check = ref(currentLanguage.value)
-// Watch for changes in the global language state and update the i18n locale
 watch(currentLanguage, (newLanguage) => {
   locale.value = newLanguage
   check.value = newLanguage
 })
-
-// Dropdown functionality
 const isOpen = ref(false)
 const selected = ref(currentLanguage.value)
 const options = ref([
@@ -44,11 +40,13 @@ const toggleDropdown = () => {
 }
 
 const selectOption = (option) => {
+  console.log('value', option)
   selected.value = option
   currentLanguage.value = option
   isOpen.value = false
   localStorage.setItem('language', option)
 }
+const optionLanguage = computed(() => options.value.filter((opt) => opt.value !== selected.value))
 const getImagePath = (img) => {
   let la = 'laos-flag2.png'
   let en = 'england-flag2.png'
@@ -76,17 +74,24 @@ const getImagePath = (img) => {
         <span> <img :src="getImagePath(check)" alt="flag" class="flag-bt" /></span>
       </button>
       <ul v-if="isOpen" class="dropdown-bt-change-language">
-        <li v-for="option in options" :key="option.value" @click="selectOption(option.value)">
+        <li
+          v-for="option in optionLanguage"
+          :key="option.value"
+          @click="selectOption(option.value)"
+        >
           <img :src="getImagePath(option.img)" alt="flag" class="flag-icon-change-language" />
           <span style="margin-top: -3px"> {{ option.lg }}</span>
         </li>
       </ul>
     </div>
-    <div class="flex items-center text-primary text-user absolute bottom-0 left-9">{{ $t('lg') }}</div>
+    <div class="flex items-center text-primary text-user absolute bottom-0 left-9">
+      {{ $t('lg') }}
+    </div>
   </div>
 </template>
 
-<style>
+<style scoped> 
+/* Change Language */
 .custom-select {
   position: relative;
   display: inline-block;
@@ -100,7 +105,6 @@ const getImagePath = (img) => {
   color: black;
   /* border: 2px solid rgb(165, 165, 165) */
 }
-
 .custom-select .dropdown-bt-change-language {
   position: absolute;
   top: 100%;
@@ -137,4 +141,5 @@ const getImagePath = (img) => {
   background: #eee;
   border-radius: 5px;
 }
+/* Change Language */
 </style>

@@ -16,7 +16,6 @@ export function get_service(url: string): Promise<any> {
 }
 
 export function post_service(url: string, body: any): Promise<any> {
-  console.log("url", url);
   return new Promise((resolve, reject) => {
     service
       .post(server + url, body)

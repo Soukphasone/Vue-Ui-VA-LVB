@@ -201,5 +201,7 @@ export const vn = {
   customer_list_unauthorized: 'Danh sách khách hàng chưa được phê duyệt',
   more: 'Còn nữa',
   refresh: 'Làm mới',
-  
+  exchange: 'Trao đổi tiền tệ',
+  buy: 'Mua',
+  sell: 'Bán',
 }

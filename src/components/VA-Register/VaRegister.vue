@@ -110,7 +110,7 @@ const validateCif = (event) => {
 const toggleSelection = (service) => {
   if (selectedIndex.value === service.SERVICE_PROFILE) {
     selectedIndex.value = null
-    formData.value.serviceName = null 
+    formData.value.serviceName = null
   } else {
     selectedIndex.value = service.SERVICE_PROFILE
     formData.value.serviceId = service.SERVICE_ID
@@ -139,16 +139,15 @@ async function handleSubmit() {
       dataBill.value = _res.data[0]
       showSuccess.isBill = true
       resetForm()
+      return
     }
     if (_res.message === 'This account is already registered') {
       titleModal.value = 'account_already_registered'
       showError.value = true
+      return
     }
-    if (!_res.data) {
-      titleModal.value = 'Fail'
-      messageModal.value = 'Please try again'
-      showError.value = true
-    }
+    titleModal.value = 'fail'
+    showError.value = true
   } finally {
     isLoading.value = false
   }
@@ -257,6 +256,7 @@ async function resetForm() {
   selectedIndex.value = null
   dropdownAccountNo.value = false
   currentStep.value = 1
+  isLoading.value = false
 }
 </script>
 <template>
@@ -578,3 +578,39 @@ async function resetForm() {
   </div>
   <BillRegisterModal :data="dataBill" :service="serviceName" />
 </template>
+<style scoped>
+/* Account number dropdown */
+.dropdown-container {
+  position: relative;
+}
+.dropdown-account-number {
+  cursor: pointer;
+  position: relative;
+}
+.dropdown-selected-account-number {
+  padding: 3px 0px;
+}
+.dropdown-list-account-number {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+.dropdown-item-account-number {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.dropdown-item-account-number:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/* Account number dropdown */
+</style>

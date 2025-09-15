@@ -64,13 +64,11 @@ const toggleModal = (name, data) => {
   }
 }
 const fetchData = async () => {
-  if (userData.ROLE_NAME === 'Maker' || userData.ROLE_NAME === 'Cheker') {
-    branch.value = userData.HR_BRN_CODE
-  } else if (userData.ROLE_NAME === 'Admin') {
-    branch.value = ''
-  }
   const data = {
-    BRANCH: selectBranch?.value?.BRNCODEFCC || branch.value,
+    USER_ID: userData.ROLE_NAME === 'Maker' ? userData?.EMPNAME : '',
+    BRANCH:
+      selectBranch?.value?.BRNCODEFCC ||
+      (userData.ROLE_NAME !== 'Admin' ? userData?.HR_BRN_CODE : '' || ''),
     STATUS: selectStatus?.value?.value,
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value

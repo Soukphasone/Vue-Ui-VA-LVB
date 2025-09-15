@@ -11,4 +11,6 @@ export const VA_DELETE = '/delete-va'
 export const CUSTOMERZ_REGISTER_LIST = '/customer-list'
 export const DELETE_LIST_ADDED = '/delete-map-va'
 export const MENU_LIST = '/menu'
+export const IMAGES = '/images'
+export const EXCHANGE = '/exchange'
 

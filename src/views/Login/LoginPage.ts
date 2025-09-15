@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Login } from '@/service/Get_Post_API'
+import { Login, Images } from '@/service/Get_Post_API'
 import { PATH } from '@/router/pathName'
 import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
@@ -32,26 +32,29 @@ export default function useLoginPage() {
         PASSWORD: passWord.value
       }
       const _res = await Login(userLogin)
+      console.log("Login", _res);
       if (_res?.error === '00') {
         localStorage.setItem('authToken', _res?.data.TOKEN)
         localStorage.setItem('userData', JSON.stringify(_res?.data?.DATA_USER_LOGIN))
+        localStorage.setItem('imagesData', JSON.stringify(_res?.data?.DATA_IMAGES))
         router.push(PATH.HOME)
       }
       if (_res?.error === '03') {
-        errorMessage.value = 'invalid_username'
+        return errorMessage.value = 'invalid_username'
       }
       if (_res?.error === '04') {
         if (_res?.message === 'The user or password is incorrect') {
-          errorMessage.value = 'invalid_username_or_password'
+          return errorMessage.value = 'invalid_username_or_password'
         }
         else {
-          errorMessage.value = 'user_locked'
+          return errorMessage.value = 'user_locked'
         }
 
       }
-      if(_res?.error === '2'){
-          errorMessage.value = 'sorry_try_later'
+      if (_res?.error === '2') {
+        return errorMessage.value = 'sorry_try_later'
       }
+      return errorMessage.value = 'sorry_try_later'
     } catch (error) {
       console.log(error)
     } finally {

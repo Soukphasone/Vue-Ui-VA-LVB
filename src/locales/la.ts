@@ -203,4 +203,7 @@ export const la = {
   customer_list_unauthorized: 'ລາຍການທີ່ຍັງບໍ່ທັນອະນຸມັດ',
   more: 'ເພີ່ມເຕີມ',
   refresh: 'ຣີເຟສ',
+  exchange: 'ອັດຕາແລກປ່ຽນ',
+  buy: 'ຊື້',
+  sell: 'ຂາຍ',
 }

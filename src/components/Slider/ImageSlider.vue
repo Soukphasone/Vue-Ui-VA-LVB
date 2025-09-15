@@ -1,37 +1,43 @@
-<!-- src/components/ImageSlider.vue -->
 <script setup lang="ts">
-import { computed } from "vue";
-import { useSlider } from "@/stores/useSlider";
+import { computed } from 'vue'
+import { useSlider } from '@/stores/useSlider'
+import image from '@/assets/images/slide-images/slider1.jpg'
 
+const server = import.meta.env.VITE_SERVER_MAIN
 type Slide = {
-  src: string;
-  alt?: string;
-  caption?: string;
-};
+  src: string
+  alt?: string
+  caption?: string
+}
 
-const props = withDefaults(defineProps<{
-  slides: Slide[];
-  autoplay?: boolean;
-  intervalMs?: number;
-  loop?: boolean;
-  aspect?: string; // e.g. "aspect-[16/9]" or "aspect-video"
-  rounded?: string; // e.g. "rounded-2xl"
-}>(), {
-  autoplay: true,
-  intervalMs: 6000,
-  loop: true,
-  aspect: "aspect-video",
-  rounded: "rounded-2xl",
-});
+const props = withDefaults(
+  defineProps<{
+    slides: Slide[]
+    autoplay?: boolean
+    intervalMs?: number
+    loop?: boolean
+    aspect?: string // e.g. "aspect-[16/9]" or "aspect-video"
+    rounded?: string // e.g. "rounded-2xl"
+  }>(),
+  {
+    autoplay: true,
+    intervalMs: 6000,
+    loop: true,
+    aspect: 'aspect-video',
+    rounded: 'rounded-2xl'
+  }
+)
 
 const slider = useSlider({
   length: props.slides.length,
   autoplay: props.autoplay,
   intervalMs: props.intervalMs,
-  loop: props.loop,
-});
+  loop: props.loop
+})
 
-const transformStyle = computed(() => `transform: translateX(calc(${ -slider.index.value } * 100% + ${ slider.deltaX.value }px));`);
+const transformStyle = computed(
+  () => `transform: translateX(calc(${-slider.index.value} * 100% + ${slider.deltaX.value}px));`
+)
 </script>
 
 <template>
@@ -56,29 +62,25 @@ const transformStyle = computed(() => `transform: translateX(calc(${ -slider.ind
         :style="transformStyle"
         :class="{ 'transition-none': slider.isDragging }"
       >
-        <div
-          v-for="(s, i) in slides"
-          :key="i"
-          class="shrink-0 grow-0 basis-full relative"
-        >
+        <div v-for="(s, i) in slides" :key="i" class="shrink-0 grow-0 basis-full relative">
           <img
-            :src="s.src"
-            :alt="s.alt ?? `Slide ${i+1}`"
+            :src="`${server}/images/${s.src}`"
+            :alt="s.alt ?? `Slide ${i + 1}`"
             class="h-full w-full object-cover"
             draggable="false"
           />
-          <div
+          <!-- <div
             v-if="s.caption"
             class="absolute inset-x-0 bottom-0 bg-black/40 text-white px-4 py-2 text-sm"
           >
             {{ s.caption }}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
     <!-- arrows -->
-    <button
+    <!-- <button
       type="button"
       class="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white shadow rounded-full"
       @click="slider.prev"
@@ -93,10 +95,10 @@ const transformStyle = computed(() => `transform: translateX(calc(${ -slider.ind
       aria-label="Next slide"
     >
       ›
-    </button>
+    </button> -->
 
     <!-- dots -->
-    <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
+    <!-- <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
       <button
         v-for="(s, i) in slides"
         :key="'dot-' + i"
@@ -105,11 +107,15 @@ const transformStyle = computed(() => `transform: translateX(calc(${ -slider.ind
         @click="slider.goTo(i)"
         :aria-label="`Go to slide ${i+1}`"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <style scoped>
 /* improves dragging feel on desktop */
-div[draggable="false"], img { user-select: none; -webkit-user-drag: none; }
+div[draggable='false'],
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
 </style>

@@ -93,7 +93,7 @@ export const en = {
   date_print: 'Date print',
   create_by: 'Create by',
   account_type: 'Account type',
-  currency: 'currency',
+  currency: 'Currency',
   ac_status: 'Ac status',
   status: 'Status',
   total_balance: 'Total Balance',
@@ -205,4 +205,8 @@ export const en = {
   customer_list_unauthorized: 'Customer list unauthorized',
   more: 'More',
   refresh: 'Refresh',
+  exchange: 'Currency Exchange',
+  buy: 'Buying',
+  sell: 'Selling',
+  
 }

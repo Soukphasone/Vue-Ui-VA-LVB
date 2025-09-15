@@ -50,7 +50,7 @@ onMounted(notificationCount)
 <template>
   <div>
     <aside
-      class="w-[300px] h-full bg-white border border-gray-200 duration-300 ease-linear"
+      class="w-[300px] h-full bg-white border border-gray-200 duration-300 ease-linear z-99"
       v-show="currentPage === 'Login' ? !sidebarStore.isSidebarOpen : sidebarStore.isSidebarOpen"
     >
       <!-- SIDEBAR HEADER -->

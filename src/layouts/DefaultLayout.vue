@@ -1,17 +1,26 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import HeaderArea from '@/components/Header/HeaderArea.vue'
 import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
 import { currentLanguage } from '@/i18n'
 import { useRoute } from 'vue-router'
 import showModals from '@/components/Modals/showModals.vue'
 import { useOpenModalStore } from '@/stores/modal'
+import { isTokenExpired } from '@/stores/checkToken'
+import { logout } from '@/stores/clearStorage'
 const openModalStore = useOpenModalStore()
 const currentPage = useRoute().name
 const check = ref(currentLanguage.value)
 watch(currentLanguage, (newLanguage) => {
   check.value = newLanguage
 })
+const checkToken = () => {
+  const token = localStorage.getItem('authToken')
+  if (isTokenExpired(token)) {
+    logout()
+  }
+}
+onMounted(checkToken)
 </script>
 
 <template>

@@ -4,3 +4,4 @@ services:
     ports:
       - "8082:80"   # Exposes port 8080 on your PC
     container_name: va-app-ui-test
+    restart: unless-stopped
