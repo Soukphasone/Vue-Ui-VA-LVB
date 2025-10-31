@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSlider } from '@/stores/useSlider'
-import image from '@/assets/images/slide-images/slider1.jpg'
 
 const server = import.meta.env.VITE_SERVER_MAIN
 type Slide = {

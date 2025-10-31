@@ -5,7 +5,7 @@
 
 @layer base {
     body {
-        @apply relative z-1 bg-whiten text-base font-normal text-body dark:text-bodydark dark:bg-boxdark-2;
+        @apply relative z-1 bg-whiten text-base font-normal text-body;
     }
 }
 
@@ -46,10 +46,10 @@
     background-position: top;
 }
 .bg-login{
-    background-image: url('../images/background/bg-3.jpg');
+    background-image: url('../images/background/BG.png');
     background-repeat: repeat;
     background-size: cover;
-    background-position: right;
+    background-position: top;
 
 }
 .bg-bill{
@@ -197,3 +197,37 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
   /* Date dropdown */
+/* Account number dropdown */
+.dropdown-container {
+  position: relative;
+}
+.dropdown-account-number {
+  cursor: pointer;
+  position: relative;
+}
+.dropdown-selected-account-number {
+  padding: 3px 0px;
+}
+.dropdown-list-account-number {
+  list-style: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+.dropdown-item-account-number {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.dropdown-item-account-number:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/* Account number dropdown */

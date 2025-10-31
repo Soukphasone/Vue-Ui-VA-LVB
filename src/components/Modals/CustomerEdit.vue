@@ -30,7 +30,6 @@ const isLoading = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
 const titleModal = ref('')
-const messageModal = ref('')
 const targetAccount = ref(null)
 const targetAliaType = ref(null)
 const aliasType = [
@@ -93,7 +92,7 @@ const handleCheckCIF = async () => {
         dropdownAccountNo.value = true
       }
     } else {
-      titleModal.value = 'invalid_cif'
+      titleModal.value = t('invalid_cif')
       showError.value = true
       checkCIF.value = '1'
       dropdownAccountNo.value = false
@@ -133,13 +132,13 @@ const handleUpdate = async () => {
     ALIAS_TYPE: aliasT.value,
     CIF: cif.value,
     CUSTOMER_NAME: accountName.value,
-    CCY: ccy.value,
+    CCY: ccy.value
   }
   isLoading.value = true
   try {
     const _res = await UpdateVA(data)
     if (_res.message === 'SUCCESS') {
-      titleModal.value = 'update_success'
+      titleModal.value = t('update_success')
       showSuccess.value = true
       isOpen.isDetail = false
       refreshVA()
@@ -147,12 +146,12 @@ const handleUpdate = async () => {
       return
     }
     if (_res.message === 'This account is already') {
-      titleModal.value = 'account_already_registered'
+      titleModal.value = t('account_already_registered')
       showError.value = true
       isLoading.value = false
       return
     }
-    titleModal.value = 'Fail'
+    titleModal.value = t('fail')
     showError.value = true
     isLoading.value = false
   } catch (error) {
@@ -372,16 +371,6 @@ const refreshVA = () => {
       </div>
     </transition>
   </div>
-  <showModals
-    :show-success-modal="showSuccess"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showSuccess = false"
-  />
-  <showModals
-    :show-error-modal="showError"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showError = false"
-  />
+  <showModals :show-success-modal="showSuccess" :title="titleModal" @close="showSuccess = false" />
+  <showModals :show-error-modal="showError" :title="titleModal" @close="showError = false" />
 </template>

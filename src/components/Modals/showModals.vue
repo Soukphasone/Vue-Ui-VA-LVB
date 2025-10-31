@@ -11,22 +11,21 @@ import { svgIcons } from '@/stores/svgIcons'
 const props = defineProps({
   showSuccessModal: {
     type: Boolean,
-    required: true
-  },
-  showWarningModal: {
-    type: Boolean,
-    required: true
+    required: false,
+    default: false
   },
   showErrorModal: {
     type: Boolean,
-    required: true
+    required: false,
+    default: false
   },
   showConfirmModal: {
     type: Boolean,
-    required: true
+    required: false,
+    default: false
   },
   id: {
-    type: Number
+    type: [Number, Array]
   },
   value: {
     type: String
@@ -49,9 +48,6 @@ const closeSuccessModal = () => {
 const closeErrorModal = () => {
   emit('close')
 }
-const closeWarningModal = () => {
-  emit('close')
-}
 const refreshVA = () => {
   eventBus.emit('refresh')
 }
@@ -68,12 +64,10 @@ const resetModal = () => {
 }
 function confirm(value) {
   if (value === '1' || value === '2') {
-    handleStatus()
-    return
+    return handleStatus()
   }
   if (value === 'delete-va') {
-    handleDeleteVA()
-    return
+    return handleDeleteVA()
   }
   if (value === 'logout') {
     openModal.isLogOut = false
@@ -134,23 +128,10 @@ const handleStatus = async () => {
       <div class="bg-white rounded-lg max-w-md w-full p-6">
         <div class="flex justify-center mb-6">
           <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-            <svg
-              class="w-10 h-10 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"
-              ></path>
-            </svg>
+            <span v-html="svgIcons.Authorized" class="w-9 h-9 text-green-600 animate-pulse"> </span>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ $t(title) }}</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ title }}</h2>
         <div class="flex justify-center">
           <button
             @click="closeSuccessModal"
@@ -164,65 +145,16 @@ const handleStatus = async () => {
   >
   <transition name="fade-scale">
     <div
-      v-if="showWarningModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-999"
-    >
-      <div class="bg-white rounded-lg max-w-md w-full p-6">
-        <div class="flex justify-center mb-4">
-          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
-            <svg
-              class="w-10 h-10 text-yellow-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">{{ title }}</h2>
-        <div class="flex justify-center">
-          <button
-            @click="closeWarningModal"
-            class="px-6 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 focus:outline-none"
-          >
-            Understand
-          </button>
-        </div>
-      </div>
-    </div>
-  </transition>
-  <transition name="fade-scale">
-    <div
       v-if="showErrorModal"
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-999"
     >
       <div class="bg-white rounded-lg max-w-md w-full p-6">
         <div class="flex justify-center mb-6">
           <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-            <svg
-              class="w-10 h-10 text-red-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
+            <span v-html="svgIcons.Delete" class="w-10 h-10 text-red-600 animate-pulse"> </span>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ $t(title) }}</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-10">{{ title }}</h2>
         <div class="flex justify-center">
           <button
             @click="closeErrorModal"
@@ -275,7 +207,7 @@ const handleStatus = async () => {
             </span>
           </div>
         </div>
-        <h2 class="text-2xl font-bold text-center text-gray-600 mb-10">{{ $t(title) }}</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-600 mb-10">{{ title }}</h2>
         <div class="flex justify-center space-x-4">
           <button
             @click="closeConfirmModal"

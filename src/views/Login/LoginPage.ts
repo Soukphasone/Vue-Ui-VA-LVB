@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Login, Images } from '@/service/Get_Post_API'
+import { Login } from '@/service/Get_Post_API'
 import { PATH } from '@/router/pathName'
 import { useI18n } from 'vue-i18n'
 export default function useLoginPage() {
@@ -32,7 +32,6 @@ export default function useLoginPage() {
         PASSWORD: passWord.value
       }
       const _res = await Login(userLogin)
-      console.log("Login", _res);
       if (_res?.error === '00') {
         localStorage.setItem('authToken', _res?.data.TOKEN)
         localStorage.setItem('userData', JSON.stringify(_res?.data?.DATA_USER_LOGIN))

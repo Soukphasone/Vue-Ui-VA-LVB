@@ -4,10 +4,12 @@ import { useI18n } from 'vue-i18n'
 import Loading from '@/components/Loading/Loading.vue'
 import { currentLanguage } from '@/i18n'
 import { DeleteListAddedMap, ServiceRegsiter } from '@/service/Get_Post_API'
-import showModals from '@/components/Modals/showModals.vue'
 import SearchInput from '../Search/SearchInput.vue'
 import { svgIcons } from '@/stores/svgIcons'
+import { useOpenModalStore } from '@/stores/modal'
+
 const userData = JSON.parse(localStorage.getItem('userData'))
+const isOpen = useOpenModalStore()
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
 const serviceListAddedData = ref([])
@@ -21,7 +23,6 @@ const currentPage = ref(1)
 const showSuccess = ref(false)
 const showError = ref(false)
 const titleModal = ref('')
-const messageModal = ref('' || 'Please try check again')
 watch(currentLanguage, (newLanguage) => {
   check.value = newLanguage
 })
@@ -56,23 +57,18 @@ const toggleSelection = (item) => {
   } else {
     newSelectedItems.push(id)
   }
-
   selectedItems.value = newSelectedItems
   checkItemData.value = newSelectedItems.length > 0
 }
 const reset = async () => {
+  checkItemData.value = false
   selectedItems.value = []
-  messageModal.value = 'success'
-  titleModal.value = 'delete_success'
-  showSuccess.value = true
+  isOpen.isSuccess = true
   await fetchSericeData()
 }
 const removeListAdded = async () => {
   if (!checkItemData.value) {
-    titleModal.value = 'pl_choose_service_name'
-    messageModal.value = 'check_again'
-    showError.value = true
-    return
+    return (isOpen.isError = true)
   }
   const data = {
     IDS: selectedItems.value
@@ -86,7 +82,6 @@ const removeListAdded = async () => {
     }
     showError.value = true
     titleModal.value = 'fail'
-    messageModal.value = 'check_again'
   } catch (error) {
     console.log(error)
   }
@@ -131,7 +126,7 @@ const loadMore = () => {
 </script>
 <template>
   <div class="min-h-screen bg-gray-100">
-    <div class="max-w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="max-w-full mx-auto bg-white shadow-md overflow-hidden">
       <div>
         <div class="flex flex-grow items-center justify-between py-3 px-4">
           <div class="flex items-center gap-4">
@@ -237,17 +232,4 @@ const loadMore = () => {
       </div>
     </div>
   </div>
-  <!-- Success Modal -->
-  <showModals
-    :show-success-modal="showSuccess"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showSuccess = false"
-  />
-  <showModals
-    :show-error-modal="showError"
-    :title="titleModal"
-    :message="messageModal"
-    @close="showError = false"
-  />
 </template>

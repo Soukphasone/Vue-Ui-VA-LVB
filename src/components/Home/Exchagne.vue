@@ -80,13 +80,13 @@ const getCurrencyFlage = (currency) => currencyInfo[currency]?.flag
 <template>
   <div class="max-w-full mx-auto">
     <!-- Header -->
-    <div class="bg-red-600 rounded-lg text-center text-white p-1 mb-2">
+    <div class="bg-red-600 rounded-3 text-center text-white p-1 mb-2">
       <h1 class="text-lg font-bold">{{ $t('exchange') }}</h1>
       <p>{{ $t('date') + ': ' + formatDate(new Date()) }}</p>
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="bg-white shadow overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full">
           <thead class="bg-gray-50 text-primary text-sm">
@@ -131,7 +131,7 @@ const getCurrencyFlage = (currency) => currencyInfo[currency]?.flag
                 {{ formatNumber(currency.BUY_BY_CASH) }}
               </td>
               <td class="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-                {{ formatNumber(currency.BUY_BY_TRF) }}
+                {{ formatNumber(currency.SEL_BY_CASH) }}
               </td>
             </tr>
           </tbody>

@@ -16,6 +16,7 @@ import { useOpenModalStore } from '@/stores/modal'
 import eventBus from '@/eventBus'
 import { dayList, dayListLao, dayListViet, statusList, branches } from '@/stores/branchBankList'
 import { svgIcons } from '@/stores/svgIcons'
+import HeaderInside from '@/components/Header/HeaderInside.vue'
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
 const check = ref(currentLanguage.value)
@@ -69,18 +70,17 @@ const fetchData = async () => {
     BRANCH:
       selectBranch?.value?.BRNCODEFCC ||
       (userData.ROLE_NAME !== 'Admin' ? userData?.HR_BRN_CODE : '' || ''),
-    STATUS: selectStatus?.value?.value,
+    STATUS: selectStatus?.value?.value || '',
     DATE_FROM: dateFrom.value,
     DATE_TO: dateTo.value
   }
   isLoading.value = true
   try {
     const _res = await CustomerRegisterList(data)
-    if (_res.data.length > 0) {
-      dataReport.value = _res.data
-    } else {
-      dataReport.value = []
+    if (_res.message === 'SUCCESS') {
+      return (dataReport.value = _res.data)
     }
+    dataReport.value = []
   } finally {
     setTimeout(() => {
       isLoading.value = false
@@ -211,10 +211,12 @@ onUnmounted(() => {
 })
 </script>
 <template>
-  <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
-    <div class="bg-primary py-4 px-6">
-      <h1 class="text-2xl font-bold text-white md:text-center">{{ t('cm_register_list') }}</h1>
-    </div>
+  <div
+    class="w-full mx-auto rounded-2xl shadow-md overflow-hidden"
+    data-aos="fade-left"
+    style="margin-top: -15px"
+  >
+    <HeaderInside :title="t('cm_register_list')" />
     <div class="max-w-full overflow-x-auto border border-gray-200">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
         <div class="flex justify-center items-center">
@@ -541,14 +543,13 @@ onUnmounted(() => {
   <CustomerEdit :data="dataEdit" />
   <showModals
     :show-success-modal="isOpen.isSuccess"
-    title="delete_success"
-    message="Success"
+    :title="t('delete_success')"
     @close="isOpen.isSuccess = false"
   />
   <showModals
     :show-confirm-modal="isOpen.isDeleteVA"
     :id="idDeleteVa"
-    title="dou_you_want_delete_this_account"
+    :title="t('dou_you_want_delete_this_account')"
     value="delete-va"
     @close="isOpen.isDeleteVA = false"
   />

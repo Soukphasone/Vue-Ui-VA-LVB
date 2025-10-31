@@ -8,6 +8,7 @@ import SearchInput from '../Search/SearchInput.vue'
 import BillRegisterModal from '../Modals/BillRegisterModal.vue'
 import { useOpenModalStore } from '@/stores/modal'
 import { svgIcons } from '@/stores/svgIcons'
+import HeaderInside from '@/components/Header/HeaderInside.vue'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
@@ -22,7 +23,6 @@ const itemsPerPage = ref(10)
 const currentPage = ref(1)
 const selectedIndex = ref(null)
 const titleModal = ref('')
-const messageModal = ref('' || 'check_again')
 const serviceName = ref('')
 const accountNumberList = ref([])
 const dropdownAccountNo = ref(false)
@@ -61,30 +61,29 @@ const toggleDropdownAcNo = () => {
 async function nextStep() {
   if (currentPage.value === 1) {
     if (!formData.value.serviceName || formData.value.serviceName === '') {
-      titleModal.value = 'pl_choose_service_name'
-      messageModal.value = 'check_again'
+      titleModal.value = t('pl_choose_service_name')
       showError.value = true
       return
     }
   }
   if (currentStep.value === 2) {
     if (!formData.value.cif) {
-      titleModal.value = 'pl_enter_cif'
+      titleModal.value = t('pl_enter_cif')
       showError.value = true
       return
     }
     if (formData.value.cif.length !== 9) {
-      titleModal.value = 'pl_enter_cif_9_digits'
+      titleModal.value = t('pl_enter_cif_9_digits')
       showError.value = true
       return
     }
     if (!formData.value.accountNumber) {
-      titleModal.value = 'pl_select_account_no'
+      titleModal.value = t('pl_select_account_no')
       showError.value = true
       return
     }
     if (!formData.value.aliasType) {
-      titleModal.value = 'Choose an alias type'
+      titleModal.value = t('Choose an alias type')
       showError.value = true
       return
     }
@@ -101,7 +100,7 @@ function prevStep() {
 function getAlisType(value) {
   formData.value.aliasTypeValue = value
   const type = aliasType.find((type) => type.value === value)
-  return type ? type.label : ''
+  return type ? type.label : 'alias.unknown'
 }
 const validateCif = (event) => {
   formData.value.cif = event.target.value.replace(/\D/g, '').slice(0, 9) // Limits to 9 digits
@@ -142,7 +141,7 @@ async function handleSubmit() {
       return
     }
     if (_res.message === 'This account is already registered') {
-      titleModal.value = 'account_already_registered'
+      titleModal.value = t('account_already_registered')
       showError.value = true
       return
     }
@@ -160,7 +159,7 @@ const fetchServiceData = async () => {
   isLoading.value = true
   try {
     const _res = await ServiceRegsiter(data)
-    if (_res.data.length > 0) {
+    if (_res.data) {
       serviceData.value = _res.data
     } else {
       serviceData.value = []
@@ -260,13 +259,15 @@ async function resetForm() {
 }
 </script>
 <template>
-  <div class="min-h-screen bg-gray-100" style="margin-top: -15px">
-    <div class="max-w-full mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+  <div
+    v-if="userData.ROLE_NAME === 'Maker'"
+    class="min-h-screen bg-gray-100"
+    data-aos="fade-left"
+    style="margin-top: -15px"
+  >
+    <div class="max-w-full mx-auto bg-white rounded-3 shadow-md overflow-hidden">
       <!-- Form Header -->
-      <div class="bg-primary py-4 px-6">
-        <h1 class="text-2xl font-bold text-white md:text-center">{{ t('registration') }}</h1>
-      </div>
-
+      <HeaderInside :title="t('registration')" />
       <!-- Progress Steps -->
       <div class="px-6 py-4 border-b">
         <div class="flex justify-center items-center gap-20">
@@ -530,7 +531,7 @@ async function resetForm() {
               <div class="flex w-full">
                 <span class="text-primary w-[30%]">{{ t('payment_type') }}:</span>
                 <span class="text-red-500 w-[70%]">
-                  {{ t(getAlisType(formData.aliasType)) }}
+                  {{ formData.aliasType ? t(getAlisType(formData.aliasType)) : '' }}
                 </span>
               </div>
             </div>
@@ -569,48 +570,7 @@ async function resetForm() {
         </div>
       </form>
     </div>
-    <showModals
-      :show-error-modal="showError"
-      :title="titleModal"
-      :message="messageModal"
-      @close="showError = false"
-    />
   </div>
+  <showModals :show-error-modal="showError" :title="titleModal" @close="showError = false" />
   <BillRegisterModal :data="dataBill" :service="serviceName" />
 </template>
-<style scoped>
-/* Account number dropdown */
-.dropdown-container {
-  position: relative;
-}
-.dropdown-account-number {
-  cursor: pointer;
-  position: relative;
-}
-.dropdown-selected-account-number {
-  padding: 3px 0px;
-}
-.dropdown-list-account-number {
-  list-style: none;
-  margin: 10px 0 0 0;
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-}
-.dropdown-item-account-number {
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.dropdown-item-account-number:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-/* Account number dropdown */
-</style>

@@ -2,15 +2,17 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import { useRoute } from 'vue-router'
 import { menuIcon } from './sidebarMenu'
+import { svgIcons } from '@/stores/svgIcons'
+
 const sidebarStore = useSidebarStore()
-defineProps(['item', 'index', 'count', 'role'])
+defineProps(['item', 'count', 'role'])
 sidebarStore.page = useRoute().name
 </script>
 <template>
   <li>
     <router-link
       :to="item.MENU_PATH"
-      class="group relative flex items-center py-2 px-2.5 font-medium text-bodydark3 duration-300 ease-in-out hover:bg-primary hover:text-white rounded-2"
+      class="group relative flex items-center py-2 px-2.5 font-medium text-bodydark3 duration-300 ease-in-out hover:bg-primary hover:text-white rounded-2xl"
       :class="{
         'bg-primary text-white': sidebarStore.page === item.EN_NAME
       }"
@@ -29,23 +31,7 @@ sidebarStore.page = useRoute().name
               class="relative flex"
               :class="{ hidden: sidebarStore.page === 'Authorization' }"
             >
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-8 h-8"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.75"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 11-6 0h6z"
-                  />
-                </svg>
-              </span>
+              <span v-html="svgIcons.Bell" class="w-8 h-8"></span>
               <span
                 class="absolute flex items-center left-4 bg-red-500 rounded-max text-whiter text-user w-5 h-5 justify-center"
                 style="margin-top: -4px"

@@ -130,15 +130,15 @@ watch(
             </div>
             <div v-if="data.USER_APPROVE" class="flex gap-3 items-center">
               <label class="font-medium text-gray-900 w-[250px]">
-                <P v-if="data.STATUS === 1">
+                <p v-if="data.STATUS === 1">
                   {{ t('user_approve') }}
-                </P>
-                <P v-else-if="data.STATUS === 2">
+                </p>
+                <p v-else-if="data.STATUS === 2">
                   {{ t('user_reject') }}
-                </P>
-                <P v-else-if="data.STATUS === 0 && data.USER_EDIT">
+                </p>
+                <p v-else-if="data.STATUS === 0 && data.USER_EDIT">
                   {{ t('ever_reject_by') }}
-                </P>
+                </p>
               </label>
               <span class="w-full py-1 px-2 rounded-lg text-red-600 border-b border-gray-300">
                 {{ data.USER_APPROVE }}</span

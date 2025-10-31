@@ -5,23 +5,20 @@ import VaRegisterView from '@/views/Va/VaRegisterView.vue'
 import MapVaView from '@/views/Va/MapVaView.vue'
 import CustomerListView from '@/views/Va/CustomerList.vue'
 import AuthorizationView from '@/views/Va/Authorization.vue'
+import NotFound from '@/views/Dashboard/NotFound.vue'
 import { PATH } from './pathName'
 const routes = [
+  {
+    path: PATH.EMPTY_PATH,
+    name: 'Home',
+    component: Home
+  },
   {
     path: PATH.HOME,
     name: 'Home',
     component: Home,
     meta: {
       title: 'Home',
-      requiresAuth: true
-    }
-  },
-  {
-  path: "",
-    name: 'Vitrual Account',
-    component: '',
-    meta: {
-      title: 'Vitrual Account',
       requiresAuth: true
     }
   },
@@ -68,7 +65,18 @@ const routes = [
     meta: {
       title: 'Login'
     }
+  },
+  // {
+  //   path: PATH.EMPTY_PATH,
+  //   name: 'NotFound',
+  //   component: NotFound
+  // },
+  {
+    path: PATH.NOT_FOUND,
+    name: 'CatchAll',
+    component: NotFound
   }
+
 ]
 
 const router = createRouter({

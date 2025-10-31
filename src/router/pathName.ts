@@ -6,4 +6,6 @@ export const PATH = {
   MAP_VA: '/map-va',
   CUSTOMER_LIST: '/customer-list',
   AUTHORIZATION: '/authorization',
+  EMPTY_PATH:'/',
+  NOT_FOUND: '/:pathMatch(.*)*'
 }

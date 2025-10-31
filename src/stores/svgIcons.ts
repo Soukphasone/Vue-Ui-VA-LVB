@@ -50,6 +50,33 @@ export const svgIcons = {
                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m4-4h2a2 2 0 012 2v2H7V5a2 2 0 012-2z"
               />
             </svg>`,
+  Bell: ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.75"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 11-6 0h6z"
+                  />
+                </svg>`,
+  DataList: `<svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <circle cx="5" cy="7" r="2" />
+                <line x1="10" y1="6" x2="20" y2="6" stroke-linecap="round" />
+                <circle cx="5" cy="12" r="2" />
+                <line x1="10" y1="11" x2="20" y2="11" stroke-linecap="round" />
+                <circle cx="5" cy="17" r="2" />
+                <line x1="10" y1="16" x2="20" y2="16" stroke-linecap="round" />`,
   Unauthorized: ` <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -230,6 +257,28 @@ export const svgIcons = {
                        3.75 3.75 0 017.5 0zM4.5 21a8.25 8.25 0 0115 0"
                   />
                 </svg>`,
+  AddUser: `<svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 14c-4.418 0-8 2.239-8 5v1h8m0-6c4.418 0 8 2.239 8 5v1h-8"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 8v4m2-2h-4"
+                /></svg>`,
   KetLock: `<svg
                   fill="none"
                   stroke="currentColor"
@@ -293,6 +342,22 @@ export const svgIcons = {
                 d="M21 9.75h-5.25a.75.75 0 0 1 0-1.5H19.5a8.25 8.25 0 1 0 2.414 5.836.75.75 0 1 1 1.493.178A9.75 9.75 0 1 1 19.5 4.5v-2.25a.75.75 0 0 1 1.5 0v6z"
               />
             </svg>`,
+  Phone: `<svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              role="img"
+              aria-label="Phone"
+            >
+              <title>Phone</title>
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.89.37 1.75.74 2.56a2 2 0 0 1-.45 2.11L8.91 9.91a16 16 0 0 0 6 6l1.52-1.39a2 2 0 0 1 2.11-.45c.81.37 1.67.62 2.56.74A2 2 0 0 1 22 16.92z"
+              />
+            </svg>`,
   Refresh_Arrows: ` <svg
               v-else
               xmlns="http://www.w3.org/2000/svg"
@@ -307,6 +372,121 @@ export const svgIcons = {
                 d="M4 4v5h5M20 20v-5h-5M5.5 8a7 7 0 0113.5 0M18.5 16a7 7 0 01-13.5 0"
               />
             </svg>`,
+  Email: `  <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              role="img"
+              aria-label="Email"
+            >
+              <title>Email</title>
+              <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+              <polyline points="22,7 12,13 2,7"></polyline>
+            </svg>`,
+  Department: ` <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-gray-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              role="img"
+              aria-label="Department office icon"
+            >
+              <title>Department office</title>
+              <rect
+                x="2"
+                y="4"
+                width="20"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+                fill="none"
+              />
+              <!-- roof / sign -->
+              <path d="M2 8h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              <!-- windows -->
+              <rect
+                x="5"
+                y="10"
+                width="2.5"
+                height="2.5"
+                rx="0.3"
+                stroke="currentColor"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <rect
+                x="9"
+                y="10"
+                width="2.5"
+                height="2.5"
+                rx="0.3"
+                stroke="currentColor"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <rect
+                x="13"
+                y="10"
+                width="2.5"
+                height="2.5"
+                rx="0.3"
+                stroke="currentColor"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <rect
+                x="17"
+                y="10"
+                width="2.5"
+                height="2.5"
+                rx="0.3"
+                stroke="currentColor"
+                stroke-width="1.2"
+                fill="none"
+              />
+              <!-- door -->
+              <rect
+                x="10.5"
+                y="14"
+                width="3"
+                height="6"
+                rx="0.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <circle cx="12" cy="16.5" r="0.25" fill="currentColor" />
+              <!-- department sign -->
+              <rect
+                x="6"
+                y="6"
+                width="12"
+                height="1.4"
+                rx="0.3"
+                fill="currentColor"
+                opacity="0.08"
+              />
+            </svg>`,
+  Hamberger: `  <svg
+                  class="w-8 h-8 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>`,
   Logout: ` <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-9 h-9"
@@ -320,5 +500,15 @@ export const svgIcons = {
                 stroke-linejoin="round"
                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
               />
-            </svg>`
+            </svg>`,
+  Exit: ` <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="fill-red-500 hover:fill-red-600"
+        >
+          <path
+            d="M10 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H10V19H5V5H10V3ZM21 12L16 7V10H9V14H16V17L21 12Z"
+          />
+        </svg>`
 }

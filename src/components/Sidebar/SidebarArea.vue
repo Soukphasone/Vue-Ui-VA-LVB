@@ -37,7 +37,7 @@ const notificationCount = async () => {
   }
   try {
     const _res = await CustomerRegisterList(data)
-    if (_res.data.length > 0) {
+    if (_res.data) {
       notificationBell.value = _res.data.length
     }
   } catch (error) {
@@ -55,7 +55,7 @@ onMounted(notificationCount)
     >
       <!-- SIDEBAR HEADER -->
       <div class="flex items-center justify-start gap-2 px-6 py-4">
-        <router-link to="/">
+        <router-link to="/home">
           <div class="flex gap-1">
             <img :src="logo" alt="Logo" class="w-9 rounded-1" />
           </div>
@@ -73,8 +73,6 @@ onMounted(notificationCount)
                   <ul class="mb-2 flex flex-col gap-1.5">
                     <SidebarItem
                       :item="menuGroup"
-                      :key="index"
-                      :index="index"
                       :count="notificationBell"
                       :role="userData.ROLE_NAME"
                     />

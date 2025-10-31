@@ -21,14 +21,14 @@ const {
   <DefaultLayout>
     <div
       v-if="isLoading"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-9999"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-999"
     >
       <span class="mt-45">
         <Loading />
       </span>
     </div>
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-login">
-      <div class="w-full bg-white rounded-xl shadow md:mt-0 sm:max-w-md xl:p-0">
+      <div class="w-full bg-white rounded-2xl shadow-xl md:mt-0 sm:max-w-md xl:p-0">
         <div class="p-6 space-y-2">
           <div>
             <div class="flex justify-center mb-4">
@@ -37,7 +37,7 @@ const {
           </div>
           <form class="space-y-6" @submit.prevent="handleLogin">
             <div
-              class="relative rounded-lg block py-2 px-2 w-full outline-none"
+              class="relative rounded-2xl block py-2 px-2 w-full outline-none"
               :class="{
                 'border border-primary': !userName,
                 'border border-red-500': checkError && !userName,
@@ -58,6 +58,7 @@ const {
                 <input
                   v-model="userName"
                   @input="toUppercase"
+                  id="userName"
                   type="text"
                   :placeholder="$t('enter_name')"
                   class="text-gray-900 placeholder-gray-500 outline-none w-full"
@@ -65,7 +66,7 @@ const {
               </div>
             </div>
             <div
-              class="relative rounded-lg block py-2 px-2 w-full outline-none"
+              class="relative rounded-2xl block py-2 px-2 w-full outline-none"
               :class="{
                 'border border-primary': !passWord,
                 'border border-red-500': checkError && !passWord,
@@ -103,7 +104,7 @@ const {
             </div>
             <div>
               <button
-                class="w-full text-white bg-primary hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
+                class="w-full text-white bg-primary hover:bg-primary-700 focus:outline-none font-medium rounded-2xl text-sm px-5 py-2.5 text-center mt-4"
               >
                 <span>{{ $t('login') }}</span>
               </button>

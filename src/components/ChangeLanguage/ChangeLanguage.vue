@@ -1,145 +1,98 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
+import flagLaos from '@/assets/images/flags/laos-flag.png'
+import flagVietnam from '@/assets/images/flags/vietnam-flag.png'
+import flagEngland from '@/assets/images/flags/england-flag.png'
+import laos from '@/assets/images/flags/laos-flag2.png'
+import vietnam from '@/assets/images/flags/vietnam-flag2.png'
+import england from '@/assets/images/flags/england-flag2.png'
 import { onClickOutside } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { currentLanguage } from '@/i18n'
+import { svgIcons } from '@/stores/svgIcons'
 const { locale } = useI18n()
 const check = ref(currentLanguage.value)
-watch(currentLanguage, (newLanguage) => {
-  locale.value = newLanguage
-  check.value = newLanguage
-})
+const target = ref(null)
 const isOpen = ref(false)
 const selected = ref(currentLanguage.value)
 const options = ref([
   {
     value: 'en',
-    language: 'US (EN)',
-    lg: 'EN',
-    img: 'england-flag.png'
+    img: flagEngland
   },
   {
     value: 'la',
-    language: 'ລາວ (LA)',
-    lg: 'LA',
-    img: 'laos-flag.png'
+    img: flagLaos
   },
   {
     value: 'vn',
-    language: 'Tiếng việt (VN)',
-    lg: 'VN',
-    img: 'vietnam-flag.png'
+    img: flagVietnam
   }
 ])
-const target = ref(null)
+watch(currentLanguage, (newLanguage) => {
+  locale.value = newLanguage
+  check.value = newLanguage
+})
 onClickOutside(target, () => {
   isOpen.value = false
 })
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value
 }
-
 const selectOption = (option) => {
-  console.log('value', option)
-  selected.value = option
-  currentLanguage.value = option
+  selected.value = option.value
+  currentLanguage.value = option.value
   isOpen.value = false
-  localStorage.setItem('language', option)
+  localStorage.setItem('language', option.value)
 }
 const optionLanguage = computed(() => options.value.filter((opt) => opt.value !== selected.value))
 const getImagePath = (img) => {
-  let la = 'laos-flag2.png'
-  let en = 'england-flag2.png'
-  let vn = 'vietnam-flag2.png'
   if (img === 'la') {
-    return new URL(`/src/assets/images/flags/${la}`, import.meta.url).href
+    return laos
   }
   if (img === 'en') {
-    return new URL(`/src/assets/images/flags/${en}`, import.meta.url).href
+    return england
   }
   if (img === 'vn') {
-    return new URL(`/src/assets/images/flags/${vn}`, import.meta.url).href
+    return vietnam
   }
-  return new URL(`/src/assets/images/flags/${img}`, import.meta.url).href
 }
 </script>
 <template>
-  <div class="relative flex space-x-1" ref="target">
-    <div class="custom-select">
-      <button
-        class="flex items-center bt-change-language focus:outline-none"
-        @click="toggleDropdown"
-        @keydown.esc="isOpen = false"
-      >
-        <span> <img :src="getImagePath(check)" alt="flag" class="flag-bt" /></span>
-      </button>
-      <ul v-if="isOpen" class="dropdown-bt-change-language">
-        <li
-          v-for="option in optionLanguage"
-          :key="option.value"
-          @click="selectOption(option.value)"
-        >
-          <img :src="getImagePath(option.img)" alt="flag" class="flag-icon-change-language" />
-          <span style="margin-top: -3px"> {{ option.lg }}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="flex items-center text-primary text-user absolute bottom-0 left-9">
+  <div class="relative inline-block text-left">
+    <!-- Dropdown button -->
+    <button
+      @click="toggleDropdown"
+      @keydown.esc="isOpen = false"
+      ref="target"
+      class="inline-flex gap-2 items-center justify-start w-40 rounded-2xl shadow-md hover:bg-gray-50 px-4 py-1 text-sm font-medium text-gray-700 focus:outline-none"
+    >
+      <img :src="getImagePath(check)" alt="" class="w-7 h-7 rounded-full" />
       {{ $t('lg') }}
+      <span
+        v-html="svgIcons.ArrowDropDown"
+        class="absolute top-1/2 -translate-y-1/2 fill-current right-0 px-2"
+        :class="{ 'rotate-180': isOpen }"
+      >
+      </span>
+    </button>
+
+    <!-- Dropdown menu -->
+    <div
+      v-if="isOpen"
+      class="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+    >
+      <div class="py-1">
+        <button
+          v-for="lang in optionLanguage"
+          :key="lang.value"
+          @click="selectOption(lang)"
+          class="flex gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
+          <img :src="lang.img" alt="" class="w-6 rounded-sm" />
+          {{ $t(lang.value) }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped> 
-/* Change Language */
-.custom-select {
-  position: relative;
-  display: inline-block;
-}
-.custom-select .bt-change-language {
-  /* background: #f0f0f0; */
-  padding: 5px 5px;
-  cursor: pointer;
-  display: flex;
-  font-size: 20px;
-  color: black;
-  /* border: 2px solid rgb(165, 165, 165) */
-}
-.custom-select .dropdown-bt-change-language {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  list-style: none;
-  /* padding: 5px 10px 5px 5px; */
-  margin: 5px 0 0 0;
-  width: 70px;
-  color: black;
-  z-index: 100;
-  border-radius: 5px;
-}
-
-.dropdown-bt-change-language li {
-  padding: 10px 7px 8px 7px;
-  /* cursor: pointer; */
-  font-size: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.flag-icon-change-language {
-  width: 25px;
-  height: 18px;
-}
-
-.bt-change-language .flag-bt {
-  width: 35px;
-}
-
-.dropdown-bt-change-language li:hover {
-  background: #eee;
-  border-radius: 5px;
-}
-/* Change Language */
-</style>

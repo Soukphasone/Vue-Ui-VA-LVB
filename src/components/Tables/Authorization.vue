@@ -16,6 +16,7 @@ import { useOpenModalStore } from '@/stores/modal'
 import eventBus from '@/eventBus'
 import { dayList, dayListLao, dayListViet } from '@/stores/branchBankList'
 import { svgIcons } from '@/stores/svgIcons'
+import HeaderInside from '@/components/Header/HeaderInside.vue'
 
 const userData = JSON.parse(localStorage.getItem('userData'))
 const { t } = useI18n()
@@ -82,25 +83,25 @@ const toggleModal = (name, data) => {
       dataDeail.value = data
       isOpen.isDetail = true
       checkItemData.value = true
-      titleModal.value = 'successfully'
+      titleModal.value = t('successfully')
     }
   }
   if (name === 'authorize') {
     if (!checkItemData.value) {
-      titleModal.value = 'please_select_some_items'
+      titleModal.value = t('please_select_some_items')
       showError.value = true
       return
     }
-    titleModal.value = 'authorize_auccess'
+    titleModal.value = t('authorize_auccess')
     isOpen.isAuthorizeVA = true
   }
   if (name === 'reject') {
     if (!checkItemData.value) {
-      titleModal.value = 'please_select_some_items'
+      titleModal.value = t('please_select_some_items')
       showError.value = true
       return
     }
-    titleModal.value = 'reject_success'
+    titleModal.value = t('reject_success')
     isOpen.isRejectVA = true
   }
 }
@@ -114,7 +115,7 @@ const fetchData = async () => {
   isLoading.value = true
   try {
     const _res = await CustomerRegisterList(data)
-    if (_res.data.length > 0) {
+    if (_res.data) {
       dataReport.value = _res.data
     } else {
       dataReport.value = []
@@ -135,8 +136,8 @@ const filteredItems = computed(() =>
   )
 )
 onMounted(fetchData)
-const reSet = () => {
-  fetchData()
+const reSet = async () => {
+  await fetchData()
   selectedItems.value = []
   checkItemData.value = false
 }
@@ -231,12 +232,13 @@ onUnmounted(() => {
 })
 </script>
 <template>
-  <div class="w-full mx-auto rounded-lg shadow-md overflow-hidden" style="margin-top: -15px">
-    <div class="bg-primary py-4 px-6">
-      <h1 class="text-2xl font-bold text-white md:text-center">
-        {{ t('customer_list_unauthorized') }}
-      </h1>
-    </div>
+  <div
+    v-if="userData.ROLE_NAME === 'Checker'"
+    class="w-full mx-auto rounded-2xl shadow-md overflow-hidden"
+    data-aos="fade-left"
+    style="margin-top: -15px"
+  >
+    <HeaderInside :title="t('customer_list_unauthorized')" />
     <div class="max-w-full overflow-x-auto border border-gray-300 bg-gray-50">
       <div class="flex flex-grow items-center justify-between py-3 px-4">
         <div class="flex justify-center items-center">
@@ -349,7 +351,7 @@ onUnmounted(() => {
               >
               </span>
               <span>
-                {{ t('authorize') }}
+                {{ t('approve') }}
               </span>
             </button>
           </div>
@@ -496,14 +498,14 @@ onUnmounted(() => {
   <showModals
     :show-confirm-modal="isOpen.isAuthorizeVA"
     :id="selectedItems"
-    title="do_you_want_authorize"
+    :title="t('do_you_want_authorize')"
     value="1"
     @close="isOpen.isAuthorizeVA = false"
   />
   <showModals
     :show-confirm-modal="isOpen.isRejectVA"
     :id="selectedItems"
-    title="do_want_to_reject"
+    :title="t('do_want_to_reject')"
     value="2"
     @close="isOpen.isRejectVA = false"
   />
